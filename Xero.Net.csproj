@@ -8,7 +8,7 @@
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>Xero.Net</RootNamespace>
-    <AssemblyName>Xero.Net</AssemblyName>
+    <AssemblyName>Xero.Net.OAuth2</AssemblyName>
     <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <Deterministic>true</Deterministic>
@@ -114,6 +114,19 @@
     <Compile Include="Client\Multimap.cs" />
     <Compile Include="Client\OpenAPIDateConverter.cs" />
     <Compile Include="Client\RequestOptions.cs" />
+    <Compile Include="Core\API.cs" />
+    <Compile Include="Core\Api\AccountingApi.cs" />
+    <Compile Include="Core\Api\AssetApi.cs" />
+    <Compile Include="Core\Api\BankFeedsApi.cs" />
+    <Compile Include="Core\Api\PayrollAUApi.cs" />
+    <Compile Include="Core\Api\PayrollNZApi.cs" />
+    <Compile Include="Core\Api\ProjectApi.cs" />
+    <Compile Include="Core\Class\Common.cs" />
+    <Compile Include="Core\Class\Constants.cs" />
+    <Compile Include="Core\Class\EventHandlerExtensions.cs" />
+    <Compile Include="Core\Class\LocalHttpListener.cs" />
+    <Compile Include="Core\Class\LogMessages.cs" />
+    <Compile Include="Core\oAuth2.cs" />
     <Compile Include="Model\Accounting\Account.cs" />
     <Compile Include="Model\Accounting\Accounts.cs" />
     <Compile Include="Model\Accounting\AccountsPayable.cs" />
@@ -552,11 +565,16 @@
     <Compile Include="Model\Project\TimeEntries.cs" />
     <Compile Include="Model\Project\TimeEntry.cs" />
     <Compile Include="Model\Project\TimeEntryCreateOrUpdate.cs" />
+    <Compile Include="OAuth2\Model\Tenant.cs" />
+    <Compile Include="OAuth2\Model\XeroConfiguration.cs" />
+    <Compile Include="OAuth2\Model\XeroOAuthToken.cs" />
+    <Compile Include="OAuth2\Model\XeroScope.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
     <None Include="packages.config" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
