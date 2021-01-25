@@ -1,0 +1,562 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{C3875286-3898-408D-9BC3-D4C50E177DFB}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Xero.Net</RootNamespace>
+    <AssemblyName>Xero.Net</AssemblyName>
+    <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <Deterministic>true</Deterministic>
+    <TargetFrameworkProfile />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="IdentityModel, Version=5.0.0.0, Culture=neutral, PublicKeyToken=e7877f4675df049f, processorArchitecture=MSIL">
+      <HintPath>..\XeroAuth2API\packages\IdentityModel.5.0.0\lib\net472\IdentityModel.dll</HintPath>
+    </Reference>
+    <Reference Include="JsonSubTypes, Version=1.8.0.0, Culture=neutral, PublicKeyToken=ee75fc290dbc1176, processorArchitecture=MSIL">
+      <HintPath>..\XeroAuth2API\packages\JsonSubTypes.1.8.0\lib\net47\JsonSubTypes.dll</HintPath>
+    </Reference>
+    <Reference Include="KellermanSoftware.Compare-NET-Objects, Version=4.71.0.0, Culture=neutral, PublicKeyToken=d970ace04cc85217, processorArchitecture=MSIL">
+      <HintPath>..\XeroAuth2API\packages\CompareNETObjects.4.71.0\lib\net472\KellermanSoftware.Compare-NET-Objects.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Bcl.AsyncInterfaces, Version=5.0.0.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\XeroAuth2API\packages\Microsoft.Bcl.AsyncInterfaces.5.0.0\lib\net461\Microsoft.Bcl.AsyncInterfaces.dll</HintPath>
+    </Reference>
+    <Reference Include="Newtonsoft.Json, Version=12.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\XeroAuth2API\packages\Newtonsoft.Json.12.0.3\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="RestSharp, Version=106.11.7.0, Culture=neutral, PublicKeyToken=598062e77f915f75, processorArchitecture=MSIL">
+      <HintPath>..\XeroAuth2API\packages\RestSharp.106.11.7\lib\net452\RestSharp.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Buffers, Version=4.0.3.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\XeroAuth2API\packages\System.Buffers.4.5.1\lib\net461\System.Buffers.dll</HintPath>
+    </Reference>
+    <Reference Include="System.ComponentModel.Annotations, Version=4.2.1.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\XeroAuth2API\packages\System.ComponentModel.Annotations.5.0.0\lib\net461\System.ComponentModel.Annotations.dll</HintPath>
+    </Reference>
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Memory, Version=4.0.1.1, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\XeroAuth2API\packages\System.Memory.4.5.4\lib\net461\System.Memory.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Numerics" />
+    <Reference Include="System.Numerics.Vectors, Version=4.1.4.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\XeroAuth2API\packages\System.Numerics.Vectors.4.5.0\lib\net46\System.Numerics.Vectors.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Runtime.CompilerServices.Unsafe, Version=5.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\XeroAuth2API\packages\System.Runtime.CompilerServices.Unsafe.5.0.0\lib\net45\System.Runtime.CompilerServices.Unsafe.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Text.Encodings.Web, Version=5.0.0.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\XeroAuth2API\packages\System.Text.Encodings.Web.5.0.0\lib\net461\System.Text.Encodings.Web.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Text.Json, Version=5.0.0.1, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\XeroAuth2API\packages\System.Text.Json.5.0.1\lib\net461\System.Text.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Threading.Tasks.Extensions, Version=4.2.0.1, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\XeroAuth2API\packages\System.Threading.Tasks.Extensions.4.5.4\lib\net461\System.Threading.Tasks.Extensions.dll</HintPath>
+    </Reference>
+    <Reference Include="System.ValueTuple, Version=4.0.3.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\XeroAuth2API\packages\System.ValueTuple.4.5.0\lib\net47\System.ValueTuple.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Api\AccountingApi.cs" />
+    <Compile Include="Api\AssetApi.cs" />
+    <Compile Include="Api\BankFeedsApi.cs" />
+    <Compile Include="Api\IdentityApi.cs" />
+    <Compile Include="Api\PayrollAUApi.cs" />
+    <Compile Include="Api\PayrollNZApi.cs" />
+    <Compile Include="Api\PayrollUkApi.cs" />
+    <Compile Include="Api\ProjectApi.cs" />
+    <Compile Include="Client\ApiClient.cs" />
+    <Compile Include="Client\ApiException.cs" />
+    <Compile Include="Client\ApiResponse.cs" />
+    <Compile Include="Client\ClientUtils.cs" />
+    <Compile Include="Client\Configuration.cs" />
+    <Compile Include="Client\ExceptionFactory.cs" />
+    <Compile Include="Client\GlobalConfiguration.cs" />
+    <Compile Include="Client\HttpMethod.cs" />
+    <Compile Include="Client\IApiAccessor.cs" />
+    <Compile Include="Client\IAsynchronousClient.cs" />
+    <Compile Include="Client\IReadableConfiguration.cs" />
+    <Compile Include="Client\ISynchronousClient.cs" />
+    <Compile Include="Client\Multimap.cs" />
+    <Compile Include="Client\OpenAPIDateConverter.cs" />
+    <Compile Include="Client\RequestOptions.cs" />
+    <Compile Include="Model\Accounting\Account.cs" />
+    <Compile Include="Model\Accounting\Accounts.cs" />
+    <Compile Include="Model\Accounting\AccountsPayable.cs" />
+    <Compile Include="Model\Accounting\AccountsReceivable.cs" />
+    <Compile Include="Model\Accounting\AccountType.cs" />
+    <Compile Include="Model\Accounting\Action.cs" />
+    <Compile Include="Model\Accounting\Actions.cs" />
+    <Compile Include="Model\Accounting\Address.cs" />
+    <Compile Include="Model\Accounting\AddressForOrganisation.cs" />
+    <Compile Include="Model\Accounting\Allocation.cs" />
+    <Compile Include="Model\Accounting\Allocations.cs" />
+    <Compile Include="Model\Accounting\Attachment.cs" />
+    <Compile Include="Model\Accounting\Attachments.cs" />
+    <Compile Include="Model\Accounting\BalanceDetails.cs" />
+    <Compile Include="Model\Accounting\Balances.cs" />
+    <Compile Include="Model\Accounting\BankTransaction.cs" />
+    <Compile Include="Model\Accounting\BankTransactions.cs" />
+    <Compile Include="Model\Accounting\BankTransfer.cs" />
+    <Compile Include="Model\Accounting\BankTransfers.cs" />
+    <Compile Include="Model\Accounting\BatchPayment.cs" />
+    <Compile Include="Model\Accounting\BatchPaymentDetails.cs" />
+    <Compile Include="Model\Accounting\BatchPayments.cs" />
+    <Compile Include="Model\Accounting\Bill.cs" />
+    <Compile Include="Model\Accounting\BrandingTheme.cs" />
+    <Compile Include="Model\Accounting\BrandingThemes.cs" />
+    <Compile Include="Model\Accounting\CISOrgSetting.cs" />
+    <Compile Include="Model\Accounting\CISSetting.cs" />
+    <Compile Include="Model\Accounting\CISSettings.cs" />
+    <Compile Include="Model\Accounting\Contact.cs" />
+    <Compile Include="Model\Accounting\ContactGroup.cs" />
+    <Compile Include="Model\Accounting\ContactGroups.cs" />
+    <Compile Include="Model\Accounting\ContactPerson.cs" />
+    <Compile Include="Model\Accounting\Contacts.cs" />
+    <Compile Include="Model\Accounting\ConversionBalances.cs" />
+    <Compile Include="Model\Accounting\ConversionDate.cs" />
+    <Compile Include="Model\Accounting\CountryCode.cs" />
+    <Compile Include="Model\Accounting\CreditNote.cs" />
+    <Compile Include="Model\Accounting\CreditNotes.cs" />
+    <Compile Include="Model\Accounting\Currencies.cs" />
+    <Compile Include="Model\Accounting\Currency.cs" />
+    <Compile Include="Model\Accounting\CurrencyCode.cs" />
+    <Compile Include="Model\Accounting\Element.cs" />
+    <Compile Include="Model\Accounting\Employee.cs" />
+    <Compile Include="Model\Accounting\Employees.cs" />
+    <Compile Include="Model\Accounting\Error.cs" />
+    <Compile Include="Model\Accounting\ExpenseClaim.cs" />
+    <Compile Include="Model\Accounting\ExpenseClaims.cs" />
+    <Compile Include="Model\Accounting\ExternalLink.cs" />
+    <Compile Include="Model\Accounting\HistoryRecord.cs" />
+    <Compile Include="Model\Accounting\HistoryRecords.cs" />
+    <Compile Include="Model\Accounting\ImportSummary.cs" />
+    <Compile Include="Model\Accounting\ImportSummaryAccounts.cs" />
+    <Compile Include="Model\Accounting\ImportSummaryObject.cs" />
+    <Compile Include="Model\Accounting\ImportSummaryOrganisation.cs" />
+    <Compile Include="Model\Accounting\Invoice.cs" />
+    <Compile Include="Model\Accounting\InvoiceReminder.cs" />
+    <Compile Include="Model\Accounting\InvoiceReminders.cs" />
+    <Compile Include="Model\Accounting\Invoices.cs" />
+    <Compile Include="Model\Accounting\Item.cs" />
+    <Compile Include="Model\Accounting\Items.cs" />
+    <Compile Include="Model\Accounting\Journal.cs" />
+    <Compile Include="Model\Accounting\JournalLine.cs" />
+    <Compile Include="Model\Accounting\Journals.cs" />
+    <Compile Include="Model\Accounting\LineAmountTypes.cs" />
+    <Compile Include="Model\Accounting\LineItem.cs" />
+    <Compile Include="Model\Accounting\LineItemTracking.cs" />
+    <Compile Include="Model\Accounting\LinkedTransaction.cs" />
+    <Compile Include="Model\Accounting\LinkedTransactions.cs" />
+    <Compile Include="Model\Accounting\ManualJournal.cs" />
+    <Compile Include="Model\Accounting\ManualJournalLine.cs" />
+    <Compile Include="Model\Accounting\ManualJournals.cs" />
+    <Compile Include="Model\Accounting\OnlineInvoice.cs" />
+    <Compile Include="Model\Accounting\OnlineInvoices.cs" />
+    <Compile Include="Model\Accounting\Organisation.cs" />
+    <Compile Include="Model\Accounting\Organisations.cs" />
+    <Compile Include="Model\Accounting\Overpayment.cs" />
+    <Compile Include="Model\Accounting\Overpayments.cs" />
+    <Compile Include="Model\Accounting\Payment.cs" />
+    <Compile Include="Model\Accounting\PaymentDelete.cs" />
+    <Compile Include="Model\Accounting\Payments.cs" />
+    <Compile Include="Model\Accounting\PaymentService.cs" />
+    <Compile Include="Model\Accounting\PaymentServices.cs" />
+    <Compile Include="Model\Accounting\PaymentTerm.cs" />
+    <Compile Include="Model\Accounting\PaymentTermType.cs" />
+    <Compile Include="Model\Accounting\Phone.cs" />
+    <Compile Include="Model\Accounting\Prepayment.cs" />
+    <Compile Include="Model\Accounting\Prepayments.cs" />
+    <Compile Include="Model\Accounting\Purchase.cs" />
+    <Compile Include="Model\Accounting\PurchaseOrder.cs" />
+    <Compile Include="Model\Accounting\PurchaseOrders.cs" />
+    <Compile Include="Model\Accounting\Quote.cs" />
+    <Compile Include="Model\Accounting\QuoteLineAmountTypes.cs" />
+    <Compile Include="Model\Accounting\Quotes.cs" />
+    <Compile Include="Model\Accounting\QuoteStatusCodes.cs" />
+    <Compile Include="Model\Accounting\Receipt.cs" />
+    <Compile Include="Model\Accounting\Receipts.cs" />
+    <Compile Include="Model\Accounting\RepeatingInvoice.cs" />
+    <Compile Include="Model\Accounting\RepeatingInvoices.cs" />
+    <Compile Include="Model\Accounting\Report.cs" />
+    <Compile Include="Model\Accounting\ReportAttribute.cs" />
+    <Compile Include="Model\Accounting\ReportCell.cs" />
+    <Compile Include="Model\Accounting\ReportFields.cs" />
+    <Compile Include="Model\Accounting\ReportRow.cs" />
+    <Compile Include="Model\Accounting\ReportRows.cs" />
+    <Compile Include="Model\Accounting\Reports.cs" />
+    <Compile Include="Model\Accounting\ReportWithRow.cs" />
+    <Compile Include="Model\Accounting\ReportWithRows.cs" />
+    <Compile Include="Model\Accounting\RequestEmpty.cs" />
+    <Compile Include="Model\Accounting\RowType.cs" />
+    <Compile Include="Model\Accounting\SalesTrackingCategory.cs" />
+    <Compile Include="Model\Accounting\Schedule.cs" />
+    <Compile Include="Model\Accounting\Setup.cs" />
+    <Compile Include="Model\Accounting\TaxComponent.cs" />
+    <Compile Include="Model\Accounting\TaxRate.cs" />
+    <Compile Include="Model\Accounting\TaxRates.cs" />
+    <Compile Include="Model\Accounting\TaxType.cs" />
+    <Compile Include="Model\Accounting\TenNinetyNineContact.cs" />
+    <Compile Include="Model\Accounting\TenNinteyNineContact.cs" />
+    <Compile Include="Model\Accounting\TimeZone.cs" />
+    <Compile Include="Model\Accounting\TrackingCategories.cs" />
+    <Compile Include="Model\Accounting\TrackingCategory.cs" />
+    <Compile Include="Model\Accounting\TrackingOption.cs" />
+    <Compile Include="Model\Accounting\TrackingOptions.cs" />
+    <Compile Include="Model\Accounting\User.cs" />
+    <Compile Include="Model\Accounting\Users.cs" />
+    <Compile Include="Model\Accounting\ValidationError.cs" />
+    <Compile Include="Model\Asset\Asset.cs" />
+    <Compile Include="Model\Asset\Assets.cs" />
+    <Compile Include="Model\Asset\AssetStatus.cs" />
+    <Compile Include="Model\Asset\AssetStatusQueryParam.cs" />
+    <Compile Include="Model\Asset\AssetType.cs" />
+    <Compile Include="Model\Asset\BookDepreciationDetail.cs" />
+    <Compile Include="Model\Asset\BookDepreciationSetting.cs" />
+    <Compile Include="Model\Asset\Error.cs" />
+    <Compile Include="Model\Asset\FieldValidationErrorsElement.cs" />
+    <Compile Include="Model\Asset\Pagination.cs" />
+    <Compile Include="Model\Asset\ResourceValidationErrorsElement.cs" />
+    <Compile Include="Model\Asset\Setting.cs" />
+    <Compile Include="Model\Bankfeeds\CountryCode.cs" />
+    <Compile Include="Model\Bankfeeds\CreditDebitIndicator.cs" />
+    <Compile Include="Model\Bankfeeds\CurrencyCode.cs" />
+    <Compile Include="Model\Bankfeeds\EndBalance.cs" />
+    <Compile Include="Model\Bankfeeds\Error.cs" />
+    <Compile Include="Model\Bankfeeds\FeedConnection.cs" />
+    <Compile Include="Model\Bankfeeds\FeedConnections.cs" />
+    <Compile Include="Model\Bankfeeds\Pagination.cs" />
+    <Compile Include="Model\Bankfeeds\StartBalance.cs" />
+    <Compile Include="Model\Bankfeeds\Statement.cs" />
+    <Compile Include="Model\Bankfeeds\StatementLine.cs" />
+    <Compile Include="Model\Bankfeeds\Statements.cs" />
+    <Compile Include="Model\Identity\AccessToken.cs" />
+    <Compile Include="Model\Identity\Connection.cs" />
+    <Compile Include="Model\Identity\RefreshToken.cs" />
+    <Compile Include="Model\PayrollAu\Account.cs" />
+    <Compile Include="Model\PayrollAu\AccountType.cs" />
+    <Compile Include="Model\PayrollAu\AllowanceType.cs" />
+    <Compile Include="Model\PayrollAu\APIException.cs" />
+    <Compile Include="Model\PayrollAu\BankAccount.cs" />
+    <Compile Include="Model\PayrollAu\CalendarType.cs" />
+    <Compile Include="Model\PayrollAu\DeductionLine.cs" />
+    <Compile Include="Model\PayrollAu\DeductionType.cs" />
+    <Compile Include="Model\PayrollAu\DeductionTypeCalculationType.cs" />
+    <Compile Include="Model\PayrollAu\EarningsLine.cs" />
+    <Compile Include="Model\PayrollAu\EarningsRate.cs" />
+    <Compile Include="Model\PayrollAu\EarningsRateCalculationType.cs" />
+    <Compile Include="Model\PayrollAu\EarningsType.cs" />
+    <Compile Include="Model\PayrollAu\Employee.cs" />
+    <Compile Include="Model\PayrollAu\Employees.cs" />
+    <Compile Include="Model\PayrollAu\EmployeeStatus.cs" />
+    <Compile Include="Model\PayrollAu\EmploymentBasis.cs" />
+    <Compile Include="Model\PayrollAu\EmploymentTerminationPaymentType.cs" />
+    <Compile Include="Model\PayrollAu\EntitlementFinalPayPayoutType.cs" />
+    <Compile Include="Model\PayrollAu\HomeAddress.cs" />
+    <Compile Include="Model\PayrollAu\LeaveAccrualLine.cs" />
+    <Compile Include="Model\PayrollAu\LeaveApplication.cs" />
+    <Compile Include="Model\PayrollAu\LeaveApplications.cs" />
+    <Compile Include="Model\PayrollAu\LeaveBalance.cs" />
+    <Compile Include="Model\PayrollAu\LeaveEarningsLine.cs" />
+    <Compile Include="Model\PayrollAu\LeaveLine.cs" />
+    <Compile Include="Model\PayrollAu\LeaveLineCalculationType.cs" />
+    <Compile Include="Model\PayrollAu\LeaveLines.cs" />
+    <Compile Include="Model\PayrollAu\LeavePeriod.cs" />
+    <Compile Include="Model\PayrollAu\LeavePeriodStatus.cs" />
+    <Compile Include="Model\PayrollAu\LeaveType.cs" />
+    <Compile Include="Model\PayrollAu\LeaveTypeContributionType.cs" />
+    <Compile Include="Model\PayrollAu\ManualTaxType.cs" />
+    <Compile Include="Model\PayrollAu\OpeningBalances.cs" />
+    <Compile Include="Model\PayrollAu\PayItem.cs" />
+    <Compile Include="Model\PayrollAu\PayItems.cs" />
+    <Compile Include="Model\PayrollAu\PaymentFrequencyType.cs" />
+    <Compile Include="Model\PayrollAu\PayrollCalendar.cs" />
+    <Compile Include="Model\PayrollAu\PayrollCalendars.cs" />
+    <Compile Include="Model\PayrollAu\PayRun.cs" />
+    <Compile Include="Model\PayrollAu\PayRuns.cs" />
+    <Compile Include="Model\PayrollAu\PayRunStatus.cs" />
+    <Compile Include="Model\PayrollAu\Payslip.cs" />
+    <Compile Include="Model\PayrollAu\PayslipLines.cs" />
+    <Compile Include="Model\PayrollAu\PayslipObject.cs" />
+    <Compile Include="Model\PayrollAu\Payslips.cs" />
+    <Compile Include="Model\PayrollAu\PayslipSummary.cs" />
+    <Compile Include="Model\PayrollAu\PayTemplate.cs" />
+    <Compile Include="Model\PayrollAu\RateType.cs" />
+    <Compile Include="Model\PayrollAu\ReimbursementLine.cs" />
+    <Compile Include="Model\PayrollAu\ReimbursementLines.cs" />
+    <Compile Include="Model\PayrollAu\ReimbursementType.cs" />
+    <Compile Include="Model\PayrollAu\ResidencyStatus.cs" />
+    <Compile Include="Model\PayrollAu\Settings.cs" />
+    <Compile Include="Model\PayrollAu\SettingsObject.cs" />
+    <Compile Include="Model\PayrollAu\SettingsTrackingCategories.cs" />
+    <Compile Include="Model\PayrollAu\SettingsTrackingCategoriesEmployeeGroups.cs" />
+    <Compile Include="Model\PayrollAu\SettingsTrackingCategoriesTimesheetCategories.cs" />
+    <Compile Include="Model\PayrollAu\State.cs" />
+    <Compile Include="Model\PayrollAu\SuperannuationCalculationType.cs" />
+    <Compile Include="Model\PayrollAu\SuperannuationContributionType.cs" />
+    <Compile Include="Model\PayrollAu\SuperannuationLine.cs" />
+    <Compile Include="Model\PayrollAu\SuperFund.cs" />
+    <Compile Include="Model\PayrollAu\SuperFundProduct.cs" />
+    <Compile Include="Model\PayrollAu\SuperFundProducts.cs" />
+    <Compile Include="Model\PayrollAu\SuperFunds.cs" />
+    <Compile Include="Model\PayrollAu\SuperFundType.cs" />
+    <Compile Include="Model\PayrollAu\SuperLine.cs" />
+    <Compile Include="Model\PayrollAu\SuperMembership.cs" />
+    <Compile Include="Model\PayrollAu\TaxDeclaration.cs" />
+    <Compile Include="Model\PayrollAu\TaxLine.cs" />
+    <Compile Include="Model\PayrollAu\TFNExemptionType.cs" />
+    <Compile Include="Model\PayrollAu\Timesheet.cs" />
+    <Compile Include="Model\PayrollAu\TimesheetLine.cs" />
+    <Compile Include="Model\PayrollAu\TimesheetObject.cs" />
+    <Compile Include="Model\PayrollAu\Timesheets.cs" />
+    <Compile Include="Model\PayrollAu\TimesheetStatus.cs" />
+    <Compile Include="Model\PayrollAu\ValidationError.cs" />
+    <Compile Include="Model\PayrollNz\Account.cs" />
+    <Compile Include="Model\PayrollNz\Accounts.cs" />
+    <Compile Include="Model\PayrollNz\Address.cs" />
+    <Compile Include="Model\PayrollNz\BankAccount.cs" />
+    <Compile Include="Model\PayrollNz\Benefit.cs" />
+    <Compile Include="Model\PayrollNz\CalendarType.cs" />
+    <Compile Include="Model\PayrollNz\Deduction.cs" />
+    <Compile Include="Model\PayrollNz\DeductionLine.cs" />
+    <Compile Include="Model\PayrollNz\DeductionObject.cs" />
+    <Compile Include="Model\PayrollNz\Deductions.cs" />
+    <Compile Include="Model\PayrollNz\EarningsLine.cs" />
+    <Compile Include="Model\PayrollNz\EarningsOrder.cs" />
+    <Compile Include="Model\PayrollNz\EarningsOrderObject.cs" />
+    <Compile Include="Model\PayrollNz\EarningsOrders.cs" />
+    <Compile Include="Model\PayrollNz\EarningsRate.cs" />
+    <Compile Include="Model\PayrollNz\EarningsRateObject.cs" />
+    <Compile Include="Model\PayrollNz\EarningsRates.cs" />
+    <Compile Include="Model\PayrollNz\EarningsTemplate.cs" />
+    <Compile Include="Model\PayrollNz\EarningsTemplateObject.cs" />
+    <Compile Include="Model\PayrollNz\Employee.cs" />
+    <Compile Include="Model\PayrollNz\EmployeeEarningsTemplates.cs" />
+    <Compile Include="Model\PayrollNz\EmployeeLeave.cs" />
+    <Compile Include="Model\PayrollNz\EmployeeLeaveBalance.cs" />
+    <Compile Include="Model\PayrollNz\EmployeeLeaveBalances.cs" />
+    <Compile Include="Model\PayrollNz\EmployeeLeaveObject.cs" />
+    <Compile Include="Model\PayrollNz\EmployeeLeaves.cs" />
+    <Compile Include="Model\PayrollNz\EmployeeLeaveSetup.cs" />
+    <Compile Include="Model\PayrollNz\EmployeeLeaveSetupObject.cs" />
+    <Compile Include="Model\PayrollNz\EmployeeLeaveType.cs" />
+    <Compile Include="Model\PayrollNz\EmployeeLeaveTypeObject.cs" />
+    <Compile Include="Model\PayrollNz\EmployeeLeaveTypes.cs" />
+    <Compile Include="Model\PayrollNz\EmployeeObject.cs" />
+    <Compile Include="Model\PayrollNz\EmployeeOpeningBalance.cs" />
+    <Compile Include="Model\PayrollNz\EmployeeOpeningBalancesObject.cs" />
+    <Compile Include="Model\PayrollNz\EmployeePayTemplate.cs" />
+    <Compile Include="Model\PayrollNz\EmployeePayTemplateObject.cs" />
+    <Compile Include="Model\PayrollNz\EmployeePayTemplates.cs" />
+    <Compile Include="Model\PayrollNz\Employees.cs" />
+    <Compile Include="Model\PayrollNz\EmployeeStatutoryLeaveBalance.cs" />
+    <Compile Include="Model\PayrollNz\EmployeeStatutoryLeaveBalanceObject.cs" />
+    <Compile Include="Model\PayrollNz\EmployeeStatutoryLeavesSummaries.cs" />
+    <Compile Include="Model\PayrollNz\EmployeeStatutoryLeaveSummary.cs" />
+    <Compile Include="Model\PayrollNz\EmployeeStatutorySickLeave.cs" />
+    <Compile Include="Model\PayrollNz\EmployeeStatutorySickLeaveObject.cs" />
+    <Compile Include="Model\PayrollNz\EmployeeStatutorySickLeaves.cs" />
+    <Compile Include="Model\PayrollNz\EmployeeTax.cs" />
+    <Compile Include="Model\PayrollNz\EmployeeTaxObject.cs" />
+    <Compile Include="Model\PayrollNz\Employment.cs" />
+    <Compile Include="Model\PayrollNz\EmploymentObject.cs" />
+    <Compile Include="Model\PayrollNz\GrossEarningsHistory.cs" />
+    <Compile Include="Model\PayrollNz\InvalidField.cs" />
+    <Compile Include="Model\PayrollNz\LeaveAccrualLine.cs" />
+    <Compile Include="Model\PayrollNz\LeaveEarningsLine.cs" />
+    <Compile Include="Model\PayrollNz\LeavePeriod.cs" />
+    <Compile Include="Model\PayrollNz\LeavePeriods.cs" />
+    <Compile Include="Model\PayrollNz\LeaveType.cs" />
+    <Compile Include="Model\PayrollNz\LeaveTypeObject.cs" />
+    <Compile Include="Model\PayrollNz\LeaveTypes.cs" />
+    <Compile Include="Model\PayrollNz\Pagination.cs" />
+    <Compile Include="Model\PayrollNz\PaymentLine.cs" />
+    <Compile Include="Model\PayrollNz\PaymentMethod.cs" />
+    <Compile Include="Model\PayrollNz\PaymentMethodObject.cs" />
+    <Compile Include="Model\PayrollNz\PayRun.cs" />
+    <Compile Include="Model\PayrollNz\PayRunCalendar.cs" />
+    <Compile Include="Model\PayrollNz\PayRunCalendarObject.cs" />
+    <Compile Include="Model\PayrollNz\PayRunCalendars.cs" />
+    <Compile Include="Model\PayrollNz\PayRunObject.cs" />
+    <Compile Include="Model\PayrollNz\PayRuns.cs" />
+    <Compile Include="Model\PayrollNz\PaySlip.cs" />
+    <Compile Include="Model\PayrollNz\PaySlipObject.cs" />
+    <Compile Include="Model\PayrollNz\PaySlips.cs" />
+    <Compile Include="Model\PayrollNz\Problem.cs" />
+    <Compile Include="Model\PayrollNz\Reimbursement.cs" />
+    <Compile Include="Model\PayrollNz\ReimbursementLine.cs" />
+    <Compile Include="Model\PayrollNz\ReimbursementObject.cs" />
+    <Compile Include="Model\PayrollNz\Reimbursements.cs" />
+    <Compile Include="Model\PayrollNz\SalaryAndWage.cs" />
+    <Compile Include="Model\PayrollNz\SalaryAndWageObject.cs" />
+    <Compile Include="Model\PayrollNz\SalaryAndWages.cs" />
+    <Compile Include="Model\PayrollNz\Settings.cs" />
+    <Compile Include="Model\PayrollNz\StatutoryDeduction.cs" />
+    <Compile Include="Model\PayrollNz\StatutoryDeductionCategory.cs" />
+    <Compile Include="Model\PayrollNz\StatutoryDeductionLine.cs" />
+    <Compile Include="Model\PayrollNz\StatutoryDeductionObject.cs" />
+    <Compile Include="Model\PayrollNz\StatutoryDeductions.cs" />
+    <Compile Include="Model\PayrollNz\SuperannuationLine.cs" />
+    <Compile Include="Model\PayrollNz\SuperannuationObject.cs" />
+    <Compile Include="Model\PayrollNz\Superannuations.cs" />
+    <Compile Include="Model\PayrollNz\TaxCode.cs" />
+    <Compile Include="Model\PayrollNz\TaxLine.cs" />
+    <Compile Include="Model\PayrollNz\TaxSettings.cs" />
+    <Compile Include="Model\PayrollNz\Timesheet.cs" />
+    <Compile Include="Model\PayrollNz\TimesheetEarningsLine.cs" />
+    <Compile Include="Model\PayrollNz\TimesheetLine.cs" />
+    <Compile Include="Model\PayrollNz\TimesheetLineObject.cs" />
+    <Compile Include="Model\PayrollNz\TimesheetObject.cs" />
+    <Compile Include="Model\PayrollNz\Timesheets.cs" />
+    <Compile Include="Model\PayrollNz\TrackingCategories.cs" />
+    <Compile Include="Model\PayrollNz\TrackingCategory.cs" />
+    <Compile Include="Model\PayrollUk\Account.cs" />
+    <Compile Include="Model\PayrollUk\Accounts.cs" />
+    <Compile Include="Model\PayrollUk\Address.cs" />
+    <Compile Include="Model\PayrollUk\BankAccount.cs" />
+    <Compile Include="Model\PayrollUk\Benefit.cs" />
+    <Compile Include="Model\PayrollUk\BenefitLine.cs" />
+    <Compile Include="Model\PayrollUk\BenefitObject.cs" />
+    <Compile Include="Model\PayrollUk\Benefits.cs" />
+    <Compile Include="Model\PayrollUk\CourtOrderLine.cs" />
+    <Compile Include="Model\PayrollUk\Deduction.cs" />
+    <Compile Include="Model\PayrollUk\DeductionLine.cs" />
+    <Compile Include="Model\PayrollUk\DeductionObject.cs" />
+    <Compile Include="Model\PayrollUk\Deductions.cs" />
+    <Compile Include="Model\PayrollUk\EarningsLine.cs" />
+    <Compile Include="Model\PayrollUk\EarningsOrder.cs" />
+    <Compile Include="Model\PayrollUk\EarningsOrderObject.cs" />
+    <Compile Include="Model\PayrollUk\EarningsOrders.cs" />
+    <Compile Include="Model\PayrollUk\EarningsRate.cs" />
+    <Compile Include="Model\PayrollUk\EarningsRateObject.cs" />
+    <Compile Include="Model\PayrollUk\EarningsRates.cs" />
+    <Compile Include="Model\PayrollUk\EarningsTemplate.cs" />
+    <Compile Include="Model\PayrollUk\EarningsTemplateObject.cs" />
+    <Compile Include="Model\PayrollUk\Employee.cs" />
+    <Compile Include="Model\PayrollUk\EmployeeLeave.cs" />
+    <Compile Include="Model\PayrollUk\EmployeeLeaveBalance.cs" />
+    <Compile Include="Model\PayrollUk\EmployeeLeaveBalances.cs" />
+    <Compile Include="Model\PayrollUk\EmployeeLeaveObject.cs" />
+    <Compile Include="Model\PayrollUk\EmployeeLeaves.cs" />
+    <Compile Include="Model\PayrollUk\EmployeeLeaveType.cs" />
+    <Compile Include="Model\PayrollUk\EmployeeLeaveTypeObject.cs" />
+    <Compile Include="Model\PayrollUk\EmployeeLeaveTypes.cs" />
+    <Compile Include="Model\PayrollUk\EmployeeObject.cs" />
+    <Compile Include="Model\PayrollUk\EmployeeOpeningBalances.cs" />
+    <Compile Include="Model\PayrollUk\EmployeeOpeningBalancesObject.cs" />
+    <Compile Include="Model\PayrollUk\EmployeePayTemplate.cs" />
+    <Compile Include="Model\PayrollUk\EmployeePayTemplateObject.cs" />
+    <Compile Include="Model\PayrollUk\EmployeePayTemplates.cs" />
+    <Compile Include="Model\PayrollUk\Employees.cs" />
+    <Compile Include="Model\PayrollUk\EmployeeStatutoryLeaveBalance.cs" />
+    <Compile Include="Model\PayrollUk\EmployeeStatutoryLeaveBalanceObject.cs" />
+    <Compile Include="Model\PayrollUk\EmployeeStatutoryLeavesSummaries.cs" />
+    <Compile Include="Model\PayrollUk\EmployeeStatutoryLeaveSummary.cs" />
+    <Compile Include="Model\PayrollUk\EmployeeStatutorySickLeave.cs" />
+    <Compile Include="Model\PayrollUk\EmployeeStatutorySickLeaveObject.cs" />
+    <Compile Include="Model\PayrollUk\EmployeeStatutorySickLeaves.cs" />
+    <Compile Include="Model\PayrollUk\EmployeeTax.cs" />
+    <Compile Include="Model\PayrollUk\EmployeeTaxObject.cs" />
+    <Compile Include="Model\PayrollUk\Employment.cs" />
+    <Compile Include="Model\PayrollUk\EmploymentObject.cs" />
+    <Compile Include="Model\PayrollUk\InvalidField.cs" />
+    <Compile Include="Model\PayrollUk\LeaveAccrualLine.cs" />
+    <Compile Include="Model\PayrollUk\LeaveEarningsLine.cs" />
+    <Compile Include="Model\PayrollUk\LeavePeriod.cs" />
+    <Compile Include="Model\PayrollUk\LeavePeriods.cs" />
+    <Compile Include="Model\PayrollUk\LeaveType.cs" />
+    <Compile Include="Model\PayrollUk\LeaveTypeObject.cs" />
+    <Compile Include="Model\PayrollUk\LeaveTypes.cs" />
+    <Compile Include="Model\PayrollUk\Pagination.cs" />
+    <Compile Include="Model\PayrollUk\PaymentLine.cs" />
+    <Compile Include="Model\PayrollUk\PaymentMethod.cs" />
+    <Compile Include="Model\PayrollUk\PaymentMethodObject.cs" />
+    <Compile Include="Model\PayrollUk\PayRun.cs" />
+    <Compile Include="Model\PayrollUk\PayRunCalendar.cs" />
+    <Compile Include="Model\PayrollUk\PayRunCalendarObject.cs" />
+    <Compile Include="Model\PayrollUk\PayRunCalendars.cs" />
+    <Compile Include="Model\PayrollUk\PayRunObject.cs" />
+    <Compile Include="Model\PayrollUk\PayRuns.cs" />
+    <Compile Include="Model\PayrollUk\Payslip.cs" />
+    <Compile Include="Model\PayrollUk\PayslipObject.cs" />
+    <Compile Include="Model\PayrollUk\Payslips.cs" />
+    <Compile Include="Model\PayrollUk\Problem.cs" />
+    <Compile Include="Model\PayrollUk\Reimbursement.cs" />
+    <Compile Include="Model\PayrollUk\ReimbursementLine.cs" />
+    <Compile Include="Model\PayrollUk\ReimbursementObject.cs" />
+    <Compile Include="Model\PayrollUk\Reimbursements.cs" />
+    <Compile Include="Model\PayrollUk\SalaryAndWage.cs" />
+    <Compile Include="Model\PayrollUk\SalaryAndWageObject.cs" />
+    <Compile Include="Model\PayrollUk\SalaryAndWages.cs" />
+    <Compile Include="Model\PayrollUk\Settings.cs" />
+    <Compile Include="Model\PayrollUk\StatutoryDeduction.cs" />
+    <Compile Include="Model\PayrollUk\StatutoryDeductionCategory.cs" />
+    <Compile Include="Model\PayrollUk\TaxLine.cs" />
+    <Compile Include="Model\PayrollUk\Timesheet.cs" />
+    <Compile Include="Model\PayrollUk\TimesheetEarningsLine.cs" />
+    <Compile Include="Model\PayrollUk\TimesheetLine.cs" />
+    <Compile Include="Model\PayrollUk\TimesheetLineObject.cs" />
+    <Compile Include="Model\PayrollUk\TimesheetObject.cs" />
+    <Compile Include="Model\PayrollUk\Timesheets.cs" />
+    <Compile Include="Model\PayrollUk\TrackingCategories.cs" />
+    <Compile Include="Model\PayrollUk\TrackingCategory.cs" />
+    <Compile Include="Model\Project\Amount.cs" />
+    <Compile Include="Model\Project\ChargeType.cs" />
+    <Compile Include="Model\Project\CurrencyCode.cs" />
+    <Compile Include="Model\Project\Error.cs" />
+    <Compile Include="Model\Project\Pagination.cs" />
+    <Compile Include="Model\Project\Project.cs" />
+    <Compile Include="Model\Project\ProjectCreateOrUpdate.cs" />
+    <Compile Include="Model\Project\ProjectPatch.cs" />
+    <Compile Include="Model\Project\Projects.cs" />
+    <Compile Include="Model\Project\ProjectStatus.cs" />
+    <Compile Include="Model\Project\ProjectUser.cs" />
+    <Compile Include="Model\Project\ProjectUsers.cs" />
+    <Compile Include="Model\Project\Task.cs" />
+    <Compile Include="Model\Project\TaskCreateOrUpdate.cs" />
+    <Compile Include="Model\Project\Tasks.cs" />
+    <Compile Include="Model\Project\TimeEntries.cs" />
+    <Compile Include="Model\Project\TimeEntry.cs" />
+    <Compile Include="Model\Project\TimeEntryCreateOrUpdate.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="app.config" />
+    <None Include="packages.config" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+</Project>
