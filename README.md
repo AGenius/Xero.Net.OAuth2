@@ -24,11 +24,11 @@ Just provide the required Xero Client ID, Callback URL, scope and original saved
 
 It uses a wrapper around the System.Net.HttListener class that waits for the call back response once the user has authenticated and will then exchange the provided authentication code for the access tokens.
 
-The oAuth2 wrapper will also handle the refresh of the access tokens if required.
+This wrapper will also handle the refresh of the access tokens if required.
 
-The oAuth2 process is wrapped inside a API Wrapper designed to simplify the API calls to Xero and convert all the Async calls to sync calls. there are also events to provide feedback to the calling application
+This API Wrapper was designed to simplify the API calls to Xero and convert all the Async calls to sync calls. there are also events to provide feedback to the calling application
 
-You will need the XeroAPI/Net-Standard Nuget package installed so you can use the models as I have not replicated these models in this wrapper
+My codebase is contained in "Core".
 
 [![NuGet.org](https://img.shields.io/badge/NuGet.org-Xero.NetStandard.OAuth2-brightgreen?style=plastic&logo=appveyor)](https://www.nuget.org/packages/Xero.NetStandard.OAuth2/)
 
