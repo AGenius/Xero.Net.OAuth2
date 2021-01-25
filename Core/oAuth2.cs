@@ -6,11 +6,11 @@ using System.IO;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Threading.Tasks;
-using Xero.Net.OAuth2.Model;
+using Xero.Net.Core.OAuth2.Model;
 
 namespace Xero.Net.Core
 {
-    public class oAuth2
+    internal class oAuth2
     {
         public XeroConfiguration XeroConfig { get; set; }
         public XeroAccessToken XeroAPIToken { get; set; } // Hold the active Access and Refresh tokens

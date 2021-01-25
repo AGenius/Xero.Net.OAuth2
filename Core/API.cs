@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Security.Cryptography;
 using System.Threading.Tasks;
-using Xero.Net.OAuth2.Model;
+using Xero.Net.Core.OAuth2.Model;
 
 namespace Xero.Net.Core
 {
@@ -15,7 +15,7 @@ namespace Xero.Net.Core
         {
             get
             {
-                return "This API Version : 1.2021.0120 - Compatible with Xero-Standard API : 3.12.1";
+                return "This API Version : 1.2021.0125 - Compatible with Xero-Standard API : 3.12.1";
             }
         }
         oAuth2 _authClient = null;

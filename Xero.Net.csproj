@@ -565,10 +565,10 @@
     <Compile Include="Model\Project\TimeEntries.cs" />
     <Compile Include="Model\Project\TimeEntry.cs" />
     <Compile Include="Model\Project\TimeEntryCreateOrUpdate.cs" />
-    <Compile Include="OAuth2\Model\Tenant.cs" />
-    <Compile Include="OAuth2\Model\XeroConfiguration.cs" />
-    <Compile Include="OAuth2\Model\XeroOAuthToken.cs" />
-    <Compile Include="OAuth2\Model\XeroScope.cs" />
+    <Compile Include="Core\OAuth2\Model\Tenant.cs" />
+    <Compile Include="Core\OAuth2\Model\XeroConfiguration.cs" />
+    <Compile Include="Core\OAuth2\Model\XeroOAuthToken.cs" />
+    <Compile Include="Core\OAuth2\Model\XeroScope.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

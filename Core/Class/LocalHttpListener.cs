@@ -2,9 +2,8 @@
 using System.Net;
 using System.Text;
 using System.Text.RegularExpressions;
-using System.Threading.Tasks;
 using Newtonsoft.Json;
-using Xero.Net.OAuth2.Model;
+using Xero.Net.Core.OAuth2.Model;
 
 /// <summary>
 /// thanks for code found at http://www.gabescode.com/dotnet/2018/11/01/basic-HttpListener-web-service.html 

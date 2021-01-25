@@ -1,8 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
 
-namespace Xero.Net.OAuth2.Model
+namespace Xero.Net.Core.OAuth2.Model
 {
     public class Tenant
     {

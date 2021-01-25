@@ -1,10 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Xero.Net.OAuth2.Model
+﻿
+namespace Xero.Net.Core.OAuth2.Model
 {
     public enum XeroScope
     {
