@@ -34,7 +34,7 @@ You will need the XeroAPI/Net-Standard Nuget package installed so you can use th
 
 Visit https://github.com/XeroAPI/Xero-NetStandard
 
-#! You do not need to install the Nuget package for this Wrapper to work as its a clone of 3.12.1
+#### You do not need to install the Nuget package for this Wrapper to work as its a clone of 3.12.1
 
 ### Limitations
 Presently the project is being worked on so dont expect it to work perfectly.
