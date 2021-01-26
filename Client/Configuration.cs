@@ -43,7 +43,7 @@ namespace Xero.Net.Api.Client
         #endregion Constants
 
         #region Static Members
-        
+
         /// <summary>
         /// Default creation of exceptions for a given method name and response object
         /// </summary>
@@ -73,7 +73,7 @@ namespace Xero.Net.Api.Client
         /// Example: http://localhost:3000/v1/
         /// </summary>
         private String _basePath;
-        
+
         /// <summary>
         /// Gets or sets the API key based on the authentication name.
         /// This is the key and value comprising the "secret" for acessing an API.
@@ -154,9 +154,11 @@ namespace Xero.Net.Api.Client
         /// <summary>
         /// Gets or sets the base path for API access.
         /// </summary>
-        public virtual string BasePath {
+        public virtual string BasePath
+        {
             get { return _basePath; }
-            set {
+            set
+            {
                 _basePath = value;
             }
         }
@@ -197,13 +199,13 @@ namespace Xero.Net.Api.Client
         public string GetApiKeyWithPrefix(string apiKeyIdentifier)
         {
             string apiKeyValue;
-            ApiKey.TryGetValue (apiKeyIdentifier, out apiKeyValue);
+            ApiKey.TryGetValue(apiKeyIdentifier, out apiKeyValue);
             string apiKeyPrefix;
             if (ApiKeyPrefix.TryGetValue(apiKeyIdentifier, out apiKeyPrefix))
             {
                 return apiKeyPrefix + " " + apiKeyValue;
             }
-            
+
             return apiKeyValue;
         }
 
@@ -330,14 +332,36 @@ namespace Xero.Net.Api.Client
         /// </summary>
         public static String ToDebugReport()
         {
+            var os_info = System.Environment.OSVersion;
             String report = "C# SDK (Xero.Net.Api) Debug Report:\n";
-            report += "    OS: " + System.Runtime.InteropServices.RuntimeInformation.OSDescription + "\n";
+            report += "     OS : " + os_info.VersionString + "\n";
+            report += "Platform :" + GetOsName(os_info) + "\n";
+            report += "Service :" + os_info.ServicePack + "\n";
+            report += "Version :" + os_info.Version + "\n";
             report += "    Version of the API: 2.8.0\n";
             report += "    SDK Package Version: 3.12.1\n";
 
             return report;
         }
-
+        // Return the OS name.
+        private static string GetOsName(OperatingSystem os_info)
+        {
+            string version =
+                os_info.Version.Major.ToString() + "." +
+                os_info.Version.Minor.ToString();
+            switch (version)
+            {
+                case "10.0": return "Windows 10/Server 2016";
+                case "6.3": return "Windows 8.1/Server 2012 R2";
+                case "6.2": return "Windows 8/Server 2012";
+                case "6.1": return "Windows 7/Server 2008 R2";
+                case "6.0": return "Windows Server 2008/Vista";
+                case "5.2": return "Windows Server 2003 R2/Server 2003/XP 64-Bit Edition";
+                case "5.1": return "Windows XP";
+                case "5.0": return "Windows 2000";
+            }
+            return "Unknown";
+        }
         /// <summary>
         /// Add Api Key Header.
         /// </summary>
@@ -371,11 +395,11 @@ namespace Xero.Net.Api.Client
         public static IReadableConfiguration MergeConfigurations(IReadableConfiguration first, IReadableConfiguration second)
         {
             if (second == null) return first ?? GlobalConfiguration.Instance;
-            
+
             Dictionary<string, string> apiKey = first.ApiKey.ToDictionary(kvp => kvp.Key, kvp => kvp.Value);
             Dictionary<string, string> apiKeyPrefix = first.ApiKeyPrefix.ToDictionary(kvp => kvp.Key, kvp => kvp.Value);
             Dictionary<string, string> defaultHeader = first.DefaultHeader.ToDictionary(kvp => kvp.Key, kvp => kvp.Value);
-            
+
             foreach (var kvp in second.ApiKey) apiKey[kvp.Key] = kvp.Value;
             foreach (var kvp in second.ApiKeyPrefix) apiKeyPrefix[kvp.Key] = kvp.Value;
             foreach (var kvp in second.DefaultHeader) defaultHeader[kvp.Key] = kvp.Value;
