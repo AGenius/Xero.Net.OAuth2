@@ -691,6 +691,16 @@ namespace Xero.Net.Core.Api
 
             return Contacts(where, order);
         }
+
+        /// <summary>
+        /// Provide a way to fetch Contacts using a list if IDs
+        /// </summary>
+        /// <param name="iDs">List of Guid's</param>
+        /// <returns>List of Matching Records</returns>
+        public List<Contact> Contacts(List<Guid> iDs)
+        {            
+            return Contacts(null, null, null, null, iDs);
+        }
         /// <summary>
         /// Return a single contact
         /// </summary>
