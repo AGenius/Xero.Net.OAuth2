@@ -78,13 +78,13 @@ XeroConfiguration XeroConfig = new XeroConfiguration
     ClientID = XeroClientID,
     CallbackUri = XeroCallbackUri,
     // Add Scopes this way or see below
-    ////Scopes = new List<XeroAuth2API.XeroScope> { XeroAuth2API.XeroScope.accounting_contacts, XeroAuth2API.XeroScope.accounting_transactions },
+    ////Scopes = new List<Xero.Net.Core.OAuth2.Model.XeroScope> { Xero.Net.Core.OAuth2.Model.XeroScope.accounting_contacts, Xero.Net.Core.OAuth2.Model.XeroScope.accounting_transactions },
     //State = XeroState, // Optional - Not needed for a desktop app
     codeVerifier = null // Code verifier will be generated if empty
 };
 
-XeroConfig.AddScope(XeroAuth2API.XeroScope.all);
-XeroAuth2API.API  xeroAPI = new XeroAuth2API.API(XeroConfig);
+XeroConfig.AddScope(Xero.Net.Core.OAuth2.Model.XeroScope.all);
+Xero.Net.Core.API  xeroAPI = new Xero.Net.Core.API(XeroConfig);
 ```
 2 Load the Config from storage and pass to the API
 ```c#
@@ -92,7 +92,7 @@ string tokendata = ReadTextFile("tokendata.txt");
 if (!string.IsNullOrEmpty(tokendata))
 {
     XeroConfiguration XeroConfig = DeSerializeObject<XeroConfiguration>(tokendata);
-    XeroAuth2API.API  xeroAPI = new XeroAuth2API.API(XeroConfig);
+    Xero.Net.Core.API  xeroAPI = new Xero.Net.Core.API(XeroConfig);
 }
 ```
 3 Create a new Config and restore just the Access Token portion
@@ -102,7 +102,7 @@ XeroConfiguration XeroConfig = new XeroConfiguration
     ClientID = XeroClientID,
     CallbackUri = XeroCallbackUri,
     // Add Scopes this way or see below
-    ////Scopes = new List<XeroAuth2API.XeroScope> { XeroAuth2API.XeroScope.accounting_contacts, XeroAuth2API.XeroScope.accounting_transactions },
+    ////Scopes = new List<Xero.Net.Core.OAuth2.Model.XeroScope> { Xero.Net.Core.OAuth2.Model.XeroScope.accounting_contacts, Xero.Net.Core.OAuth2.Model.XeroScope.accounting_transactions },
     //State = XeroState, // Optional - Not needed for a desktop app
     codeVerifier = null // Code verifier will be generated if empty
 };
@@ -112,7 +112,7 @@ if (!string.IsNullOrEmpty(tokendata))
 {
     XeroAccessToken token = DeSerializeObject<XeroAccessToken>(tokendata);
     XeroConfig.XeroAPIToken = token;
-    XeroAuth2API.API xeroAPI = new XeroAuth2API.API(XeroConfig);
+    Xero.Net.Core.API xeroAPI = new Xero.Net.Core.API(XeroConfig);
 }
 ```
 
