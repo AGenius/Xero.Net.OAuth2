@@ -248,23 +248,17 @@ namespace Xero.Net.Core
                 foreach (var scopeItem in scopes)
                 {
                     string scopename = scopeItem;
-                    if (scopename == "offline_access")
+                    scopename = scopeItem.Replace(".", "_"); // Replace . with _ to match the scopes
+                    // Find the Scope Enum that matches the scopename string
+                    foreach (XeroScope item in (XeroScope[])Enum.GetValues(typeof(XeroScope)))
                     {
-                        XeroConfig.AddScope(XeroScope.offline_access);
-                    }
-                    else
-                    {
-                        scopename = scopeItem.Replace(".", "_"); // Replace . with _ to match the scopes
-                        // Find the Scope Enum that matches the scopename string
-                        foreach (XeroScope item in (XeroScope[])Enum.GetValues(typeof(XeroScope)))
+                        string name = Enum.GetName(typeof(XeroScope), item);
+                        if (scopename == name)
                         {
-                            string name = Enum.GetName(typeof(XeroScope), item);
-                            if (scopename == name)
-                            {
-                                XeroConfig.AddScope(item);
-                            }
+                            XeroConfig.AddScope(item);
                         }
                     }
+
                 }
             }
         }
