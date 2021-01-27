@@ -1,4 +1,5 @@
-﻿using Newtonsoft.Json;
+﻿using IdentityModel.Client;
+using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
@@ -99,6 +100,11 @@ namespace Xero.Net.Core
             }
             if (doAuth)
             {
+                // First Revoke if token is present 
+                if (!string.IsNullOrEmpty(XeroConfig.XeroAPIToken.RefreshToken))
+                {
+                    RevokeToken();
+                }
                 var task = Task.Run(() => BeginoAuth2Authentication());
                 task.Wait();
             }
@@ -123,7 +129,7 @@ namespace Xero.Net.Core
             responseListener.Message += MessageResponse;
             responseListener.callBackUri = XeroConfig.CallbackUri;
             responseListener.config = XeroConfig;
-            responseListener.StartWebServer();            
+            responseListener.StartWebServer();
 
             //open web browser with the link generated
             System.Diagnostics.Process.Start(XeroConfig.AuthURL);
@@ -144,7 +150,7 @@ namespace Xero.Net.Core
             {
                 // Raise event to the parent caller (your app)
                 onStatusUpdates("Timed Out Waiting for Authentication", XeroEventStatus.Timeout);
-                HasTimedout = true;                
+                HasTimedout = true;
             }
             else
             {
@@ -155,7 +161,7 @@ namespace Xero.Net.Core
                     // Raise event to the parent caller (your app)
                     onStatusUpdates("Success", XeroEventStatus.Success);
 
-             //       XeroConfig = responseListener.config;// update the config with the retrieved access code data
+                    //       XeroConfig = responseListener.config;// update the config with the retrieved access code data
                     ExchangeCodeForToken();
                     // Raise event to the parent caller (your app)
                     onStatusUpdates("Authentication Completed", XeroEventStatus.Success);
@@ -200,7 +206,7 @@ namespace Xero.Net.Core
                     var content = contenttask.Result;// await response.Content.ReadAsStringAsync();
 
                     // Record the token data
-                    XeroConfig.XeroAPIToken = UnpackToken(content);
+                    XeroConfig.XeroAPIToken = UnpackToken(content, false);
                     XeroConfig.XeroAPIToken.Tenants = null;
 
                     client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", XeroConfig.XeroAPIToken.AccessToken);
@@ -229,32 +235,27 @@ namespace Xero.Net.Core
         }
 
         /// <summary>
-        /// REvoke the Access Token and disconnect the tenants from the user
-        /// </summary>
-        /// <param name="xeroToken"></param>
-        public void RevokeToken(XeroAccessToken XeroToken)
+        /// Revoke the Access Token and disconnect the tenants from the user
+        /// </summary>        
+        public void RevokeToken()
         {
-            if (XeroToken == null)
+            //TODO Implement Revoke (when found out how!)
+            var client = new HttpClient();
+
+            var response = Task.Run(() => client.RevokeTokenAsync(new TokenRevocationRequest
             {
-                throw new ArgumentNullException("XeroToken");
+                Address = "https://identity.xero.com/connect/revocation",
+                ClientId = XeroConfig.ClientID,
+                //ClientSecret = XeroConfig.ClientSecret,
+                Token = XeroConfig.XeroAPIToken.RefreshToken
+            }));
+            response.Wait();
+
+            if (response.Result.HttpStatusCode != System.Net.HttpStatusCode.OK)
+            {
+                throw new Exception(response.Result.Exception.Message);
             }
-
-            //TODO Implement Revoke (when found out how!
-            //var client = new HttpClient();
-
-            //var response = client.RevokeTokenAsync(new TokenRevocationRequest
-            //{
-            //    Address = "~https~://identity.xero.com/connect/revocation",
-            //    ClientId = xeroConfiguration.ClientId,
-            //    ClientSecret = xeroConfiguration.ClientSecret,
-            //    Token = xeroToken.RefreshToken
-            //});
-
-            //if (response.IsError)
-            //{
-            //    throw new Exception(response.Error);
-            //}
-
+            XeroConfig.XeroAPIToken = new XeroAccessToken(); // Remove it as its no longer valid
 
         }
         public void RefreshToken()
@@ -288,7 +289,7 @@ namespace Xero.Net.Core
                 {
                     throw new Exception(content);
                 }
-                XeroConfig.XeroAPIToken = UnpackToken(content);
+                XeroConfig.XeroAPIToken = UnpackToken(content, true);
 
                 client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", XeroConfig.XeroAPIToken.AccessToken);
 
@@ -318,7 +319,7 @@ namespace Xero.Net.Core
         /// </summary>
         /// <param name="content">reponse string containing the data </param>
         /// <returns></returns>
-        private XeroAccessToken UnpackToken(string content)
+        private XeroAccessToken UnpackToken(string content, bool isRefresh)
         {
             // Record the token data
             var tokens = JObject.Parse(content);
@@ -329,13 +330,21 @@ namespace Xero.Net.Core
             newToken.AccessToken = tokens["access_token"]?.ToString();
             newToken.ExpiresAtUtc = DateTime.Now.AddSeconds(int.Parse(tokens["expires_in"]?.ToString()));
             newToken.RefreshToken = tokens["refresh_token"]?.ToString();
-            if (XeroConfig.StoreReceivedScope)
+            if (!isRefresh)
             {
-                newToken.RequestedScopes = tokens["scope"]?.ToString(); // Ensure we record the scope used
-            }
-            else
+                // Only bother with this if its not a refresh
+                if (XeroConfig.StoreReceivedScope)
+                {
+                    newToken.RequestedScopes = tokens["scope"]?.ToString(); // Ensure we record the scope used
+                }
+                else
+                {
+                    newToken.RequestedScopes = XeroConfig.Scope;
+                }
+            } else
             {
-                newToken.RequestedScopes = XeroConfig.Scope;
+                // Ensure the scopes list is left intact!
+                newToken.RequestedScopes = XeroConfig.XeroAPIToken.RequestedScopes;
             }
 
             return newToken;

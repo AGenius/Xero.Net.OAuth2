@@ -190,6 +190,10 @@ namespace Xero.Net.Core
                 throw;
             }
         }
+        public void RevokeAuth()
+        {
+            _authClient.RevokeToken();
+        }
         private string GenerateCodeVerifier()
         {
             //Generate a random string for our code verifier

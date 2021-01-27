@@ -43,7 +43,7 @@ namespace Xero.Net.Core.OAuth2.Model
             {
                 if (_scopes == null)
                 {
-                    _scopes = new List<XeroScope>();
+                    Scopes = new List<XeroScope>();
                 }
 
                 return _scopes;
@@ -70,8 +70,12 @@ namespace Xero.Net.Core.OAuth2.Model
         /// Add a scope to the required scopes when authenticating
         /// </summary>
         /// <param name="scope"></param>
-        public void AddScope(XeroScope scope)
+        public void AddScope(XeroScope scope, bool reset = false)
         {
+            if (reset)
+            {
+                Scopes = new List<XeroScope>(); // Reset the list as requested
+            }
             switch (scope)
             {
                 case XeroScope.all:
@@ -153,7 +157,7 @@ namespace Xero.Net.Core.OAuth2.Model
                 string scopelist = string.Empty;
                 foreach (var item in Scopes)
                 {
-                    if (!string.IsNullOrEmpty(scopelist))
+                    if (!string.IsNullOrEmpty(scopelist) && item != XeroScope.offline_access)
                     {
                         scopelist += " ";
                     }
