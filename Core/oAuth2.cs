@@ -209,6 +209,8 @@ namespace Xero.Net.Core
                     XeroConfig.XeroAPIToken = UnpackToken(content, false);
                     XeroConfig.XeroAPIToken.Tenants = null;
 
+                    ScopesFromScopeString(); // Fix the internal Scope collection
+
                     client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", XeroConfig.XeroAPIToken.AccessToken);
 
                     responsetask = Task.Run(() => client.GetAsync(XeroConstants.XERO_TENANTS_URL));
@@ -233,7 +235,39 @@ namespace Xero.Net.Core
                 throw new InvalidDataException("Code Exchange Failed");
             }
         }
+        /// <summary>
+        /// Force the Config Scope list to match the returned scopes list if the <see cref="XeroConfig.StoreReceivedScope"/> is true
+        /// </summary>
+        public void ScopesFromScopeString()
+        {
+            if (XeroConfig.StoreReceivedScope && !string.IsNullOrEmpty(XeroConfig.XeroAPIToken.RequestedScopes))
+            {
+                string[] scopes = XeroConfig.XeroAPIToken.RequestedScopes.Split(' ');
+                XeroConfig.Scopes = new List<XeroScope>();
 
+                foreach (var scopeItem in scopes)
+                {
+                    string scopename = scopeItem;
+                    if (scopename == "offline_access")
+                    {
+                        XeroConfig.AddScope(XeroScope.offline_access);
+                    }
+                    else
+                    {
+                        scopename = scopeItem.Replace(".", "_"); // Replace . with _ to match the scopes
+                        // Find the Scope Enum that matches the scopename string
+                        foreach (XeroScope item in (XeroScope[])Enum.GetValues(typeof(XeroScope)))
+                        {
+                            string name = Enum.GetName(typeof(XeroScope), item);
+                            if (scopename == name)
+                            {
+                                XeroConfig.AddScope(item);
+                            }
+                        }
+                    }
+                }
+            }
+        }
         /// <summary>
         /// Revoke the Access Token and disconnect the tenants from the user
         /// </summary>        
@@ -341,7 +375,8 @@ namespace Xero.Net.Core
                 {
                     newToken.RequestedScopes = XeroConfig.Scope;
                 }
-            } else
+            }
+            else
             {
                 // Ensure the scopes list is left intact!
                 newToken.RequestedScopes = XeroConfig.XeroAPIToken.RequestedScopes;

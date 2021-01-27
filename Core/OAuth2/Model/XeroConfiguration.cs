@@ -43,7 +43,7 @@ namespace Xero.Net.Core.OAuth2.Model
             {
                 if (_scopes == null)
                 {
-                    Scopes = new List<XeroScope>();
+                    _scopes = new List<XeroScope>();
                 }
 
                 return _scopes;
@@ -51,18 +51,20 @@ namespace Xero.Net.Core.OAuth2.Model
             set
             {
                 _scopes = value;
-
-                if (!_scopes.Contains(XeroScope.openid))
+                if (_scopes != null && _scopes.Count == 0)
                 {
-                    AddScope(XeroScope.openid); // Ensure its in there
-                }
-                if (!_scopes.Contains(XeroScope.profile))
-                {
-                    AddScope(XeroScope.profile); // Ensure its in there
-                }
-                if (!_scopes.Contains(XeroScope.offline_access))
-                {
-                    AddScope(XeroScope.offline_access); // Ensure its in there                   
+                    if (!_scopes.Contains(XeroScope.openid))
+                    {
+                        AddScope(XeroScope.openid); // Ensure its in there
+                    }
+                    if (!_scopes.Contains(XeroScope.profile))
+                    {
+                        AddScope(XeroScope.profile); // Ensure its in there
+                    }
+                    if (!_scopes.Contains(XeroScope.offline_access))
+                    {
+                        AddScope(XeroScope.offline_access); // Ensure its in there                   
+                    }
                 }
             }
         }
@@ -127,7 +129,7 @@ namespace Xero.Net.Core.OAuth2.Model
                     // Add any not already in list
                     if (!Scopes.Contains(scope))
                     {
-                        Scopes.Add(scope);
+                        _scopes.Add(scope);
                     }
                     break;
             }
@@ -175,7 +177,9 @@ namespace Xero.Net.Core.OAuth2.Model
                 scopelist += " offline_access";
                 return scopelist;
             }
+           
         }
+
         /// <summary>
         /// a unique string to be passed back on completion (optional) 
         /// The state parameter should be used to avoid forgery attacks. Pass in a value that's unique to the user you're sending through authorisation. It will be passed back after the user completes authorisation.
