@@ -21,7 +21,7 @@ namespace Xero.Net.Core.OAuth2.Model
         accounting_transactions, // View and manage business transactions
         accounting_transactions_read, // View business transactions
         accounting_reports_read, // View reports
-        accounting_reports_tenninetynine_read, //View your 1099 reports
+       // accounting_reports_tenninetynine_read, //View your 1099 reports
         accounting_journals_read, // View the general ledger
         accounting_settings, // View and manage organisation settings
         accounting_settings_read, // View organisation settings
