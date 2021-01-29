@@ -162,7 +162,7 @@ namespace Xero.Net.Core
             AccountingApi.APICore = this;
             AssetApi.APICore = this;
             ProjectApi.APICore = this;
-            isConnected = false;
+            isConnected = false;           
 
         }
         /// <summary>
@@ -225,7 +225,7 @@ namespace Xero.Net.Core
         public void RevokeAuth()
         {
             _authClient.RevokeToken();
-        }
+        }            
         private string GenerateCodeVerifier()
         {
             //Generate a random string for our code verifier

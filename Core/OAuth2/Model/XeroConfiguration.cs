@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Security.Cryptography;
 using System.Text;
+using System.Linq;
 
 namespace Xero.Net.Core.OAuth2.Model
 {
@@ -163,7 +164,8 @@ namespace Xero.Net.Core.OAuth2.Model
                 }
 
                 string scopelist = string.Empty;
-                foreach (var item in Scopes)
+                // Always sort the list of scopes in Alphabetical order to ensure match when testing for changes
+                foreach (var item in Scopes.OrderBy(x => x.ToString()))
                 {
                     if (!string.IsNullOrEmpty(scopelist) && item != XeroScope.offline_access)
                     {
