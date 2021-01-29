@@ -81,9 +81,10 @@ namespace Xero.Net.Core
                     try
                     {
                         RefreshToken();
+
                         doAuth = false;
                     }
-                    catch (Exception ex)
+                    catch (Exception)
                     {
                         // If an error happens there was a problem with the token data
                         // Possibly app was disconnected or revoked
@@ -198,42 +199,41 @@ namespace Xero.Net.Core
                         new KeyValuePair<string, string>("code_verifier", XeroConfig.codeVerifier),
                       });
 
-                    var responsetask = Task.Run(() => client.PostAsync(XeroConstants.XERO_TOKEN_URL, formContent));
-                    responsetask.Wait();
-                    var response = responsetask.Result;// await client.PostAsync(url, formContent);
+                    var response = Task.Run(() => client.PostAsync(XeroConstants.XERO_TOKEN_URL, formContent)).ConfigureAwait(false).GetAwaiter().GetResult();
+                    if (response.StatusCode == System.Net.HttpStatusCode.OK)
+                    {
+                        var content = Task.Run(() => response.Content.ReadAsStringAsync()).ConfigureAwait(false).GetAwaiter().GetResult();
 
-                    var contenttask = Task.Run(() => response.Content.ReadAsStringAsync());
-                    contenttask.Wait();
-                    var content = contenttask.Result;// await response.Content.ReadAsStringAsync();
+                        // Record the token data
+                        XeroConfig.XeroAPIToken = UnpackToken(content, false);
+                        XeroConfig.XeroAPIToken.Tenants = null;
 
-                    // Record the token data
-                    XeroConfig.XeroAPIToken = UnpackToken(content, false);
-                    XeroConfig.XeroAPIToken.Tenants = null;
+                        ScopesFromScopeString(); // Fix the internal Scope collection
 
-                    ScopesFromScopeString(); // Fix the internal Scope collection
+                        client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", XeroConfig.XeroAPIToken.AccessToken);
 
-                    client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", XeroConfig.XeroAPIToken.AccessToken);
+                        // Refresh the Authorised Tenants collection
+                        var tenantsresponse = Task.Run(() => client.GetAsync(XeroConstants.XERO_TENANTS_URL)).ConfigureAwait(false).GetAwaiter().GetResult();
+                        var tenantscontent = Task.Run(() => tenantsresponse.Content.ReadAsStringAsync()).ConfigureAwait(false).GetAwaiter().GetResult();
 
-                    responsetask = Task.Run(() => client.GetAsync(XeroConstants.XERO_TENANTS_URL));
-                    responsetask.Wait();
-                    response = responsetask.Result;
+                        // Record the Available Tenants
+                        XeroConfig.XeroAPIToken.Tenants = JsonConvert.DeserializeObject<List<Tenant>>(content);
 
-                    contenttask = Task.Run(() => response.Content.ReadAsStringAsync());
-                    contenttask.Wait();
-                    content = contenttask.Result;
-
-                    // Record the Available Tenants
-                    XeroConfig.XeroAPIToken.Tenants = JsonConvert.DeserializeObject<List<Tenant>>(content);
-
-                    // Raise event to the parent caller (your app) 
-                    onStatusUpdates("Code Exchange Completed", XeroEventStatus.Success);
+                        // Raise event to the parent caller (your app) 
+                        onStatusUpdates("Code Exchange Completed", XeroEventStatus.Success);
+                    }
+                    else
+                    {
+                        onStatusUpdates($"Begin Code Failed - {response.StatusCode}-{response.ReasonPhrase}", XeroEventStatus.Failed);
+                        throw new InvalidDataException($"Code Exchange Failed - {response.StatusCode}-{response.ReasonPhrase}");
+                    }
                 }
             }
             catch (Exception ex)
             {
                 // Raise event to the parent caller (your app)
-                onStatusUpdates("Begin Code Failed", XeroEventStatus.Failed);
-                throw new InvalidDataException("Code Exchange Failed");
+                onStatusUpdates($"Begin Code Failed - {ex.Message}", XeroEventStatus.Failed);
+                throw new InvalidDataException($"Code Exchange Failed - {ex.Message}");
             }
         }
         /// <summary>
@@ -267,7 +267,7 @@ namespace Xero.Net.Core
         /// Revoke the Access Token and disconnect the tenants from the user
         /// </summary>        
         public void RevokeToken()
-        {            
+        {
             var client = new HttpClient();
 
             var response = Task.Run(() => client.RevokeTokenAsync(new TokenRevocationRequest
@@ -299,48 +299,35 @@ namespace Xero.Net.Core
                 new KeyValuePair<string, string>("refresh_token", XeroConfig.XeroAPIToken.RefreshToken),
             });
 
-                var responsetask = Task.Run(() => client.PostAsync(XeroConstants.XERO_TOKEN_URL, formContent));
-                responsetask.Wait();
-                var response = responsetask.Result;
+                var response = Task.Run(() => client.PostAsync(XeroConstants.XERO_TOKEN_URL, formContent)).ConfigureAwait(false).GetAwaiter().GetResult();
 
-                if (response.StatusCode != System.Net.HttpStatusCode.OK)
+                if (response.StatusCode == System.Net.HttpStatusCode.OK)
+                {
+                    var content = Task.Run(() => response.Content.ReadAsStringAsync()).ConfigureAwait(false).GetAwaiter().GetResult();
+
+                    // Unpack the response tokens
+                    if (content.Contains("error"))
+                    {
+                        throw new Exception(content);
+                    }
+                    XeroConfig.XeroAPIToken = UnpackToken(content, true);
+
+                    client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", XeroConfig.XeroAPIToken.AccessToken);
+
+                    onStatusUpdates("Token Refresh Success", XeroEventStatus.Refreshed);
+                }
+                else
                 {
                     // Something didnt work - disconnected/revoked?
                     throw new Exception(response.ReasonPhrase);
                 }
-                var contenttask = Task.Run(() => response.Content.ReadAsStringAsync());
-                contenttask.Wait();
-                var content = contenttask.Result;
-
-                // Unpack the response tokens
-                if (content.Contains("error"))
-                {
-                    throw new Exception(content);
-                }
-                XeroConfig.XeroAPIToken = UnpackToken(content, true);
-
-                client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", XeroConfig.XeroAPIToken.AccessToken);
-
-                responsetask = Task.Run(() => client.GetAsync(XeroConstants.XERO_TENANTS_URL));
-                responsetask.Wait();
-                response = responsetask.Result;// await client.PostAsync(url, formContent);
-
-                contenttask = Task.Run(() => response.Content.ReadAsStringAsync());
-                contenttask.Wait();
-                content = contenttask.Result;// await response.Content.ReadAsStringAsync();
-
-                XeroConfig.XeroAPIToken.Tenants = JsonConvert.DeserializeObject<List<Tenant>>(content);
-
-                onStatusUpdates("Token Refresh Success", XeroEventStatus.Refreshed);
-
-                return;
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-
-                throw;
+                // Raise event to the parent caller (your app)
+                onStatusUpdates($"Refresh Code Failed - {ex.Message}", XeroEventStatus.Failed);
+                throw new InvalidDataException($"Refresh Exchange Failed - {ex.Message}");
             }
-
         }
         /// <summary>
         /// Unpack the token data from the API Authentication or Refresh calls

@@ -50,10 +50,16 @@ namespace Xero.Net.Core.Api
                 while (count == pageSize)
                 {
                     if (page == -1) page = null; // This allows a quick first page of records
-                    var task = Task.Run(() => APIClient.GetProjectsAsync(APICore.XeroConfig.XeroAPIToken.AccessToken, APICore.XeroConfig.SelectedTenantID, projectIds, contactID, states, page, pageSize));
-                    task.Wait();
-                    records.AddRange(task.Result.Items); // Add the next page records returned
-                    count = task.Result.Items.Count; // Record the number of records returned in this page. if less than 100 then the loop will exit otherwise get the next page full
+                    var results = Task.Run(() => APIClient.GetProjectsAsync(APICore.XeroConfig.XeroAPIToken.AccessToken, APICore.XeroConfig.SelectedTenantID, projectIds, contactID, states, page, pageSize)).ConfigureAwait(false).GetAwaiter().GetResult();
+                    if (results != null && results.Items != null && results.Items.Count > 0)
+                    {
+                        records.AddRange(results.Items); // Add the next page records returned
+                        count = results.Items.Count; // Record the number of records returned in this page. if less than 100 then the loop will exit otherwise get the next page full
+                    }
+                    else
+                    {
+                        count = 0;
+                    }
                     if (page != null) page++;
                     if (onlypage.HasValue) count = -1;
                 }
@@ -84,11 +90,11 @@ namespace Xero.Net.Core.Api
             }
             try
             {
-                var task = Task.Run(() => APIClient.GetProjectAsync(APICore.XeroConfig.XeroAPIToken.AccessToken, APICore.XeroConfig.SelectedTenantID, projectID));
-                task.Wait();
-                if (task.Result != null)
+                var results = Task.Run(() => APIClient.GetProjectAsync(APICore.XeroConfig.XeroAPIToken.AccessToken, APICore.XeroConfig.SelectedTenantID, projectID)).ConfigureAwait(false).GetAwaiter().GetResult(); ;
+
+                if (results != null)
                 {
-                    return task.Result;
+                    return results;
                 }
             }
             catch (Exception ex)

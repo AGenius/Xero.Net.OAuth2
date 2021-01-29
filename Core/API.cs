@@ -22,7 +22,7 @@ namespace Xero.Net.Core
             }
         }
         oAuth2 _authClient = null;
-        
+
         /// <summary>
         /// The Configuration object that holds all the magic info needed!
         /// </summary>
@@ -93,7 +93,7 @@ namespace Xero.Net.Core
         /// <summary>Exposes the PayrollUkApi Object</summary>
         public Api.PayrollUkApi PayrollUkApi = new Api.PayrollUkApi();
         /// <summary>Exposes the IdentityApi Object</summary>
-        public Api.IdentityApi IdentityApi = new Api.IdentityApi();        
+        public Api.IdentityApi IdentityApi = new Api.IdentityApi();
         /// <summary>Exposes the ProjectApi Object</summary>
         public Api.ProjectApi ProjectApi = new Api.ProjectApi();
 

@@ -42,12 +42,12 @@ namespace Xero.Net.Core.Api
             APICore.onStatusUpdates("Fetch Accounts", XeroEventStatus.Log);
             try
             {
-                var task = Task.Run(() => APIClient.GetAccountsAsync(APICore.XeroConfig.XeroAPIToken.AccessToken, APICore.XeroConfig.SelectedTenantID, ModifiedSince, filter, order));
-                task.Wait();
-                if (task.Result._Accounts.Count > 0)
+                var results = Task.Run(() => APIClient.GetAccountsAsync(APICore.XeroConfig.XeroAPIToken.AccessToken, APICore.XeroConfig.SelectedTenantID, ModifiedSince, filter, order)).ConfigureAwait(false).GetAwaiter().GetResult();
+
+                if (results._Accounts.Count > 0)
                 {
                     APICore.onStatusUpdates("Fetch Accounts - Success", XeroEventStatus.Log);
-                    return task.Result._Accounts;
+                    return results._Accounts;
                 }
             }
             catch (Exception ex)
@@ -142,12 +142,11 @@ namespace Xero.Net.Core.Api
             APICore.onStatusUpdates("Fetch Account", XeroEventStatus.Log);
             try
             {
-                var task = Task.Run(() => APIClient.GetAccountAsync(APICore.XeroConfig.XeroAPIToken.AccessToken, APICore.XeroConfig.SelectedTenantID, accountID));
-                task.Wait();
-                if (task.Result._Accounts.Count > 0)
+                var results = Task.Run(() => APIClient.GetAccountAsync(APICore.XeroConfig.XeroAPIToken.AccessToken, APICore.XeroConfig.SelectedTenantID, accountID)).ConfigureAwait(false).GetAwaiter().GetResult();
+                if (results._Accounts.Count > 0)
                 {
                     APICore.onStatusUpdates("Fetch Account - Success", XeroEventStatus.Log);
-                    return task.Result._Accounts[0];
+                    return results._Accounts[0];
                 }
             }
             catch (Exception ex)
@@ -182,11 +181,11 @@ namespace Xero.Net.Core.Api
             }
             try
             {
-                var task = Task.Run(() => APIClient.CreateAccountAsync(APICore.XeroConfig.XeroAPIToken.AccessToken, APICore.XeroConfig.SelectedTenantID, record));
-                task.Wait();
-                if (task.Result._Accounts.Count > 0)
+                var results = Task.Run(() => APIClient.CreateAccountAsync(APICore.XeroConfig.XeroAPIToken.AccessToken, APICore.XeroConfig.SelectedTenantID, record)).ConfigureAwait(false).GetAwaiter().GetResult();
+
+                if (results._Accounts.Count > 0)
                 {
-                    return task.Result._Accounts[0];
+                    return results._Accounts[0];
                 }
             }
             catch (Exception ex)
@@ -216,11 +215,11 @@ namespace Xero.Net.Core.Api
                 var header = new Accounts();
                 header._Accounts = list;
 
-                var task = Task.Run(() => APIClient.UpdateAccountAsync(APICore.XeroConfig.XeroAPIToken.AccessToken, APICore.XeroConfig.SelectedTenantID, record.AccountID.Value, header));
-                task.Wait();
-                if (task.Result._Accounts.Count > 0)
+                var results = Task.Run(() => APIClient.UpdateAccountAsync(APICore.XeroConfig.XeroAPIToken.AccessToken, APICore.XeroConfig.SelectedTenantID, record.AccountID.Value, header)).ConfigureAwait(false).GetAwaiter().GetResult();
+
+                if (results._Accounts.Count > 0)
                 {
-                    return task.Result._Accounts[0];
+                    return results._Accounts[0];
                 }
             }
             catch (Exception ex)
@@ -246,9 +245,9 @@ namespace Xero.Net.Core.Api
             }
             try
             {
-                var task = Task.Run(() => APIClient.DeleteAccountAsync(APICore.XeroConfig.XeroAPIToken.AccessToken, APICore.XeroConfig.SelectedTenantID, AccountID));
-                task.Wait();
-                if (task.Result._Accounts.Count > 0)
+                var results = Task.Run(() => APIClient.DeleteAccountAsync(APICore.XeroConfig.XeroAPIToken.AccessToken, APICore.XeroConfig.SelectedTenantID, AccountID)).ConfigureAwait(false).GetAwaiter().GetResult();
+
+                if (results._Accounts.Count > 0)
                 {
                     return true;
                 }
@@ -287,13 +286,19 @@ namespace Xero.Net.Core.Api
             {
                 if (page == -1) page = null; // This allows a quick first page of records
                 var records = new List<BankTransaction>(); // Hold the records 
-                int count = 100; // This is how many per page - setting this will ensure we check for the first page is a full 100 and loop until all returned            
+                int count = 100; // This is how many per page - setting this will ensure we check for the first page is a full 100 and loop until all returned           
                 while (count == 100)
                 {
-                    var task = Task.Run(() => APIClient.GetBankTransactionsAsync(APICore.XeroConfig.XeroAPIToken.AccessToken, APICore.XeroConfig.SelectedTenantID, ModifiedSince, filter, order, page, unitdp));
-                    task.Wait();
-                    records.AddRange(task.Result._BankTransactions); // Add the next page records returned
-                    count = task.Result._BankTransactions.Count; // Record the number of records returned in this page. if less than 100 then the loop will exit otherwise get the next page full
+                    var results = Task.Run(() => APIClient.GetBankTransactionsAsync(APICore.XeroConfig.XeroAPIToken.AccessToken, APICore.XeroConfig.SelectedTenantID, ModifiedSince, filter, order, page, unitdp)).ConfigureAwait(false).GetAwaiter().GetResult();
+                    if (results != null && results._BankTransactions != null && results._BankTransactions.Count > 0)
+                    {
+                        records.AddRange(results._BankTransactions); // Add the next page records returned
+                        count = results._BankTransactions.Count; // Record the number of records returned in this page. if less than 100 then the loop will exit otherwise get the next page full
+                    }
+                    else
+                    {
+                        count = 0;
+                    }
                     if (page != null) page++;
                     if (onlypage.HasValue) count = -1;
                 }
@@ -320,11 +325,11 @@ namespace Xero.Net.Core.Api
         {
             try
             {
-                var task = Task.Run(() => APIClient.GetBankTransactionAsync(APICore.XeroConfig.XeroAPIToken.AccessToken, APICore.XeroConfig.SelectedTenantID, transactionID));
-                task.Wait();
-                if (task.Result._BankTransactions.Count > 0)
+                var results = Task.Run(() => APIClient.GetBankTransactionAsync(APICore.XeroConfig.XeroAPIToken.AccessToken, APICore.XeroConfig.SelectedTenantID, transactionID)).ConfigureAwait(false).GetAwaiter().GetResult();
+
+                if (results._BankTransactions.Count > 0)
                 {
-                    return task.Result._BankTransactions[0];
+                    return results._BankTransactions[0];
                 }
             }
             catch (Exception ex)
@@ -352,11 +357,11 @@ namespace Xero.Net.Core.Api
         {
             try
             {
-                var task = Task.Run(() => APIClient.GetBankTransfersAsync(APICore.XeroConfig.XeroAPIToken.AccessToken, APICore.XeroConfig.SelectedTenantID, ModifiedSince, filter, order));
-                task.Wait();
-                if (task.Result._BankTransfers.Count > 0)
+                var results = Task.Run(() => APIClient.GetBankTransfersAsync(APICore.XeroConfig.XeroAPIToken.AccessToken, APICore.XeroConfig.SelectedTenantID, ModifiedSince, filter, order)).ConfigureAwait(false).GetAwaiter().GetResult();
+
+                if (results._BankTransfers.Count > 0)
                 {
-                    return task.Result._BankTransfers;
+                    return results._BankTransfers;
                 }
             }
             catch (Exception ex)
@@ -376,11 +381,11 @@ namespace Xero.Net.Core.Api
         {
             try
             {
-                var task = Task.Run(() => APIClient.GetBankTransferAsync(APICore.XeroConfig.XeroAPIToken.AccessToken, APICore.XeroConfig.SelectedTenantID, bankTransferID));
-                task.Wait();
-                if (task.Result._BankTransfers.Count > 0)
+                var results = Task.Run(() => APIClient.GetBankTransferAsync(APICore.XeroConfig.XeroAPIToken.AccessToken, APICore.XeroConfig.SelectedTenantID, bankTransferID)).ConfigureAwait(false).GetAwaiter().GetResult();
+
+                if (results._BankTransfers.Count > 0)
                 {
-                    return task.Result._BankTransfers[0];
+                    return results._BankTransfers[0];
                 }
             }
             catch (Exception ex)
@@ -422,11 +427,11 @@ namespace Xero.Net.Core.Api
                 var header = new BankTransfers();
                 header._BankTransfers = list;
 
-                var task = Task.Run(() => APIClient.CreateBankTransferAsync(APICore.XeroConfig.XeroAPIToken.AccessToken, APICore.XeroConfig.SelectedTenantID, header));
-                task.Wait();
-                if (task.Result._BankTransfers.Count > 0)
+                var results = Task.Run(() => APIClient.CreateBankTransferAsync(APICore.XeroConfig.XeroAPIToken.AccessToken, APICore.XeroConfig.SelectedTenantID, header)).ConfigureAwait(false).GetAwaiter().GetResult();
+
+                if (results._BankTransfers.Count > 0)
                 {
-                    return task.Result._BankTransfers[0];
+                    return results._BankTransfers[0];
                 }
             }
             catch (Exception ex)
@@ -453,11 +458,11 @@ namespace Xero.Net.Core.Api
                 var header = new BankTransfers();
                 header._BankTransfers = records;
 
-                var task = Task.Run(() => APIClient.CreateBankTransferAsync(APICore.XeroConfig.XeroAPIToken.AccessToken, APICore.XeroConfig.SelectedTenantID, header));
-                task.Wait();
-                if (task.Result._BankTransfers.Count > 0)
+                var results = Task.Run(() => APIClient.CreateBankTransferAsync(APICore.XeroConfig.XeroAPIToken.AccessToken, APICore.XeroConfig.SelectedTenantID, header)).ConfigureAwait(false).GetAwaiter().GetResult();
+
+                if (results._BankTransfers.Count > 0)
                 {
-                    return task.Result._BankTransfers[0];
+                    return results._BankTransfers[0];
                 }
             }
             catch (Exception ex)
@@ -485,11 +490,11 @@ namespace Xero.Net.Core.Api
         {
             try
             {
-                var task = Task.Run(() => APIClient.GetBatchPaymentsAsync(APICore.XeroConfig.XeroAPIToken.AccessToken, APICore.XeroConfig.SelectedTenantID, ModifiedSince, filter, order));
-                task.Wait();
-                if (task.Result._BatchPayments.Count > 0)
+                var results = Task.Run(() => APIClient.GetBatchPaymentsAsync(APICore.XeroConfig.XeroAPIToken.AccessToken, APICore.XeroConfig.SelectedTenantID, ModifiedSince, filter, order)).ConfigureAwait(false).GetAwaiter().GetResult();
+
+                if (results._BatchPayments.Count > 0)
                 {
-                    return task.Result._BatchPayments[0];
+                    return results._BatchPayments[0];
                 }
             }
             catch (Exception ex)
@@ -519,11 +524,11 @@ namespace Xero.Net.Core.Api
                 var header = new BatchPayments();
                 header._BatchPayments = list;
 
-                var task = Task.Run(() => APIClient.CreateBatchPaymentAsync(APICore.XeroConfig.XeroAPIToken.AccessToken, APICore.XeroConfig.SelectedTenantID, header));
-                task.Wait();
-                if (task.Result._BatchPayments.Count > 0)
+                var results = Task.Run(() => APIClient.CreateBatchPaymentAsync(APICore.XeroConfig.XeroAPIToken.AccessToken, APICore.XeroConfig.SelectedTenantID, header)).ConfigureAwait(false).GetAwaiter().GetResult();
+
+                if (results._BatchPayments.Count > 0)
                 {
-                    return task.Result._BatchPayments[0];
+                    return results._BatchPayments[0];
                 }
             }
             catch (Exception ex)
@@ -550,11 +555,11 @@ namespace Xero.Net.Core.Api
                 var header = new BatchPayments();
                 header._BatchPayments = records;
 
-                var task = Task.Run(() => APIClient.CreateBatchPaymentAsync(APICore.XeroConfig.XeroAPIToken.AccessToken, APICore.XeroConfig.SelectedTenantID, header));
-                task.Wait();
-                if (task.Result._BatchPayments.Count > 0)
+                var results = Task.Run(() => APIClient.CreateBatchPaymentAsync(APICore.XeroConfig.XeroAPIToken.AccessToken, APICore.XeroConfig.SelectedTenantID, header)).ConfigureAwait(false).GetAwaiter().GetResult();
+
+                if (results._BatchPayments.Count > 0)
                 {
-                    return task.Result._BatchPayments;
+                    return results._BatchPayments;
                 }
             }
             catch (Exception ex)
@@ -579,11 +584,11 @@ namespace Xero.Net.Core.Api
         {
             try
             {
-                var task = Task.Run(() => APIClient.GetBrandingThemesAsync(APICore.XeroConfig.XeroAPIToken.AccessToken, APICore.XeroConfig.SelectedTenantID));
-                task.Wait();
-                if (task.Result._BrandingThemes.Count > 0)
+                var results = Task.Run(() => APIClient.GetBrandingThemesAsync(APICore.XeroConfig.XeroAPIToken.AccessToken, APICore.XeroConfig.SelectedTenantID)).ConfigureAwait(false).GetAwaiter().GetResult();
+
+                if (results._BrandingThemes.Count > 0)
                 {
-                    return task.Result._BrandingThemes;
+                    return results._BrandingThemes;
                 }
             }
             catch (Exception ex)
@@ -603,11 +608,11 @@ namespace Xero.Net.Core.Api
         {
             try
             {
-                var task = Task.Run(() => APIClient.GetBrandingThemeAsync(APICore.XeroConfig.XeroAPIToken.AccessToken, APICore.XeroConfig.SelectedTenantID, brandingThemeID));
-                task.Wait();
-                if (task.Result._BrandingThemes.Count > 0)
+                var results = Task.Run(() => APIClient.GetBrandingThemeAsync(APICore.XeroConfig.XeroAPIToken.AccessToken, APICore.XeroConfig.SelectedTenantID, brandingThemeID)).ConfigureAwait(false).GetAwaiter().GetResult();
+
+                if (results._BrandingThemes.Count > 0)
                 {
-                    return task.Result._BrandingThemes[0];
+                    return results._BrandingThemes[0];
                 }
             }
             catch (Exception ex)
@@ -675,10 +680,16 @@ namespace Xero.Net.Core.Api
                 while (count == 100)
                 {
                     if (page == -1) page = null; // This allows a quick first page of records
-                    var task = Task.Run(() => APIClient.GetContactsAsync(APICore.XeroConfig.XeroAPIToken.AccessToken, APICore.XeroConfig.SelectedTenantID, ModifiedSince, filter, order, iDs, page, includeArchived));
-                    task.Wait();
-                    records.AddRange(task.Result._Contacts); // Add the next page records returned
-                    count = task.Result._Contacts.Count; // Record the number of records returned in this page. if less than 100 then the loop will exit otherwise get the next page full
+                    var results = Task.Run(() => APIClient.GetContactsAsync(APICore.XeroConfig.XeroAPIToken.AccessToken, APICore.XeroConfig.SelectedTenantID, ModifiedSince, filter, order, iDs, page, includeArchived)).ConfigureAwait(false).GetAwaiter().GetResult();
+                    if (results != null && results._Contacts != null && results._Contacts.Count > 0)
+                    {
+                        records.AddRange(results._Contacts); // Add the next page records returned
+                        count = results._Contacts.Count; // Record the number of records returned in this page. if less than 100 then the loop will exit otherwise get the next page full
+                    }
+                    else
+                    {
+                        count = 0;
+                    }
                     if (page != null) page++;
                     if (onlypage.HasValue) count = -1;
                 }
@@ -768,11 +779,11 @@ namespace Xero.Net.Core.Api
             }
             try
             {
-                var task = Task.Run(() => APIClient.GetContactAsync(APICore.XeroConfig.XeroAPIToken.AccessToken, APICore.XeroConfig.SelectedTenantID, contactID));
-                task.Wait();
-                if (task.Result._Contacts.Count > 0)
+                var results = Task.Run(() => APIClient.GetContactAsync(APICore.XeroConfig.XeroAPIToken.AccessToken, APICore.XeroConfig.SelectedTenantID, contactID)).ConfigureAwait(false).GetAwaiter().GetResult();
+
+                if (results._Contacts.Count > 0)
                 {
-                    return task.Result._Contacts[0];
+                    return results._Contacts[0];
                 }
             }
             catch (Exception ex)
@@ -814,11 +825,11 @@ namespace Xero.Net.Core.Api
                 var header = new Contacts();
                 header._Contacts = list;
 
-                var task = Task.Run(() => APIClient.CreateContactsAsync(APICore.XeroConfig.XeroAPIToken.AccessToken, APICore.XeroConfig.SelectedTenantID, header));
-                task.Wait();
-                if (task.Result._Contacts.Count > 0)
+                var results = Task.Run(() => APIClient.CreateContactsAsync(APICore.XeroConfig.XeroAPIToken.AccessToken, APICore.XeroConfig.SelectedTenantID, header)).ConfigureAwait(false).GetAwaiter().GetResult();
+
+                if (results._Contacts.Count > 0)
                 {
-                    return task.Result._Contacts[0];
+                    return results._Contacts[0];
                 }
             }
             catch (Exception ex)
@@ -845,11 +856,11 @@ namespace Xero.Net.Core.Api
                 var header = new Contacts();
                 header._Contacts = records;
 
-                var task = Task.Run(() => APIClient.CreateContactsAsync(APICore.XeroConfig.XeroAPIToken.AccessToken, APICore.XeroConfig.SelectedTenantID, header));
-                task.Wait();
-                if (task.Result._Contacts.Count > 0)
+                var results = Task.Run(() => APIClient.CreateContactsAsync(APICore.XeroConfig.XeroAPIToken.AccessToken, APICore.XeroConfig.SelectedTenantID, header)).ConfigureAwait(false).GetAwaiter().GetResult();
+
+                if (results._Contacts.Count > 0)
                 {
-                    return task.Result._Contacts;
+                    return results._Contacts;
                 }
             }
             catch (Exception ex)
@@ -879,11 +890,11 @@ namespace Xero.Net.Core.Api
                 var header = new Contacts();
                 header._Contacts = list;
 
-                var task = Task.Run(() => APIClient.UpdateContactAsync(APICore.XeroConfig.XeroAPIToken.AccessToken, APICore.XeroConfig.SelectedTenantID, record.ContactID.Value, header));
-                task.Wait();
-                if (task.Result._Contacts.Count > 0)
+                var results = Task.Run(() => APIClient.UpdateContactAsync(APICore.XeroConfig.XeroAPIToken.AccessToken, APICore.XeroConfig.SelectedTenantID, record.ContactID.Value, header)).ConfigureAwait(false).GetAwaiter().GetResult();
+
+                if (results._Contacts.Count > 0)
                 {
-                    return task.Result._Contacts[0];
+                    return results._Contacts[0];
                 }
             }
             catch (Exception ex)
@@ -910,11 +921,11 @@ namespace Xero.Net.Core.Api
                 var header = new Contacts();
                 header._Contacts = records;
 
-                var task = Task.Run(() => APIClient.UpdateContactAsync(APICore.XeroConfig.XeroAPIToken.AccessToken, APICore.XeroConfig.SelectedTenantID, new Guid(), header));
-                task.Wait();
-                if (task.Result._Contacts.Count > 0)
+                var results = Task.Run(() => APIClient.UpdateContactAsync(APICore.XeroConfig.XeroAPIToken.AccessToken, APICore.XeroConfig.SelectedTenantID, new Guid(), header)).ConfigureAwait(false).GetAwaiter().GetResult();
+
+                if (results._Contacts.Count > 0)
                 {
-                    return task.Result._Contacts;
+                    return results._Contacts;
                 }
             }
             catch (Exception ex)
@@ -940,11 +951,11 @@ namespace Xero.Net.Core.Api
         {
             try
             {
-                var task = Task.Run(() => APIClient.GetContactGroupsAsync(APICore.XeroConfig.XeroAPIToken.AccessToken, APICore.XeroConfig.SelectedTenantID, filter, order));
-                task.Wait();
-                if (task.Result._ContactGroups.Count > 0)
+                var results = Task.Run(() => APIClient.GetContactGroupsAsync(APICore.XeroConfig.XeroAPIToken.AccessToken, APICore.XeroConfig.SelectedTenantID, filter, order)).ConfigureAwait(false).GetAwaiter().GetResult();
+
+                if (results._ContactGroups.Count > 0)
                 {
-                    return task.Result._ContactGroups;
+                    return results._ContactGroups;
                 }
             }
             catch (Exception ex)
@@ -964,11 +975,11 @@ namespace Xero.Net.Core.Api
         {
             try
             {
-                var task = Task.Run(() => APIClient.GetContactGroupAsync(APICore.XeroConfig.XeroAPIToken.AccessToken, APICore.XeroConfig.SelectedTenantID, contactGroupID));
-                task.Wait();
-                if (task.Result._ContactGroups.Count > 0)
+                var results = Task.Run(() => APIClient.GetContactGroupAsync(APICore.XeroConfig.XeroAPIToken.AccessToken, APICore.XeroConfig.SelectedTenantID, contactGroupID)).ConfigureAwait(false).GetAwaiter().GetResult();
+
+                if (results._ContactGroups.Count > 0)
                 {
-                    return task.Result._ContactGroups[0];
+                    return results._ContactGroups[0];
                 }
             }
             catch (Exception ex)
@@ -1010,11 +1021,11 @@ namespace Xero.Net.Core.Api
                 var header = new ContactGroups();
                 header._ContactGroups = list;
 
-                var task = Task.Run(() => APIClient.CreateContactGroupAsync(APICore.XeroConfig.XeroAPIToken.AccessToken, APICore.XeroConfig.SelectedTenantID, header));
-                task.Wait();
-                if (task.Result._ContactGroups.Count > 0)
+                var results = Task.Run(() => APIClient.CreateContactGroupAsync(APICore.XeroConfig.XeroAPIToken.AccessToken, APICore.XeroConfig.SelectedTenantID, header)).ConfigureAwait(false).GetAwaiter().GetResult();
+
+                if (results._ContactGroups.Count > 0)
                 {
-                    return task.Result._ContactGroups[0];
+                    return results._ContactGroups[0];
                 }
             }
             catch (Exception ex)
@@ -1041,11 +1052,11 @@ namespace Xero.Net.Core.Api
                 var header = new ContactGroups();
                 header._ContactGroups = records;
 
-                var task = Task.Run(() => APIClient.CreateContactGroupAsync(APICore.XeroConfig.XeroAPIToken.AccessToken, APICore.XeroConfig.SelectedTenantID, header));
-                task.Wait();
-                if (task.Result._ContactGroups.Count > 0)
+                var results = Task.Run(() => APIClient.CreateContactGroupAsync(APICore.XeroConfig.XeroAPIToken.AccessToken, APICore.XeroConfig.SelectedTenantID, header)).ConfigureAwait(false).GetAwaiter().GetResult();
+
+                if (results._ContactGroups.Count > 0)
                 {
-                    return task.Result._ContactGroups;
+                    return results._ContactGroups;
                 }
             }
             catch (Exception ex)
@@ -1070,9 +1081,9 @@ namespace Xero.Net.Core.Api
             }
             try
             {
-                var task = Task.Run(() => APIClient.DeleteContactGroupContactAsync(APICore.XeroConfig.XeroAPIToken.AccessToken, APICore.XeroConfig.SelectedTenantID, ContactGroupID, ContactID));
-                task.Wait();
-                if (task.IsCompleted)
+                var results = Task.Run(() => APIClient.DeleteContactGroupContactAsync(APICore.XeroConfig.XeroAPIToken.AccessToken, APICore.XeroConfig.SelectedTenantID, ContactGroupID, ContactID)).ConfigureAwait(false).GetAwaiter();
+
+                if (results.IsCompleted)
                 {
                     return true;
                 }
@@ -1082,7 +1093,6 @@ namespace Xero.Net.Core.Api
                 var er = ex.InnerException as Xero.Net.Api.Client.ApiException;
                 throw new Xero.Net.Api.Client.ApiException(er.ErrorCode, er.Message, er.ErrorContent);
             }
-
 
             return false;
         }
@@ -1099,9 +1109,9 @@ namespace Xero.Net.Core.Api
             }
             try
             {
-                var task = Task.Run(() => APIClient.DeleteContactGroupContactsAsync(APICore.XeroConfig.XeroAPIToken.AccessToken, APICore.XeroConfig.SelectedTenantID, ContactGroupID));
-                task.Wait();
-                if (task.IsCompleted)
+                var results = Task.Run(() => APIClient.DeleteContactGroupContactsAsync(APICore.XeroConfig.XeroAPIToken.AccessToken, APICore.XeroConfig.SelectedTenantID, ContactGroupID)).ConfigureAwait(false).GetAwaiter();
+
+                if (results.IsCompleted)
                 {
                     return true;
                 }
@@ -1140,14 +1150,20 @@ namespace Xero.Net.Core.Api
             try
             {
                 var records = new List<CreditNote>(); // Hold the records
-                int count = 100; // This is how many per page - setting this will ensure we check for the first page is a full 100 and loop until all returned            // If onlypage is set then the client only wants that page of records so stop processing
+                int count = 100; // This is how many per page - setting this will ensure we check for the first page is a full 100 and loop until all returned      
                 while (count == 100)
                 {
                     if (page == -1) page = null; // This allows a quick first page of records
-                    var task = Task.Run(() => APIClient.GetCreditNotesAsync(APICore.XeroConfig.XeroAPIToken.AccessToken, APICore.XeroConfig.SelectedTenantID, ModifiedSince, filter, order, page, unitdp));
-                    task.Wait();
-                    records.AddRange(task.Result._CreditNotes); // Add the next page records returned
-                    count = task.Result._CreditNotes.Count; // Record the number of records returned in this page. if less than 100 then the loop will exit otherwise get the next page full
+                    var results = Task.Run(() => APIClient.GetCreditNotesAsync(APICore.XeroConfig.XeroAPIToken.AccessToken, APICore.XeroConfig.SelectedTenantID, ModifiedSince, filter, order, page, unitdp)).ConfigureAwait(false).GetAwaiter().GetResult();
+                    if (results != null && results._CreditNotes != null && results._CreditNotes.Count > 0)
+                    {
+                        records.AddRange(results._CreditNotes); // Add the next page records returned
+                        count = results._CreditNotes.Count; // Record the number of records returned in this page. if less than 100 then the loop will exit otherwise get the next page full
+                    }
+                    else
+                    {
+                        count = 0;
+                    }
                     if (page != null) page++;
                     if (onlypage.HasValue) count = -1;
                 }
@@ -1243,11 +1259,11 @@ namespace Xero.Net.Core.Api
             }
             try
             {
-                var task = Task.Run(() => APIClient.GetCreditNoteAsync(APICore.XeroConfig.XeroAPIToken.AccessToken, APICore.XeroConfig.SelectedTenantID, creditNoteID, unitdp));
-                task.Wait();
-                if (task.Result._CreditNotes.Count > 0)
+                var results = Task.Run(() => APIClient.GetCreditNoteAsync(APICore.XeroConfig.XeroAPIToken.AccessToken, APICore.XeroConfig.SelectedTenantID, creditNoteID, unitdp)).ConfigureAwait(false).GetAwaiter().GetResult();
+
+                if (results._CreditNotes.Count > 0)
                 {
-                    return task.Result._CreditNotes[0];
+                    return results._CreditNotes[0];
                 }
             }
             catch (Exception ex)
@@ -1290,11 +1306,11 @@ namespace Xero.Net.Core.Api
                 var header = new CreditNotes();
                 header._CreditNotes = list;
 
-                var task = Task.Run(() => APIClient.CreateCreditNotesAsync(APICore.XeroConfig.XeroAPIToken.AccessToken, APICore.XeroConfig.SelectedTenantID, header, null, unitdp));
-                task.Wait();
-                if (task.Result._CreditNotes.Count > 0)
+                var results = Task.Run(() => APIClient.CreateCreditNotesAsync(APICore.XeroConfig.XeroAPIToken.AccessToken, APICore.XeroConfig.SelectedTenantID, header, null, unitdp)).ConfigureAwait(false).GetAwaiter().GetResult();
+
+                if (results._CreditNotes.Count > 0)
                 {
-                    return task.Result._CreditNotes[0];
+                    return results._CreditNotes[0];
                 }
             }
             catch (Exception ex)
@@ -1325,11 +1341,11 @@ namespace Xero.Net.Core.Api
                 var header = new CreditNotes();
                 header._CreditNotes = list;
 
-                var task = Task.Run(() => APIClient.UpdateCreditNoteAsync(APICore.XeroConfig.XeroAPIToken.AccessToken, APICore.XeroConfig.SelectedTenantID, record.CreditNoteID.Value, header));
-                task.Wait();
-                if (task.Result._CreditNotes.Count > 0)
+                var results = Task.Run(() => APIClient.UpdateCreditNoteAsync(APICore.XeroConfig.XeroAPIToken.AccessToken, APICore.XeroConfig.SelectedTenantID, record.CreditNoteID.Value, header)).ConfigureAwait(false).GetAwaiter().GetResult();
+
+                if (results._CreditNotes.Count > 0)
                 {
-                    return task.Result._CreditNotes[0];
+                    return results._CreditNotes[0];
                 }
             }
             catch (Exception ex)
@@ -1356,11 +1372,11 @@ namespace Xero.Net.Core.Api
         {
             try
             {
-                var task = Task.Run(() => APIClient.GetCurrenciesAsync(APICore.XeroConfig.XeroAPIToken.AccessToken, APICore.XeroConfig.SelectedTenantID, filter, order));
-                task.Wait();
-                if (task.Result._Currencies.Count > 0)
+                var results = Task.Run(() => APIClient.GetCurrenciesAsync(APICore.XeroConfig.XeroAPIToken.AccessToken, APICore.XeroConfig.SelectedTenantID, filter, order)).ConfigureAwait(false).GetAwaiter().GetResult();
+
+                if (results._Currencies.Count > 0)
                 {
-                    return task.Result._Currencies;
+                    return results._Currencies;
                 }
             }
             catch (Exception ex)
@@ -1380,11 +1396,11 @@ namespace Xero.Net.Core.Api
         {
             try
             {
-                var task = Task.Run(() => APIClient.CreateCurrencyAsync(APICore.XeroConfig.XeroAPIToken.AccessToken, APICore.XeroConfig.SelectedTenantID, record));
-                task.Wait();
-                if (task.Result._Currencies.Count > 0)
+                var results = Task.Run(() => APIClient.CreateCurrencyAsync(APICore.XeroConfig.XeroAPIToken.AccessToken, APICore.XeroConfig.SelectedTenantID, record)).ConfigureAwait(false).GetAwaiter().GetResult();
+
+                if (results._Currencies.Count > 0)
                 {
-                    return task.Result._Currencies[0];
+                    return results._Currencies[0];
                 }
             }
             catch (Exception ex)
@@ -1442,10 +1458,16 @@ namespace Xero.Net.Core.Api
                 while (count == 100)
                 {
                     if (page == -1) page = null; // This allows a quick first page of records
-                    var task = Task.Run(() => APIClient.GetInvoicesAsync(APICore.XeroConfig.XeroAPIToken.AccessToken, APICore.XeroConfig.SelectedTenantID, ModifiedSince, filter, order, iDs, invoiceNumbers, contactIDs, statuses, page, includeArchived, createdByMyApp, unitdp));
-                    task.Wait();
-                    records.AddRange(task.Result._Invoices); // Add the next page records returned
-                    count = task.Result._Invoices.Count; // Record the number of records returned in this page. if less than 100 then the loop will exit otherwise get the next page full
+                    var results = Task.Run(() => APIClient.GetInvoicesAsync(APICore.XeroConfig.XeroAPIToken.AccessToken, APICore.XeroConfig.SelectedTenantID, ModifiedSince, filter, order, iDs, invoiceNumbers, contactIDs, statuses, page, includeArchived, createdByMyApp, unitdp)).ConfigureAwait(false).GetAwaiter().GetResult();
+                    if (results != null && results._Invoices != null && results._Invoices.Count > 0)
+                    {
+                        records.AddRange(results._Invoices); // Add the next page records returned
+                        count = results._Invoices.Count; // Record the number of records returned in this page. if less than 100 then the loop will exit otherwise get the next page full
+                    }
+                    else
+                    {
+                        count = 0;
+                    }
                     if (page != null) page++;
                     if (onlypage.HasValue) count = -1;
                 }
@@ -1529,11 +1551,11 @@ namespace Xero.Net.Core.Api
             }
             try
             {
-                var task = Task.Run(() => APIClient.GetInvoiceAsync(APICore.XeroConfig.XeroAPIToken.AccessToken, APICore.XeroConfig.SelectedTenantID, invoiceID, unitdp));
-                task.Wait();
-                if (task.Result._Invoices.Count > 0)
+                var results = Task.Run(() => APIClient.GetInvoiceAsync(APICore.XeroConfig.XeroAPIToken.AccessToken, APICore.XeroConfig.SelectedTenantID, invoiceID, unitdp)).ConfigureAwait(false).GetAwaiter().GetResult();
+
+                if (results._Invoices.Count > 0)
                 {
-                    return task.Result._Invoices[0];
+                    return results._Invoices[0];
                 }
             }
             catch (Exception ex)
@@ -1576,11 +1598,11 @@ namespace Xero.Net.Core.Api
                 var header = new Invoices();
                 header._Invoices = list;
 
-                var task = Task.Run(() => APIClient.CreateInvoicesAsync(APICore.XeroConfig.XeroAPIToken.AccessToken, APICore.XeroConfig.SelectedTenantID, header, null, unitdp));
-                task.Wait();
-                if (task.Result._Invoices.Count > 0)
+                var results = Task.Run(() => APIClient.CreateInvoicesAsync(APICore.XeroConfig.XeroAPIToken.AccessToken, APICore.XeroConfig.SelectedTenantID, header, null, unitdp)).ConfigureAwait(false).GetAwaiter().GetResult();
+
+                if (results._Invoices.Count > 0)
                 {
-                    return task.Result._Invoices[0];
+                    return results._Invoices[0];
                 }
             }
             catch (Exception ex)
@@ -1608,11 +1630,11 @@ namespace Xero.Net.Core.Api
                 var header = new Invoices();
                 header._Invoices = records;
 
-                var task = Task.Run(() => APIClient.CreateInvoicesAsync(APICore.XeroConfig.XeroAPIToken.AccessToken, APICore.XeroConfig.SelectedTenantID, header, null, unitdp));
-                task.Wait();
-                if (task.Result._Invoices.Count > 0)
+                var results = Task.Run(() => APIClient.CreateInvoicesAsync(APICore.XeroConfig.XeroAPIToken.AccessToken, APICore.XeroConfig.SelectedTenantID, header, null, unitdp)).ConfigureAwait(false).GetAwaiter().GetResult();
+
+                if (results._Invoices.Count > 0)
                 {
-                    return task.Result._Invoices;
+                    return results._Invoices;
                 }
             }
             catch (Exception ex)
@@ -1643,11 +1665,11 @@ namespace Xero.Net.Core.Api
                 var header = new Invoices();
                 header._Invoices = list;
 
-                var task = Task.Run(() => APIClient.UpdateInvoiceAsync(APICore.XeroConfig.XeroAPIToken.AccessToken, APICore.XeroConfig.SelectedTenantID, record.InvoiceID.Value, header, unitdp));
-                task.Wait();
-                if (task.Result._Invoices.Count > 0)
+                var results = Task.Run(() => APIClient.UpdateInvoiceAsync(APICore.XeroConfig.XeroAPIToken.AccessToken, APICore.XeroConfig.SelectedTenantID, record.InvoiceID.Value, header, unitdp)).ConfigureAwait(false).GetAwaiter().GetResult();
+
+                if (results._Invoices.Count > 0)
                 {
-                    return task.Result._Invoices[0];
+                    return results._Invoices[0];
                 }
             }
             catch (Exception ex)
@@ -1677,11 +1699,11 @@ namespace Xero.Net.Core.Api
         {
             try
             {
-                var task = Task.Run(() => APIClient.GetItemsAsync(APICore.XeroConfig.XeroAPIToken.AccessToken, APICore.XeroConfig.SelectedTenantID, ModifiedSince, filter, order, unitdp));
-                task.Wait();
-                if (task.Result._Items.Count > 0)
+                var results = Task.Run(() => APIClient.GetItemsAsync(APICore.XeroConfig.XeroAPIToken.AccessToken, APICore.XeroConfig.SelectedTenantID, ModifiedSince, filter, order, unitdp)).ConfigureAwait(false).GetAwaiter().GetResult();
+
+                if (results._Items.Count > 0)
                 {
-                    return task.Result._Items;
+                    return results._Items;
                 }
             }
             catch (Exception ex)
@@ -1706,11 +1728,11 @@ namespace Xero.Net.Core.Api
             }
             try
             {
-                var task = Task.Run(() => APIClient.GetItemAsync(APICore.XeroConfig.XeroAPIToken.AccessToken, APICore.XeroConfig.SelectedTenantID, itemID, unitdp));
-                task.Wait();
-                if (task.Result._Items.Count > 0)
+                var results = Task.Run(() => APIClient.GetItemAsync(APICore.XeroConfig.XeroAPIToken.AccessToken, APICore.XeroConfig.SelectedTenantID, itemID, unitdp)).ConfigureAwait(false).GetAwaiter().GetResult();
+
+                if (results._Items.Count > 0)
                 {
-                    return task.Result._Items[0];
+                    return results._Items[0];
                 }
             }
             catch (Exception ex)
@@ -1753,11 +1775,11 @@ namespace Xero.Net.Core.Api
                 var header = new Items();
                 header._Items = list;
 
-                var task = Task.Run(() => APIClient.UpdateItemAsync(APICore.XeroConfig.XeroAPIToken.AccessToken, APICore.XeroConfig.SelectedTenantID, record.ItemID.Value, header, unitdp));
-                task.Wait();
-                if (task.Result._Items.Count > 0)
+                var results = Task.Run(() => APIClient.UpdateItemAsync(APICore.XeroConfig.XeroAPIToken.AccessToken, APICore.XeroConfig.SelectedTenantID, record.ItemID.Value, header, unitdp)).ConfigureAwait(false).GetAwaiter().GetResult();
+
+                if (results._Items.Count > 0)
                 {
-                    return task.Result._Items[0];
+                    return results._Items[0];
                 }
             }
             catch (Exception ex)
@@ -1788,11 +1810,11 @@ namespace Xero.Net.Core.Api
                 var header = new Items();
                 header._Items = list;
 
-                var task = Task.Run(() => APIClient.CreateItemsAsync(APICore.XeroConfig.XeroAPIToken.AccessToken, APICore.XeroConfig.SelectedTenantID, header, null, unitdp));
-                task.Wait();
-                if (task.Result._Items.Count > 0)
+                var results = Task.Run(() => APIClient.CreateItemsAsync(APICore.XeroConfig.XeroAPIToken.AccessToken, APICore.XeroConfig.SelectedTenantID, header, null, unitdp)).ConfigureAwait(false).GetAwaiter().GetResult();
+
+                if (results._Items.Count > 0)
                 {
-                    return task.Result._Items[0];
+                    return results._Items[0];
                 }
             }
             catch (Exception ex)
@@ -1820,11 +1842,10 @@ namespace Xero.Net.Core.Api
                 var header = new Items();
                 header._Items = records;
 
-                var task = Task.Run(() => APIClient.CreateItemsAsync(APICore.XeroConfig.XeroAPIToken.AccessToken, APICore.XeroConfig.SelectedTenantID, header, null, unitdp));
-                task.Wait();
-                if (task.Result._Items.Count > 0)
+                var results = Task.Run(() => APIClient.CreateItemsAsync(APICore.XeroConfig.XeroAPIToken.AccessToken, APICore.XeroConfig.SelectedTenantID, header, null, unitdp)).ConfigureAwait(false).GetAwaiter().GetResult();
+                if (results._Items.Count > 0)
                 {
-                    return task.Result._Items;
+                    return results._Items;
                 }
             }
             catch (Exception ex)
@@ -1848,9 +1869,8 @@ namespace Xero.Net.Core.Api
             }
             try
             {
-                var task = Task.Run(() => APIClient.DeleteItemAsync(APICore.XeroConfig.XeroAPIToken.AccessToken, APICore.XeroConfig.SelectedTenantID, itemID));
-                task.Wait();
-                if (task.IsCompleted)
+                var result = Task.Run(() => APIClient.DeleteItemAsync(APICore.XeroConfig.XeroAPIToken.AccessToken, APICore.XeroConfig.SelectedTenantID, itemID)).ConfigureAwait(false).GetAwaiter();
+                if (result.IsCompleted)
                 {
                     return true;
                 }
@@ -1880,11 +1900,11 @@ namespace Xero.Net.Core.Api
         {
             try
             {
-                var task = Task.Run(() => APIClient.GetJournalsAsync(APICore.XeroConfig.XeroAPIToken.AccessToken, APICore.XeroConfig.SelectedTenantID, ModifiedSince, offset, paymentsOnly));
-                task.Wait();
-                if (task.Result._Journals.Count > 0)
+                var results = Task.Run(() => APIClient.GetJournalsAsync(APICore.XeroConfig.XeroAPIToken.AccessToken, APICore.XeroConfig.SelectedTenantID, ModifiedSince, offset, paymentsOnly)).ConfigureAwait(false).GetAwaiter().GetResult();
+
+                if (results._Journals.Count > 0)
                 {
-                    return task.Result._Journals;
+                    return results._Journals;
                 }
             }
             catch (Exception ex)
@@ -1909,11 +1929,11 @@ namespace Xero.Net.Core.Api
         {
             try
             {
-                var task = Task.Run(() => APIClient.GetOrganisationsAsync(APICore.XeroConfig.XeroAPIToken.AccessToken, APICore.XeroConfig.SelectedTenantID));
-                task.Wait();
-                if (task.Result._Organisations.Count > 0)
+                var results = Task.Run(() => APIClient.GetOrganisationsAsync(APICore.XeroConfig.XeroAPIToken.AccessToken, APICore.XeroConfig.SelectedTenantID)).ConfigureAwait(false).GetAwaiter().GetResult();
+
+                if (results._Organisations.Count > 0)
                 {
-                    return task.Result._Organisations;
+                    return results._Organisations;
                 }
             }
             catch (Exception ex)
@@ -1960,10 +1980,16 @@ namespace Xero.Net.Core.Api
                 while (count == 100)
                 {
                     if (page == -1) page = null; // This allows a quick first page of records
-                    var task = Task.Run(() => APIClient.GetQuotesAsync(APICore.XeroConfig.XeroAPIToken.AccessToken, APICore.XeroConfig.SelectedTenantID, ModifiedSince, dateFrom, dateTo, expiryDateFrom, expiryDateTo, contactID, status, page, order, quoteNumber));
-                    task.Wait();
-                    records.AddRange(task.Result._Quotes); // Add the next page records returned
-                    count = task.Result._Quotes.Count; // Record the number of records returned in this page. if less than 100 then the loop will exit otherwise get the next page full
+                    var results = Task.Run(() => APIClient.GetQuotesAsync(APICore.XeroConfig.XeroAPIToken.AccessToken, APICore.XeroConfig.SelectedTenantID, ModifiedSince, dateFrom, dateTo, expiryDateFrom, expiryDateTo, contactID, status, page, order, quoteNumber)).ConfigureAwait(false).GetAwaiter().GetResult();
+                    if (results != null && results._Quotes != null && results._Quotes.Count > 0)
+                    {
+                        records.AddRange(results._Quotes); // Add the next page records returned
+                        count = results._Quotes.Count; // Record the number of records returned in this page. if less than 100 then the loop will exit otherwise get the next page full
+                    }
+                    else
+                    {
+                        count = 0;
+                    }
                     if (page != null) page++;
                     if (onlypage.HasValue) count = -1;
                 }
@@ -1995,11 +2021,11 @@ namespace Xero.Net.Core.Api
             }
             try
             {
-                var task = Task.Run(() => APIClient.GetQuoteAsync(APICore.XeroConfig.XeroAPIToken.AccessToken, APICore.XeroConfig.SelectedTenantID, quoteID));
-                task.Wait();
-                if (task.Result._Quotes.Count > 0)
+                var results = Task.Run(() => APIClient.GetQuoteAsync(APICore.XeroConfig.XeroAPIToken.AccessToken, APICore.XeroConfig.SelectedTenantID, quoteID)).ConfigureAwait(false).GetAwaiter().GetResult();
+
+                if (results._Quotes.Count > 0)
                 {
-                    return task.Result._Quotes[0];
+                    return results._Quotes[0];
                 }
             }
             catch (Exception ex)
@@ -2042,11 +2068,11 @@ namespace Xero.Net.Core.Api
                 var header = new Quotes();
                 header._Quotes = list;
 
-                var task = Task.Run(() => APIClient.CreateQuotesAsync(APICore.XeroConfig.XeroAPIToken.AccessToken, APICore.XeroConfig.SelectedTenantID, header));
-                task.Wait();
-                if (task.Result._Quotes.Count > 0)
+                var results = Task.Run(() => APIClient.CreateQuotesAsync(APICore.XeroConfig.XeroAPIToken.AccessToken, APICore.XeroConfig.SelectedTenantID, header)).ConfigureAwait(false).GetAwaiter().GetResult();
+
+                if (results._Quotes.Count > 0)
                 {
-                    return task.Result._Quotes[0];
+                    return results._Quotes[0];
                 }
             }
             catch (Exception ex)
@@ -2074,11 +2100,11 @@ namespace Xero.Net.Core.Api
         {
             try
             {
-                var task = Task.Run(() => APIClient.GetTaxRatesAsync(APICore.XeroConfig.XeroAPIToken.AccessToken, APICore.XeroConfig.SelectedTenantID, filter, order, taxType));
-                task.Wait();
-                if (task.Result._TaxRates.Count > 0)
+                var results = Task.Run(() => APIClient.GetTaxRatesAsync(APICore.XeroConfig.XeroAPIToken.AccessToken, APICore.XeroConfig.SelectedTenantID, filter, order, taxType)).ConfigureAwait(false).GetAwaiter().GetResult();
+
+                if (results._TaxRates.Count > 0)
                 {
-                    return task.Result._TaxRates;
+                    return results._TaxRates;
                 }
             }
             catch (Exception ex)
@@ -2098,11 +2124,11 @@ namespace Xero.Net.Core.Api
         {
             try
             {
-                var task = Task.Run(() => APIClient.GetTaxRatesAsync(APICore.XeroConfig.XeroAPIToken.AccessToken, APICore.XeroConfig.SelectedTenantID, $"Name =\"{name}\""));
-                task.Wait();
-                if (task.Result._TaxRates.Count > 0)
+                var results = Task.Run(() => APIClient.GetTaxRatesAsync(APICore.XeroConfig.XeroAPIToken.AccessToken, APICore.XeroConfig.SelectedTenantID, $"Name =\"{name}\"")).ConfigureAwait(false).GetAwaiter().GetResult();
+
+                if (results._TaxRates.Count > 0)
                 {
-                    return task.Result._TaxRates[0];
+                    return results._TaxRates[0];
                 }
             }
             catch (Exception ex)
@@ -2132,11 +2158,11 @@ namespace Xero.Net.Core.Api
                 var header = new TaxRates();
                 header._TaxRates = list;
 
-                var task = Task.Run(() => APIClient.CreateTaxRatesAsync(APICore.XeroConfig.XeroAPIToken.AccessToken, APICore.XeroConfig.SelectedTenantID, header));
-                task.Wait();
-                if (task.Result._TaxRates.Count > 0)
+                var results = Task.Run(() => APIClient.CreateTaxRatesAsync(APICore.XeroConfig.XeroAPIToken.AccessToken, APICore.XeroConfig.SelectedTenantID, header)).ConfigureAwait(false).GetAwaiter().GetResult();
+
+                if (results._TaxRates.Count > 0)
                 {
-                    return task.Result._TaxRates[0];
+                    return results._TaxRates[0];
                 }
             }
             catch (Exception ex)
@@ -2163,11 +2189,11 @@ namespace Xero.Net.Core.Api
                 var header = new TaxRates();
                 header._TaxRates = records;
 
-                var task = Task.Run(() => APIClient.CreateTaxRatesAsync(APICore.XeroConfig.XeroAPIToken.AccessToken, APICore.XeroConfig.SelectedTenantID, header));
-                task.Wait();
-                if (task.Result._TaxRates.Count > 0)
+                var results = Task.Run(() => APIClient.CreateTaxRatesAsync(APICore.XeroConfig.XeroAPIToken.AccessToken, APICore.XeroConfig.SelectedTenantID, header)).ConfigureAwait(false).GetAwaiter().GetResult();
+
+                if (results._TaxRates.Count > 0)
                 {
-                    return task.Result._TaxRates;
+                    return results._TaxRates;
                 }
             }
             catch (Exception ex)
@@ -2197,11 +2223,11 @@ namespace Xero.Net.Core.Api
                 var header = new TaxRates();
                 header._TaxRates = list;
 
-                var task = Task.Run(() => APIClient.UpdateTaxRateAsync(APICore.XeroConfig.XeroAPIToken.AccessToken, APICore.XeroConfig.SelectedTenantID, header));
-                task.Wait();
-                if (task.Result._TaxRates.Count > 0)
+                var results = Task.Run(() => APIClient.UpdateTaxRateAsync(APICore.XeroConfig.XeroAPIToken.AccessToken, APICore.XeroConfig.SelectedTenantID, header)).ConfigureAwait(false).GetAwaiter().GetResult();
+
+                if (results._TaxRates.Count > 0)
                 {
-                    return task.Result._TaxRates[0];
+                    return results._TaxRates[0];
                 }
             }
             catch (Exception ex)
@@ -2228,11 +2254,11 @@ namespace Xero.Net.Core.Api
                 var header = new TaxRates();
                 header._TaxRates = records;
 
-                var task = Task.Run(() => APIClient.UpdateTaxRateAsync(APICore.XeroConfig.XeroAPIToken.AccessToken, APICore.XeroConfig.SelectedTenantID, header));
-                task.Wait();
-                if (task.Result._TaxRates.Count > 0)
+                var results = Task.Run(() => APIClient.UpdateTaxRateAsync(APICore.XeroConfig.XeroAPIToken.AccessToken, APICore.XeroConfig.SelectedTenantID, header)).ConfigureAwait(false).GetAwaiter().GetResult();
+
+                if (results._TaxRates.Count > 0)
                 {
-                    return task.Result._TaxRates;
+                    return results._TaxRates;
                 }
             }
             catch (Exception ex)
@@ -2260,11 +2286,11 @@ namespace Xero.Net.Core.Api
         {
             try
             {
-                var task = Task.Run(() => APIClient.GetTrackingCategoriesAsync(APICore.XeroConfig.XeroAPIToken.AccessToken, APICore.XeroConfig.SelectedTenantID, filter, order, includeArchived));
-                task.Wait();
-                if (task.Result._TrackingCategories.Count > 0)
+                var results = Task.Run(() => APIClient.GetTrackingCategoriesAsync(APICore.XeroConfig.XeroAPIToken.AccessToken, APICore.XeroConfig.SelectedTenantID, filter, order, includeArchived)).ConfigureAwait(false).GetAwaiter().GetResult();
+
+                if (results._TrackingCategories.Count > 0)
                 {
-                    return task.Result._TrackingCategories;
+                    return results._TrackingCategories;
                 }
             }
             catch (Exception ex)
@@ -2284,11 +2310,11 @@ namespace Xero.Net.Core.Api
         {
             try
             {
-                var task = Task.Run(() => APIClient.GetTrackingCategoryAsync(APICore.XeroConfig.XeroAPIToken.AccessToken, APICore.XeroConfig.SelectedTenantID, trackingCategoryID));
-                task.Wait();
-                if (task.Result._TrackingCategories.Count > 0)
+                var results = Task.Run(() => APIClient.GetTrackingCategoryAsync(APICore.XeroConfig.XeroAPIToken.AccessToken, APICore.XeroConfig.SelectedTenantID, trackingCategoryID)).ConfigureAwait(false).GetAwaiter().GetResult();
+
+                if (results._TrackingCategories.Count > 0)
                 {
-                    return task.Result._TrackingCategories[0];
+                    return results._TrackingCategories[0];
                 }
             }
             catch (Exception ex)
@@ -2328,11 +2354,11 @@ namespace Xero.Net.Core.Api
         {
             try
             {
-                var task = Task.Run(() => APIClient.GetUsersAsync(APICore.XeroConfig.XeroAPIToken.AccessToken, APICore.XeroConfig.SelectedTenantID, ModifiedSince, filter, order));
-                task.Wait();
-                if (task.Result._Users.Count > 0)
+                var results = Task.Run(() => APIClient.GetUsersAsync(APICore.XeroConfig.XeroAPIToken.AccessToken, APICore.XeroConfig.SelectedTenantID, ModifiedSince, filter, order)).ConfigureAwait(false).GetAwaiter().GetResult();
+
+                if (results._Users.Count > 0)
                 {
-                    return task.Result._Users;
+                    return results._Users;
                 }
             }
             catch (Exception ex)
@@ -2371,13 +2397,20 @@ namespace Xero.Net.Core.Api
             {
                 var records = new List<PurchaseOrder>(); // Hold the records
                 int count = 100; // This is how many per page - setting this will ensure we check for the first page is a full 100 and loop until all returned  
+
                 while (count == 100)
                 {
                     if (page == -1) page = null; // This allows a quick first page of records
-                    var task = Task.Run(() => APIClient.GetPurchaseOrdersAsync(APICore.XeroConfig.XeroAPIToken.AccessToken, APICore.XeroConfig.SelectedTenantID, ModifiedSince, status, dateFrom, dateTo, order, page));
-                    task.Wait();
-                    records.AddRange(task.Result._PurchaseOrders); // Add the next page records returned
-                    count = task.Result._PurchaseOrders.Count; // Record the number of records returned in this page. if less than 100 then the loop will exit otherwise get the next page full
+                    var results = Task.Run(() => APIClient.GetPurchaseOrdersAsync(APICore.XeroConfig.XeroAPIToken.AccessToken, APICore.XeroConfig.SelectedTenantID, ModifiedSince, status, dateFrom, dateTo, order, page)).ConfigureAwait(false).GetAwaiter().GetResult();
+                    if (results != null && results._PurchaseOrders != null && results._PurchaseOrders.Count > 0)
+                    {
+                        records.AddRange(results._PurchaseOrders); // Add the next page records returned
+                        count = results._PurchaseOrders.Count; // Record the number of records returned in this page. if less than 100 then the loop will exit otherwise get the next page full
+                    }
+                    else
+                    {
+                        count = 0;
+                    }
                     if (page != null) page++;
                     if (onlypage.HasValue) count = -1;
                 }
@@ -2408,11 +2441,11 @@ namespace Xero.Net.Core.Api
             }
             try
             {
-                var task = Task.Run(() => APIClient.GetPurchaseOrderAsync(APICore.XeroConfig.XeroAPIToken.AccessToken, APICore.XeroConfig.SelectedTenantID, purchaseOrderID));
-                task.Wait();
-                if (task.Result._PurchaseOrders.Count > 0)
+                var results = Task.Run(() => APIClient.GetPurchaseOrderAsync(APICore.XeroConfig.XeroAPIToken.AccessToken, APICore.XeroConfig.SelectedTenantID, purchaseOrderID)).ConfigureAwait(false).GetAwaiter().GetResult();
+
+                if (results._PurchaseOrders.Count > 0)
                 {
-                    return task.Result._PurchaseOrders[0];
+                    return results._PurchaseOrders[0];
                 }
             }
             catch (Exception ex)
