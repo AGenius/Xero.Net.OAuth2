@@ -80,9 +80,12 @@ namespace Xero.Net.Core
 
 
         // Setup the sub API objects
-        internal Api.AccountingApi AccountingApi = new Api.AccountingApi();
-        internal Api.AssetApi AssetApi = new Api.AssetApi();
-        internal Api.ProjectApi ProjectApi = new Api.ProjectApi();
+        /// <summary>Exposes the AccountingApi Object</summary>
+        public Api.AccountingApi AccountingApi = new Api.AccountingApi();
+        /// <summary>Exposes the AssetApi Object</summary>
+        public Api.AssetApi AssetApi = new Api.AssetApi();
+        /// <summary>Exposes the ProjectApi Object</summary>
+        public Api.ProjectApi ProjectApi = new Api.ProjectApi();
 
 
         #region Event
