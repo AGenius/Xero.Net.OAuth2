@@ -171,7 +171,13 @@ namespace Xero.Net.Core.OAuth2.Model
                     {
                         scopelist += " ";
                     }
-                    scopelist += item.ToString().Replace("_", ".");
+                    if (item == XeroScope.offline_access)
+                    {
+                        scopelist += item.ToString();
+                    } else
+                    {
+                        scopelist += item.ToString().Replace("_", ".");
+                    }                    
                 }
 
                 return scopelist;
