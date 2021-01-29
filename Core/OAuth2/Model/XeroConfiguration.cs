@@ -5,6 +5,9 @@ using System.Text;
 
 namespace Xero.Net.Core.OAuth2.Model
 {
+    /// <summary>
+    /// The Configuration object that holds all the magic info needed!
+    /// </summary>
     public class XeroConfiguration
     {
         /// <summary>

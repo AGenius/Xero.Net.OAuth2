@@ -266,8 +266,7 @@ namespace Xero.Net.Core
         /// Revoke the Access Token and disconnect the tenants from the user
         /// </summary>        
         public void RevokeToken()
-        {
-            //TODO Implement Revoke (when found out how!)
+        {            
             var client = new HttpClient();
 
             var response = Task.Run(() => client.RevokeTokenAsync(new TokenRevocationRequest
