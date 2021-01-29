@@ -30,6 +30,10 @@ This API Wrapper was designed to simplify the API calls to Xero and convert all 
 
 My codebase is contained in "Core".
 
+I have now set the Core API wrapper to Inherit the NetStandard API's so you may access the Async calls direcly via my Core API. This is usefull to expose the Async methods and provide access to perform actions not available in my own Api code
+Using my Core Api code should cater for most things but at least it will give access without the need to instatiate a NetStandard version Api object.
+
+
 [![NuGet.org](https://img.shields.io/badge/NuGet.org-Xero.NetStandard.OAuth2-brightgreen?style=plastic&logo=appveyor)](https://www.nuget.org/packages/Xero.NetStandard.OAuth2/)
 
 Visit https://github.com/XeroAPI/Xero-NetStandard
@@ -53,6 +57,8 @@ You can follow these steps to create your Xero app to allow access to your Xero 
 * Click the "Save" button. 
 
 ## Inspired By
+The need to make life simple!
+
 Code for the listener was found here
 http://www.gabescode.com/dotnet/2018/11/01/basic-HttpListener-web-service.html 
 I built something similar in the past using the TCP Listener and started to look at midifing this to do the listening but found it didnt work as I hoped. Subsequently an example provided by Xero pointed to this listener and I managed to make it work.
@@ -61,6 +67,7 @@ I built something similar in the past using the TCP Listener and started to look
 ## Getting Started
 Clone/Download the repository
 To restore the packages used from NuGet and you may need to execute in the Nuget package console
+
 ``
 Update-Package -reinstall
 ``
@@ -293,11 +300,13 @@ if (invoiceRecord.ValidationErrors == null || invoiceRecord.ValidationErrors.Cou
 }
 
 ```            
-## Known Issues
+## Known Issues and Future Updates
 * Currently the oAuth2 handles PKCE only.
 * The State value used in the OAuth2 process is sent and received but is not checked for validity
-* Need to Add Payroll
-* Need to add BankFeeds
+* Need to add Simplified Payroll (Au, Nz and Uk) Access (Base NetStandard access is available)
+* Need to add Simplified BankFeeds Access (Base NetStandard access is available)
+* Need to add Simplified Identity Access (Base NetStandard access is available)
+
 
 ## License
 
