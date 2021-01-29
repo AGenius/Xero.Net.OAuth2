@@ -363,7 +363,7 @@ namespace Xero.Net.Core
                 // Ensure the scopes list is left intact!
                 newToken.RequestedScopes = XeroConfig.XeroAPIToken.RequestedScopes;
             }
-
+            newToken.Tenants = XeroConfig.XeroAPIToken.Tenants; // Re-instate the tenants (this should not have changed!)
             return newToken;
         }
         #region JSON Serialization methods
