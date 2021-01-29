@@ -675,17 +675,10 @@ namespace Xero.Net.Core.Api
                 while (count == 100)
                 {
                     if (page == -1) page = null; // This allows a quick first page of records
-                    var results = Task.Run(() => APIClient.GetContactsAsync(APICore.XeroConfig.XeroAPIToken.AccessToken, APICore.XeroConfig.SelectedTenantID, ModifiedSince, filter, order, iDs, page, includeArchived)).ConfigureAwait(false).GetAwaiter().GetResult();
-                    if (results != null && results._Contacts != null && results._Contacts.Count > 0)
-                    {
-                        records.AddRange(results._Contacts); // Add the next page records returned
-                        count = results._Contacts.Count; // Record the number of records returned in this page. if less than 100 then the loop will exit otherwise get the next page full
-                    }
-                    else
-                    {
-                        count = 0;
-                    }
-
+                    var task = Task.Run(() => APIClient.GetContactsAsync(APICore.XeroConfig.XeroAPIToken.AccessToken, APICore.XeroConfig.SelectedTenantID, ModifiedSince, filter, order, iDs, page, includeArchived));
+                    task.Wait();
+                    records.AddRange(task.Result._Contacts); // Add the next page records returned
+                    count = task.Result._Contacts.Count; // Record the number of records returned in this page. if less than 100 then the loop will exit otherwise get the next page full
                     if (page != null) page++;
                     if (onlypage.HasValue) count = -1;
                 }
