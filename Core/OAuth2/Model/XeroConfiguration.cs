@@ -167,22 +167,13 @@ namespace Xero.Net.Core.OAuth2.Model
                 // Always sort the list of scopes in Alphabetical order to ensure match when testing for changes
                 foreach (var item in Scopes.OrderBy(x => x.ToString()))
                 {
-                    if (!string.IsNullOrEmpty(scopelist) && item != XeroScope.offline_access)
+                    if (!string.IsNullOrEmpty(scopelist))
                     {
                         scopelist += " ";
                     }
-                    if (item == XeroScope.offline_access)
-                    {
-                        // Dont add now                        
-                    }
-                    else
-                    {
-                        scopelist += item.ToString().Replace("_", ".");
-                    }
-
+                    scopelist += item.ToString().Replace("_", ".");
                 }
-                // To ensure offline_access is at the end of the scope list
-                scopelist += " offline_access";
+
                 return scopelist;
             }
 
