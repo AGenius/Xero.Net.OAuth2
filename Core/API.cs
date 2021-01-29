@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Security.Cryptography;
 using System.Threading.Tasks;
 using Xero.Net.Core.OAuth2.Model;
+using System.Linq;
 
 namespace Xero.Net.Core
 {
@@ -162,7 +163,7 @@ namespace Xero.Net.Core
             AccountingApi.APICore = this;
             AssetApi.APICore = this;
             ProjectApi.APICore = this;
-            isConnected = false;           
+            isConnected = false;
 
         }
         /// <summary>
@@ -183,6 +184,13 @@ namespace Xero.Net.Core
             {
                 throw new ArgumentNullException("Missing XeroConfig");
             }
+
+            // Always ensure the stored Returned scope string is in sorted order 
+            if (XeroConfig.XeroAPIToken != null && !string.IsNullOrEmpty(XeroConfig.XeroAPIToken.RequestedScopes))
+            {
+                XeroConfig.XeroAPIToken.RequestedScopes = string.Join(" ", XeroConfig.XeroAPIToken.RequestedScopes.Split(' ').OrderBy(x => x).ToArray());
+            }
+
             _authClient.XeroConfig = XeroConfig; // Always ensure the auth client has the XeroConfig             
             try
             {
@@ -225,7 +233,7 @@ namespace Xero.Net.Core
         public void RevokeAuth()
         {
             _authClient.RevokeToken();
-        }            
+        }
         private string GenerateCodeVerifier()
         {
             //Generate a random string for our code verifier
