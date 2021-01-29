@@ -236,7 +236,7 @@ namespace Xero.Net.Core.Api
         /// Non-system accounts and accounts not used on transactions can be deleted using the delete method. 
         /// If an account is not able to be deleted you can update the status to "ARCHIVED"
         /// </summary>
-        /// <param name="accountID">Unique identifier for the record</param>
+        /// <param name="AccountID">Unique identifier for the record</param>
         /// <returns></returns>
         public bool DeleteAccount(Guid AccountID)
         {
@@ -440,7 +440,7 @@ namespace Xero.Net.Core.Api
         /// <summary>
         /// Allows you to create a number bank transfers
         /// </summary>
-        /// <param name="record">BankTransfers with array of BankTransfer objects in request body</param>
+        /// <param name="records">BankTransfers with array of BankTransfer objects in request body</param>
         /// <returns></returns>
         public BankTransfer CreateBankTransfers(List<BankTransfer> records)
         {
@@ -643,8 +643,11 @@ namespace Xero.Net.Core.Api
         /// </summary>
         public enum ContactType
         {
+            /// <summary>Contacts set as Customers</summary>
             isCustomer,
+            /// <summary>Contacts set as Suppliers</summary>
             isSupplier,
+            /// <summary>All Contacts regarless of Type</summary>
             Either
         }
         /// <summary>
@@ -716,7 +719,8 @@ namespace Xero.Net.Core.Api
         /// Provide a way to fetch Contacts using a single Property
         /// </summary>
         /// <param name="Status">Status Enum - Xero.Net.Api.Model.Accounting.Contact.StatusEnum </param>        
-        /// <param name="AddressType">AddressType Enum - Xero.Net.Api.Model.Accounting.Address.AddressType</param>       
+        /// <param name="AddressType">AddressType Enum - Xero.Net.Api.Model.Accounting.Address.AddressType</param>    
+        /// <param name="contactType">Enum representing the Type of Contact to return <see cref="ContactType"/></param>
         /// <returns>List of Matching Records</returns>
         public List<Contact> Contacts(Contact.ContactStatusEnum Status,
         ContactType contactType = ContactType.Either,
@@ -1555,8 +1559,8 @@ namespace Xero.Net.Core.Api
         /// <summary>
         /// Create Single Invoice 
         /// </summary>
-        /// <param name="invoice">Invoice record</param>
-        /// /// <param name="unitdp">(Unit Decimal Places) You can opt in to use four decimal places for unit amounts (optional)</param>
+        /// <param name="record">Invoice record</param>
+        /// <param name="unitdp">(Unit Decimal Places) You can opt in to use four decimal places for unit amounts (optional)</param>
         /// <returns>Created Invoice Record</returns>
         public Invoice CreateInvoice(Invoice record, int? unitdp = null)
         {
@@ -1591,6 +1595,7 @@ namespace Xero.Net.Core.Api
         /// Create a list of invoices
         /// </summary>
         /// <param name="records"></param>
+        /// <param name="unitdp">e.g. (Unit Decimal Places) You can opt in to use four decimal places for unit amounts (optional)</param>
         /// <returns>List of created invoice Records</returns>
         public List<Invoice> CreateInvoices(List<Invoice> records, int? unitdp = null)
         {
@@ -1622,6 +1627,7 @@ namespace Xero.Net.Core.Api
         /// Update a single Invoice Record
         /// </summary>
         /// <param name="record">Invoice record to update</param>
+        /// /// <param name="unitdp">e.g. (Unit Decimal Places) You can opt in to use four decimal places for unit amounts (optional)</param>
         /// <returns>Updated Invoice Record</returns>
         public Invoice UpdateInvoice(Invoice record, int? unitdp = null)
         {
@@ -1637,7 +1643,7 @@ namespace Xero.Net.Core.Api
                 var header = new Invoices();
                 header._Invoices = list;
 
-                var task = Task.Run(() => APIClient.UpdateInvoiceAsync(APICore.XeroConfig.XeroAPIToken.AccessToken, APICore.XeroConfig.SelectedTenantID, record.InvoiceID.Value, header));
+                var task = Task.Run(() => APIClient.UpdateInvoiceAsync(APICore.XeroConfig.XeroAPIToken.AccessToken, APICore.XeroConfig.SelectedTenantID, record.InvoiceID.Value, header, unitdp));
                 task.Wait();
                 if (task.Result._Invoices.Count > 0)
                 {
@@ -1939,6 +1945,7 @@ namespace Xero.Net.Core.Api
         /// <param name="status">Filter for quotes of a particular Status (optional)</param>
         /// <param name="quoteNumber">Filter by quote number (e.g. GET https://.../Quotes?QuoteNumber&#x3D;QU-0001) (optional)</param>
         /// <returns>List of Quotes</returns>
+        /// <exception cref="Xero.Net.Api.Client.ApiException">Thrown when fails to make API call</exception>
         public List<Quote> Quotes(string order = null, int? onlypage = null, DateTime? ModifiedSince = null, DateTime? dateFrom = null, DateTime? dateTo = null, DateTime? expiryDateFrom = null, DateTime? expiryDateTo = null, Guid? contactID = null, string status = null, string quoteNumber = null)
         {
             int? page = 1;
@@ -1979,6 +1986,7 @@ namespace Xero.Net.Core.Api
         /// </summary>
         /// <param name="quoteID">Unique identifier for the record</param>
         /// <returns>Quote Object</returns>
+        /// <exception cref="Xero.Net.Api.Client.ApiException">Thrown when fails to make API call</exception>
         public Quote Quote(Guid quoteID)
         {
             if (quoteID == null)
@@ -2014,6 +2022,12 @@ namespace Xero.Net.Core.Api
 
             return null;
         }
+        /// <summary>
+        /// Allows you to create a singlequotes 
+        /// </summary>        
+        /// <param name="record">Item Record</param>               
+        /// <returns>The Created Quote Record</returns>
+        /// <exception cref="Xero.Net.Api.Client.ApiException">Thrown when fails to make API call</exception>
         public Quote CreateQuote(Quote record)
         {
             if (record == null)

@@ -23,6 +23,9 @@ namespace Xero.Net.Core.OAuth2.Model
         /// Holds the Live AccessToken
         /// </summary>
         public XeroAccessToken XeroAPIToken { get; set; }
+        /// <summary>
+        /// The random generated code verification hash
+        /// </summary>
         public string codeVerifier { get; set; }
         /// <summary>
         /// Issued when you create your Zero app
@@ -73,7 +76,8 @@ namespace Xero.Net.Core.OAuth2.Model
         /// <summary>
         /// Add a scope to the required scopes when authenticating
         /// </summary>
-        /// <param name="scope"></param>
+        /// <param name="scope">The Scope to add <see cref="XeroScope"/></param>
+        /// <param name="reset">Force a reset of the Scopes List</param>
         public void AddScope(XeroScope scope, bool reset = false)
         {
             if (reset)

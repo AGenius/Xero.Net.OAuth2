@@ -42,7 +42,8 @@ namespace Xero.Net.Core
         /// <summary>
         /// Set the initial Token record before any processing, if this is a new authentication then no existing data is needed
         /// </summary>
-        /// <param name="TokenData"></param>
+        /// <param name="timeout">The timout duration in seconds to wait for authentication before it gives up</param>
+        /// <param name="ForceReAuth">Force a re-authentication regardless of status of the token</param>
         /// <returns>The AccessToken record (refreshed version if it was expired prior)</returns>
         public void InitializeoAuth2(int? timeout = 60, bool ForceReAuth = false)
         {
@@ -236,7 +237,7 @@ namespace Xero.Net.Core
             }
         }
         /// <summary>
-        /// Force the Config Scope list to match the returned scopes list if the <see cref="XeroConfig.StoreReceivedScope"/> is true
+        /// Force the Config Scope list to match the returned scopes list if the <see cref="XeroConfiguration.StoreReceivedScope"/> is true
         /// </summary>
         public void ScopesFromScopeString()
         {
@@ -345,6 +346,7 @@ namespace Xero.Net.Core
         /// Unpack the token data from the API Authentication or Refresh calls
         /// </summary>
         /// <param name="content">reponse string containing the data </param>
+        /// <param name="isRefresh">Property used to know if the Unpack is from the refresh</param>
         /// <returns></returns>
         private XeroAccessToken UnpackToken(string content, bool isRefresh)
         {

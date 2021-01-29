@@ -11,15 +11,21 @@ namespace Xero.Net.Core
     /// </summary>
     public class API
     {
+        /// <summary>
+        /// The API Wrapper version
+        /// </summary>
         public string Version
         {
             get
             {
-                return "This API Version : 1.2021.0125 - Compatible with Xero-Standard API : 3.12.1";
+                return "This API Version : 1.2021.0129 - Compatible with Xero-Standard API : 3.13.0";
             }
         }
         oAuth2 _authClient = null;
-
+        
+        /// <summary>
+        /// The Configuration object that holds all the magic info needed!
+        /// </summary>
         public XeroConfiguration XeroConfig { get; set; }
         /// <summary>
         /// When the API is initialized and the Token is refreshed or the API is authenticated 
@@ -74,13 +80,15 @@ namespace Xero.Net.Core
 
 
         // Setup the sub API objects
-        public Api.AccountingApi AccountingApi = new Api.AccountingApi();
-        public Api.AssetApi AssetApi = new Api.AssetApi();
-        public Api.ProjectApi ProjectApi = new Api.ProjectApi();
+        internal Api.AccountingApi AccountingApi = new Api.AccountingApi();
+        internal Api.AssetApi AssetApi = new Api.AssetApi();
+        internal Api.ProjectApi ProjectApi = new Api.ProjectApi();
 
 
         #region Event
-
+        /// <summary>
+        /// Loggin message Event
+        /// </summary>
         public class LogMessage
         {
             public string MessageText { get; set; }
@@ -92,13 +100,15 @@ namespace Xero.Net.Core
             public string MessageText { get; set; }
             public XeroEventStatus Status { get; set; }
         }
-        public void onStatusUpdates(string message, XeroEventStatus status)
+        /// <summary>Fire the Status update Event</summary>
+        internal void onStatusUpdates(string message, XeroEventStatus status)
         {
             StatusEventArgs args = new StatusEventArgs() { MessageText = message, Status = status };
             StatusUpdates.SafeInvoke(this, args);
         }
 
         #endregion
+        /// <summary>Default constructor, will setup the defaults required.</summary>
         public API()
         {
             _authClient = new oAuth2();
@@ -110,6 +120,8 @@ namespace Xero.Net.Core
             isConnected = false;
 
         }
+        /// <summary>Instantiate the API with a Configuration record already setup</summary>
+        /// <param name="config">The configuration record to use <see cref="XeroConfiguration"/></param>
         public API(XeroConfiguration config = null)
         {
             if (config == null)
@@ -192,6 +204,9 @@ namespace Xero.Net.Core
                 throw;
             }
         }
+        /// <summary>
+        /// Revoke the Access Token to invalidate the token used 
+        /// </summary>
         public void RevokeAuth()
         {
             _authClient.RevokeToken();
