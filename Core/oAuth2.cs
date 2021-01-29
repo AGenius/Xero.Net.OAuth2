@@ -217,7 +217,7 @@ namespace Xero.Net.Core
                         var tenantscontent = Task.Run(() => tenantsresponse.Content.ReadAsStringAsync()).ConfigureAwait(false).GetAwaiter().GetResult();
 
                         // Record the Available Tenants
-                        XeroConfig.XeroAPIToken.Tenants = JsonConvert.DeserializeObject<List<Tenant>>(content);
+                        XeroConfig.XeroAPIToken.Tenants = JsonConvert.DeserializeObject<List<Tenant>>(tenantscontent);
 
                         // Raise event to the parent caller (your app) 
                         onStatusUpdates("Code Exchange Completed", XeroEventStatus.Success);
