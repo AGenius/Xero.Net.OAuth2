@@ -7,7 +7,7 @@ namespace Xero.Net.Core.Api
     /// <summary>
     /// Collection of wrapper functions to interact with the Project API endpoints
     /// </summary>
-    public class ProjectApi : ICoreAPI
+    public class ProjectApi : Xero.Net.Api.Api.ProjectApi, ICoreAPI
     {
         Xero.Net.Api.Api.ProjectApi APIClient = new Xero.Net.Api.Api.ProjectApi();
         internal API APICore { get; set; }

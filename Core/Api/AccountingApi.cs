@@ -8,7 +8,7 @@ namespace Xero.Net.Core.Api
     /// <summary>
     /// Collection of wrapper functions to interact with the Accounting API endpoints
     /// </summary>
-    public class AccountingApi : ICoreAPI
+    public class AccountingApi : Xero.Net.Api.Api.AccountingApi, ICoreAPI
     {
         Xero.Net.Api.Api.AccountingApi APIClient = new Xero.Net.Api.Api.AccountingApi();
         internal API APICore { get; set; }

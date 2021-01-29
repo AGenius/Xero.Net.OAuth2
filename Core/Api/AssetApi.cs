@@ -8,7 +8,7 @@ namespace Xero.Net.Core.Api
     /// <summary>
     /// Collection of wrapper functions to interact with the Asset API endpoints
     /// </summary>
-    public class AssetApi : ICoreAPI
+    public class AssetApi : Xero.Net.Api.Api.AssetApi, ICoreAPI
     {
         Xero.Net.Api.Api.AssetApi APIClient = new Xero.Net.Api.Api.AssetApi();
         internal API APICore { get; set; }
