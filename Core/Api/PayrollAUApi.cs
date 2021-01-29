@@ -7,11 +7,11 @@ using System.Threading.Tasks;
 namespace Xero.Net.Core.Api
 {
     /// <summary>
-    /// Collection of wrapper functions to interact with the Project API endpoints
+    /// Collection of wrapper functions to interact with the PayrollAu API endpoints
     /// </summary>
-    public class PayrolAU : ICoreAPI
+    public class PayrollAuApi : Xero.Net.Api.Api.ProjectApi, ICoreAPI
     {
-        Xero.Net.Api.Api.ProjectApi APIClient = new Xero.Net.Api.Api.ProjectApi();
+        Xero.Net.Api.Api.PayrollAuApi APIClient = new Xero.Net.Api.Api.PayrollAuApi();
         internal API APICore { get; set; }
         /// <summary>
         /// Return the Rate Limit info collected on last call

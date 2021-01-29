@@ -7,11 +7,11 @@ using System.Threading.Tasks;
 namespace Xero.Net.Core.Api
 {
     /// <summary>
-    /// Collection of wrapper functions to interact with the PayrollNZ API endpoints
+    /// Collection of wrapper functions to interact with the PayrollNz API endpoints
     /// </summary>
-    public class PayrollNZ : ICoreAPI
+    public class PayrollNzApi : ICoreAPI
     {
-        Xero.Net.Api.Api.ProjectApi APIClient = new Xero.Net.Api.Api.ProjectApi();
+        Xero.Net.Api.Api.PayrollNzApi APIClient = new Xero.Net.Api.Api.PayrollNzApi();
         internal API APICore { get; set; }
         /// <summary>
         /// Return the Rate Limit info collected on last call

@@ -84,8 +84,20 @@ namespace Xero.Net.Core
         public Api.AccountingApi AccountingApi = new Api.AccountingApi();
         /// <summary>Exposes the AssetApi Object</summary>
         public Api.AssetApi AssetApi = new Api.AssetApi();
+        /// <summary>Exposes the BankFeedsApi Object</summary>
+        public Api.BankFeedsApi BankFeedsApi = new Api.BankFeedsApi();
+        /// <summary>Exposes the PayrollAuApi Object</summary>
+        public Api.PayrollAuApi PayrollAuApi = new Api.PayrollAuApi();
+        /// <summary>Exposes the PayrollNzApi Object</summary>
+        public Api.PayrollNzApi PayrollNzApi = new Api.PayrollNzApi();
+        /// <summary>Exposes the PayrollUkApi Object</summary>
+        public Api.PayrollUkApi PayrollUkApi = new Api.PayrollUkApi();
+        /// <summary>Exposes the IdentityApi Object</summary>
+        public Api.IdentityApi IdentityApi = new Api.IdentityApi();        
         /// <summary>Exposes the ProjectApi Object</summary>
         public Api.ProjectApi ProjectApi = new Api.ProjectApi();
+
+
 
 
         #region Event

@@ -7,11 +7,11 @@ using System.Threading.Tasks;
 namespace Xero.Net.Core.Api
 {
     /// <summary>
-    /// Collection of wrapper functions to interact with the BankFeeds API endpoints
+    /// Collection of wrapper functions to interact with the PayrollUk API endpoints
     /// </summary>
-    public class BankFeedsApi : Xero.Net.Api.Api.BankFeedsApi, ICoreAPI
+    public class PayrollUkApi : Xero.Net.Api.Api.PayrollUkApi, ICoreAPI
     {
-        Xero.Net.Api.Api.BankFeedsApi APIClient = new Xero.Net.Api.Api.BankFeedsApi();
+        Xero.Net.Api.Api.PayrollUkApi APIClient = new Xero.Net.Api.Api.PayrollUkApi();
         internal API APICore { get; set; }
         /// <summary>
         /// Return the Rate Limit info collected on last call

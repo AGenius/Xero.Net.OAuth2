@@ -124,6 +124,8 @@
     <Compile Include="Core\Api\BankFeedsApi.cs" />
     <Compile Include="Core\Api\ICoreAPI.cs" />
     <Compile Include="Core\Api\PayrollAUApi.cs" />
+    <Compile Include="Core\Api\IdentityApi.cs" />
+    <Compile Include="Core\Api\PayrollUkApi.cs" />
     <Compile Include="Core\Api\PayrollNZApi.cs" />
     <Compile Include="Core\Api\ProjectApi.cs" />
     <Compile Include="Core\Class\Common.cs" />
