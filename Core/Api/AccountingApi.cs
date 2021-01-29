@@ -8,14 +8,25 @@ namespace Xero.Net.Core.Api
     /// <summary>
     /// Collection of wrapper functions to interact with the Accounting API endpoints
     /// </summary>
-    public class AccountingApi
+    public class AccountingApi : ICoreAPI
     {
         Xero.Net.Api.Api.AccountingApi APIClient = new Xero.Net.Api.Api.AccountingApi();
+        internal API APICore { get; set; }
         /// <summary>
         /// Throw errors for Items not found
         /// </summary>
         public bool? RaiseNotFoundErrors { get; set; }
-        internal API APICore { get; set; }
+        /// <summary>
+        /// Return the Rate Limit info collected on last call
+        /// </summary>
+        public Xero.Net.Api.Model.RateLimitInfo RateInfo
+        {
+            get
+            {
+                return APIClient.AsynchronousClient.RateInfo;
+            }
+        }
+
 
 
         #region Accounts

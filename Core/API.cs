@@ -71,8 +71,10 @@ namespace Xero.Net.Core
             }
         }
 
+
+
         // Setup the sub API objects
-        public Xero.Net.Core.Api.AccountingApi AccountingApi = new Api.AccountingApi();
+        public Api.AccountingApi AccountingApi = new Api.AccountingApi();
         public Api.AssetApi AssetApi = new Api.AssetApi();
         public Api.ProjectApi ProjectApi = new Api.ProjectApi();
 

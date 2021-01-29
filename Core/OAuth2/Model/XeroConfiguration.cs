@@ -30,7 +30,6 @@ namespace Xero.Net.Core.OAuth2.Model
         /// where "port" is any valid port e.g. 8888 and "name" is something like "callback" - http://localhost:8888/callback
         /// </summary>
         public Uri CallbackUri { get; set; }
-
         private List<XeroScope> _scopes { get; set; } // Hold the list
         /// <summary>
         /// List of Scopes the API would like to use
@@ -177,7 +176,7 @@ namespace Xero.Net.Core.OAuth2.Model
                 scopelist += " offline_access";
                 return scopelist;
             }
-           
+
         }
 
         /// <summary>
@@ -231,6 +230,9 @@ namespace Xero.Net.Core.OAuth2.Model
                 return null;
             }
         }
+        /// <summary>
+        /// The Tenant ID used for API calls
+        /// </summary>
         public string SelectedTenantID
         {
             get
@@ -241,9 +243,19 @@ namespace Xero.Net.Core.OAuth2.Model
                 }
                 return null;
             }
-        }// The Tenant ID to use for API calls
-        public Tenant SelectedTenant { get; set; }// The Tenant  
+        }
+        /// <summary>
+        /// The Selected Tenant record
+        /// </summary>
+        public Tenant SelectedTenant { get; set; }
+        /// <summary>
+        /// Choose to store the Received scope list and sync it with the internal list
+        /// </summary>
         public bool StoreReceivedScope { get; set; }
+        /// <summary>
+        /// Auto select will ensure the first tenant is the selected tenant
+        /// Useful for single tenant connections
+        /// </summary>
         public bool? AutoSelectTenant { get; set; }
 
     }

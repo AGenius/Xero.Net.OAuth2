@@ -122,6 +122,7 @@
     <Compile Include="Core\Api\AccountingApi.cs" />
     <Compile Include="Core\Api\AssetApi.cs" />
     <Compile Include="Core\Api\BankFeedsApi.cs" />
+    <Compile Include="Core\Api\ICoreAPI.cs" />
     <Compile Include="Core\Api\PayrollAUApi.cs" />
     <Compile Include="Core\Api\PayrollNZApi.cs" />
     <Compile Include="Core\Api\ProjectApi.cs" />
@@ -573,6 +574,7 @@
     <Compile Include="Core\OAuth2\Model\XeroConfiguration.cs" />
     <Compile Include="Core\OAuth2\Model\XeroOAuthToken.cs" />
     <Compile Include="Core\OAuth2\Model\XeroScope.cs" />
+    <Compile Include="Model\RateLimitInfo.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
