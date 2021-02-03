@@ -102,7 +102,21 @@ if (!string.IsNullOrEmpty(tokendata))
     Xero.Net.Core.API  xeroAPI = new Xero.Net.Core.API(XeroConfig);
 }
 ```
+Alternative ways to load the configuration from storage
+
+```c#
+// Load from a saved Json string same as above
+XeroConfig = Utils.DeSerializeObject<XeroConfiguration>(tokendata);
+
+// Load direct from a file that contains the Json
+XeroConfig = new XeroConfiguration("tokendata.xml");
+
+// Load from the Json string (deserialized internally)
+XeroConfig = new XeroConfiguration(tokendata); // Load from json string
+```
+
 3 Create a new Config and restore just the Access Token portion
+
 ```c#
 XeroConfiguration XeroConfig = new XeroConfiguration
 {

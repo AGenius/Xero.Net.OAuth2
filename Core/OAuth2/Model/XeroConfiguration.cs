@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Security.Cryptography;
 using System.Text;
 using System.Linq;
+using Newtonsoft.Json;
 
 namespace Xero.Net.Core.OAuth2.Model
 {
@@ -11,6 +12,37 @@ namespace Xero.Net.Core.OAuth2.Model
     /// </summary>
     public class XeroConfiguration
     {
+        /// <summary>
+        /// default ctor
+        /// </summary>
+        public XeroConfiguration() { }
+        /// <summary>
+        /// Provide ability to create the config from a loaded Json string
+        /// </summary>
+        /// <param name="jsonStringOrFilePath">The string containing the Configuration record or a valid file path to a saved Configuration </param>
+        /// <returns>XeroConfiguration object <see cref="XeroConfiguration"/></returns>        
+        public XeroConfiguration(string jsonStringOrFilePath)
+        {
+            try
+            {
+                if (System.IO.File.Exists(jsonStringOrFilePath))
+                {
+                    // Thi parameter passed is a valid file so load it and Deserialize
+                    string content = Common.ReadTextFile(jsonStringOrFilePath);
+                    XeroConfiguration newConfig = Common.DeSerializeObject<XeroConfiguration>(content);
+                    Clone(newConfig);
+                }
+                else
+                {
+                    XeroConfiguration newConfig = Common.DeSerializeObject<XeroConfiguration>(jsonStringOrFilePath);
+                    Clone(newConfig);
+                }
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+        }
         /// <summary>
         /// Holds the Returned Access Code from the Authentication step that the AccessToken exchange needs
         /// </summary>
@@ -23,7 +55,8 @@ namespace Xero.Net.Core.OAuth2.Model
         /// <summary>
         /// Holds the Live AccessToken returned from the Auth process
         /// </summary>
-        public  XeroTokenSet AccessTokenSet { get; internal set; }
+        [JsonProperty]
+        public XeroTokenSet AccessTokenSet { get; internal set; }
         /// <summary>
         /// The random generated code verification hash
         /// </summary>
@@ -268,7 +301,6 @@ namespace Xero.Net.Core.OAuth2.Model
         /// Useful for single tenant connections
         /// </summary>
         public bool? AutoSelectTenant { get; set; }
-
         private string _AccessGrantedHTML { get; set; }
         /// <summary>
         /// Override the default Access Granted message
@@ -306,6 +338,24 @@ namespace Xero.Net.Core.OAuth2.Model
             {
                 _AccessDeniedHTML = value;
             }
+        }
+
+        void Clone(XeroConfiguration configObj)
+        {
+            this.AccessDeniedHTML = configObj.AccessDeniedHTML;
+            this.AccessGrantedHTML = configObj.AccessGrantedHTML;
+            this.AccessTokenSet = configObj.AccessTokenSet;
+            this.AutoSelectTenant = configObj.AutoSelectTenant;
+            this.CallbackUri = configObj.CallbackUri;
+            this.ClientID = configObj.ClientID;
+            this.codeVerifier = configObj.codeVerifier;
+            this.ReturnedAccessCode = configObj.ReturnedAccessCode;
+            this.ReturnedState = configObj.ReturnedState;
+            this.Scopes = configObj.Scopes;
+            this.SelectedTenant = configObj.SelectedTenant;
+            this.State = configObj.State;
+            this.StoreReceivedScope = configObj.StoreReceivedScope;
+
         }
     }
 }

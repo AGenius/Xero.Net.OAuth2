@@ -217,7 +217,7 @@ namespace Xero.Net.Core
                         var tenantscontent = Task.Run(() => tenantsresponse.Content.ReadAsStringAsync()).ConfigureAwait(false).GetAwaiter().GetResult();
 
                         // Record the Available Tenants
-                        XeroConfig.AccessTokenSet.Tenants = JsonConvert.DeserializeObject<List<Tenant>>(tenantscontent);
+                        XeroConfig.AccessTokenSet.Tenants = Common.DeSerializeObject<List<Tenant>>(tenantscontent);
 
                         // Raise event to the parent caller (your app) 
                         onStatusUpdates("Code Exchange Completed", XeroEventStatus.Success);
@@ -370,23 +370,10 @@ namespace Xero.Net.Core
                 newToken.RequestedScopes = XeroConfig.AccessTokenSet.RequestedScopes;
             }
             // Unpack the JWT Tokens
-            newToken.AccessTokenRecord = DeSerializeObject<JWTAccessToken>(Common.JWTtoJSON(newToken.AccessToken));
-            newToken.IDTokenRecord = DeSerializeObject<JWTIDToken>(Common.JWTtoJSON(newToken.IdToken));
+            newToken.AccessTokenRecord = Common.DeSerializeObject<JWTAccessToken>(Common.JWTtoJSON(newToken.AccessToken));
+            newToken.IDTokenRecord = Common.DeSerializeObject<JWTIDToken>(Common.JWTtoJSON(newToken.IdToken));
             return newToken;
         }
-        #region JSON Serialization methods
-        public string SerializeObject<TENTITY>(TENTITY objectRecord)
-        {
-            string serialVersion = Newtonsoft.Json.JsonConvert.SerializeObject(objectRecord, Newtonsoft.Json.Formatting.Indented, new Newtonsoft.Json.JsonSerializerSettings()
-            {
-                ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Error
-            });
-            return serialVersion;
-        }
-        public TENTITY DeSerializeObject<TENTITY>(string serializedString)
-        {
-            return Newtonsoft.Json.JsonConvert.DeserializeObject<TENTITY>(serializedString);
-        }
-        #endregion
+
     }
 }

@@ -93,5 +93,58 @@ namespace Xero.Net.Core
             }
             return null;
         }
+        #region JSON Serialization methods
+        public static string SerializeObject<TENTITY>(TENTITY objectRecord)
+        {
+            string serialVersion = Newtonsoft.Json.JsonConvert.SerializeObject(objectRecord, Newtonsoft.Json.Formatting.Indented, new Newtonsoft.Json.JsonSerializerSettings()
+            {
+                ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Error
+            });
+            return serialVersion;
+        }
+        public static TENTITY DeSerializeObject<TENTITY>(string serializedString)
+        {
+            return Newtonsoft.Json.JsonConvert.DeserializeObject<TENTITY>(serializedString);
+        }
+        #endregion
+
+        /// <summary>Read the contents of a text file into a string </summary>
+        /// <param name="filepath">File to read</param>
+        /// <returns>files contents</returns>
+        public static string ReadTextFile(string filepath)
+        {
+            try
+            {
+                string test = Path.GetPathRoot(filepath);
+
+                if (String.IsNullOrEmpty(test) || (test.StartsWith(@"\") && !test.StartsWith(@"\\")))
+                {
+
+                    // No Full path supplied so start from Application root
+                    if (test.StartsWith(@"\"))
+                    {
+                        filepath = ApplicationPath + filepath;
+                    }
+                    else
+                    {
+                        filepath = $"{ApplicationPath}\\{filepath}";
+                    }
+                }
+
+                if (File.Exists(filepath).Equals(true))
+                {
+                    using (StreamReader reader = new StreamReader(filepath))
+                    {
+                        string contents = reader.ReadToEnd();
+                        return contents;
+                    }
+                }
+            }
+            catch (Exception)
+            {
+            }
+
+            return null;
+        }
     }
 }
