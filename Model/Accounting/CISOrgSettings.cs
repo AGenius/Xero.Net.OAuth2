@@ -26,29 +26,17 @@ using OpenAPIDateConverter = Xero.Net.Api.Client.OpenAPIDateConverter;
 namespace Xero.Net.Api.Model.Accounting
 {
     /// <summary>
-    /// ReportFields
+    /// CISOrgSettings
     /// </summary>
     [DataContract]
-    public partial class ReportFields :  IEquatable<ReportFields>, IValidatableObject
+    public partial class CISOrgSettings :  IEquatable<CISOrgSettings>, IValidatableObject
     {
         
         /// <summary>
-        /// Gets or Sets FieldID
+        /// Gets or Sets CISSettings
         /// </summary>
-        [DataMember(Name="FieldID", EmitDefaultValue=false)]
-        public string FieldID { get; set; }
-
-        /// <summary>
-        /// Gets or Sets Description
-        /// </summary>
-        [DataMember(Name="Description", EmitDefaultValue=false)]
-        public string Description { get; set; }
-
-        /// <summary>
-        /// Gets or Sets Value
-        /// </summary>
-        [DataMember(Name="Value", EmitDefaultValue=false)]
-        public string Value { get; set; }
+        [DataMember(Name="CISSettings", EmitDefaultValue=false)]
+        public List<CISOrgSetting> CISSettings { get; set; }
 
         /// <summary>
         /// Returns the string presentation of the object
@@ -57,10 +45,8 @@ namespace Xero.Net.Api.Model.Accounting
         public override string ToString()
         {
             var sb = new StringBuilder();
-            sb.Append("class ReportFields {\n");
-            sb.Append("  FieldID: ").Append(FieldID).Append("\n");
-            sb.Append("  Description: ").Append(Description).Append("\n");
-            sb.Append("  Value: ").Append(Value).Append("\n");
+            sb.Append("class CISOrgSettings {\n");
+            sb.Append("  CISSettings: ").Append(CISSettings).Append("\n");
             sb.Append("}\n");
             return sb.ToString();
         }
@@ -81,34 +67,25 @@ namespace Xero.Net.Api.Model.Accounting
         /// <returns>Boolean</returns>
         public override bool Equals(object input)
         {
-            return this.Equals(input as ReportFields);
+            return this.Equals(input as CISOrgSettings);
         }
 
         /// <summary>
-        /// Returns true if ReportFields instances are equal
+        /// Returns true if CISOrgSettings instances are equal
         /// </summary>
-        /// <param name="input">Instance of ReportFields to be compared</param>
+        /// <param name="input">Instance of CISOrgSettings to be compared</param>
         /// <returns>Boolean</returns>
-        public bool Equals(ReportFields input)
+        public bool Equals(CISOrgSettings input)
         {
             if (input == null)
                 return false;
 
             return 
                 (
-                    this.FieldID == input.FieldID ||
-                    (this.FieldID != null &&
-                    this.FieldID.Equals(input.FieldID))
-                ) && 
-                (
-                    this.Description == input.Description ||
-                    (this.Description != null &&
-                    this.Description.Equals(input.Description))
-                ) && 
-                (
-                    this.Value == input.Value ||
-                    (this.Value != null &&
-                    this.Value.Equals(input.Value))
+                    this.CISSettings == input.CISSettings ||
+                    this.CISSettings != null &&
+                    input.CISSettings != null &&
+                    this.CISSettings.SequenceEqual(input.CISSettings)
                 );
         }
 
@@ -121,12 +98,8 @@ namespace Xero.Net.Api.Model.Accounting
             unchecked // Overflow is fine, just wrap
             {
                 int hashCode = 41;
-                if (this.FieldID != null)
-                    hashCode = hashCode * 59 + this.FieldID.GetHashCode();
-                if (this.Description != null)
-                    hashCode = hashCode * 59 + this.Description.GetHashCode();
-                if (this.Value != null)
-                    hashCode = hashCode * 59 + this.Value.GetHashCode();
+                if (this.CISSettings != null)
+                    hashCode = hashCode * 59 + this.CISSettings.GetHashCode();
                 return hashCode;
             }
         }
