@@ -53,7 +53,7 @@ namespace Xero.Net.Core.Api
                 while (count == pageSize)
                 {
                     if (page == -1) page = null; // This allows a quick first page of records
-                    var results = Task.Run(() => APIClient.GetAssetsAsync(APICore.XeroConfig.XeroAPIToken.AccessToken, APICore.XeroConfig.SelectedTenantID, status, page, pageSize, orderBy, sortDirection, filterBy)).ConfigureAwait(false).GetAwaiter().GetResult(); ;
+                    var results = Task.Run(() => APIClient.GetAssetsAsync(APICore.XeroConfig.AccessTokenSet.AccessToken, APICore.XeroConfig.SelectedTenantID, status, page, pageSize, orderBy, sortDirection, filterBy)).ConfigureAwait(false).GetAwaiter().GetResult(); ;
                     if (results != null && results.Items != null && results.Items.Count > 0)
                     {
                         records.AddRange(results.Items); // Add the next page records returned
@@ -84,7 +84,7 @@ namespace Xero.Net.Core.Api
         {
             try
             {
-                var results = Task.Run(() => APIClient.GetAssetTypesAsync(APICore.XeroConfig.XeroAPIToken.AccessToken, APICore.XeroConfig.SelectedTenantID)).ConfigureAwait(false).GetAwaiter().GetResult(); ;
+                var results = Task.Run(() => APIClient.GetAssetTypesAsync(APICore.XeroConfig.AccessTokenSet.AccessToken, APICore.XeroConfig.SelectedTenantID)).ConfigureAwait(false).GetAwaiter().GetResult(); ;
                
                 if (results.Count > 0)
                 {

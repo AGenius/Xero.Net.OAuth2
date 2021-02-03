@@ -155,7 +155,7 @@ namespace Xero.Net.Core
             // Deal with access denied/cancel
             if (query.Contains("error"))
             {
-                var buffer = Encoding.UTF8.GetBytes(XeroConstants.XERO_AUTH_ACCESS_DENIED_HTML);
+                var buffer = Encoding.UTF8.GetBytes(config.AccessDeniedHTML);
                 response.ContentLength64 = buffer.Length;
                 response.OutputStream.Write(buffer, 0, buffer.Length);
                 // Raise the event so the oAuth2 class can process the receipt of the 
@@ -191,7 +191,7 @@ namespace Xero.Net.Core
                     }
                 }
 
-                var buffer = Encoding.UTF8.GetBytes(XeroConstants.XERO_AUTH_ACCESS_GRANTED_HTML);
+                var buffer = Encoding.UTF8.GetBytes(config.AccessGrantedHTML);
                 response.ContentLength64 = buffer.Length;
                 response.OutputStream.Write(buffer, 0, buffer.Length);
                 // Raise the event so the oAuth2 class can process the receipt of the 

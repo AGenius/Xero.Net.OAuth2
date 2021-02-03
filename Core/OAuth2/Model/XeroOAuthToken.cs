@@ -6,10 +6,10 @@ namespace Xero.Net.Core.OAuth2.Model
     /// <summary>
     /// Hold the Auth token
     /// </summary>
-    public class XeroAccessToken
+    public class XeroTokenSet
     {
         /// <summary>
-        /// List of connected tenants
+        /// List of authorised tenants
         /// </summary>
         public List<Tenant> Tenants { get; set; }
         /// <summary>
@@ -21,7 +21,7 @@ namespace Xero.Net.Core.OAuth2.Model
         /// </summary>
         public string RefreshToken { get; set; }
         /// <summary>
-        /// ?
+        /// User ID
         /// </summary>
         public string IdToken { get; set; }
         /// <summary>
@@ -32,6 +32,14 @@ namespace Xero.Net.Core.OAuth2.Model
         /// Record the Scope used. If the scope is changed on a refresh then force a re-authentication
         /// </summary>
         public string RequestedScopes { get; set; }
+        /// <summary>
+        /// JWT Decoded object holding the Access Token record
+        /// </summary>
+        public JWTAccessToken AccessTokenRecord { get; set; }
+        /// <summary>
+        /// JWT Decoded object holding the ID Token record
+        /// </summary>
+        public JWTIDToken IDTokenRecord { get; set; }
 
     }
 }

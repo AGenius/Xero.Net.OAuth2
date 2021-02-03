@@ -118,7 +118,7 @@ string tokendata = ReadTextFile("tokendata.txt");
 if (!string.IsNullOrEmpty(tokendata))
 {
     XeroAccessToken token = DeSerializeObject<XeroAccessToken>(tokendata);
-    XeroConfig.XeroAPIToken = token;
+    XeroConfig.AccessTokenSet = token;
     Xero.Net.Core.API xeroAPI = new Xero.Net.Core.API(XeroConfig);
 }
 ```

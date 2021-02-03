@@ -55,9 +55,9 @@ namespace Xero.Net.Core
         {
             get
             {
-                if (XeroConfig != null && XeroConfig.XeroAPIToken != null)
+                if (XeroConfig != null && XeroConfig.AccessTokenSet != null)
                 {
-                    return XeroConfig.XeroAPIToken.Tenants;
+                    return XeroConfig.AccessTokenSet.Tenants;
                 }
                 return null;
             }
@@ -186,9 +186,9 @@ namespace Xero.Net.Core
             }
 
             // Always ensure the stored Returned scope string is in sorted order 
-            if (XeroConfig.XeroAPIToken != null && !string.IsNullOrEmpty(XeroConfig.XeroAPIToken.RequestedScopes))
+            if (XeroConfig.AccessTokenSet != null && !string.IsNullOrEmpty(XeroConfig.AccessTokenSet.RequestedScopes))
             {
-                XeroConfig.XeroAPIToken.RequestedScopes = string.Join(" ", XeroConfig.XeroAPIToken.RequestedScopes.Split(' ').OrderBy(x => x).ToArray());
+                XeroConfig.AccessTokenSet.RequestedScopes = string.Join(" ", XeroConfig.AccessTokenSet.RequestedScopes.Split(' ').OrderBy(x => x).ToArray());
             }
 
             _authClient.XeroConfig = XeroConfig; // Always ensure the auth client has the XeroConfig             
@@ -207,7 +207,7 @@ namespace Xero.Net.Core
                 {
                     if ((XeroConfig.AutoSelectTenant.HasValue && XeroConfig.AutoSelectTenant.Value == true) || !XeroConfig.AutoSelectTenant.HasValue)
                     {
-                        XeroConfig.SelectedTenant = XeroConfig.XeroAPIToken.Tenants[0];
+                        XeroConfig.SelectedTenant = XeroConfig.AccessTokenSet.Tenants[0];
                     }
                 }
                 onStatusUpdates("Ready", XeroEventStatus.Success);

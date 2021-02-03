@@ -50,7 +50,7 @@ namespace Xero.Net.Core.Api
                 while (count == pageSize)
                 {
                     if (page == -1) page = null; // This allows a quick first page of records
-                    var results = Task.Run(() => APIClient.GetProjectsAsync(APICore.XeroConfig.XeroAPIToken.AccessToken, APICore.XeroConfig.SelectedTenantID, projectIds, contactID, states, page, pageSize)).ConfigureAwait(false).GetAwaiter().GetResult();
+                    var results = Task.Run(() => APIClient.GetProjectsAsync(APICore.XeroConfig.AccessTokenSet.AccessToken, APICore.XeroConfig.SelectedTenantID, projectIds, contactID, states, page, pageSize)).ConfigureAwait(false).GetAwaiter().GetResult();
                     if (results != null && results.Items != null && results.Items.Count > 0)
                     {
                         records.AddRange(results.Items); // Add the next page records returned
@@ -90,7 +90,7 @@ namespace Xero.Net.Core.Api
             }
             try
             {
-                var results = Task.Run(() => APIClient.GetProjectAsync(APICore.XeroConfig.XeroAPIToken.AccessToken, APICore.XeroConfig.SelectedTenantID, projectID)).ConfigureAwait(false).GetAwaiter().GetResult(); ;
+                var results = Task.Run(() => APIClient.GetProjectAsync(APICore.XeroConfig.AccessTokenSet.AccessToken, APICore.XeroConfig.SelectedTenantID, projectID)).ConfigureAwait(false).GetAwaiter().GetResult(); ;
 
                 if (results != null)
                 {

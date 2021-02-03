@@ -21,9 +21,9 @@ namespace Xero.Net.Core.OAuth2.Model
         /// </summary>
         public string ReturnedState { get; set; }
         /// <summary>
-        /// Holds the Live AccessToken
+        /// Holds the Live AccessToken returned from the Auth process
         /// </summary>
-        public XeroAccessToken XeroAPIToken { get; set; }
+        public  XeroTokenSet AccessTokenSet { get; internal set; }
         /// <summary>
         /// The random generated code verification hash
         /// </summary>
@@ -167,17 +167,22 @@ namespace Xero.Net.Core.OAuth2.Model
                 // Always sort the list of scopes in Alphabetical order to ensure match when testing for changes
                 foreach (var item in Scopes.OrderBy(x => x.ToString()))
                 {
-                    if (!string.IsNullOrEmpty(scopelist))
+                    // Must be a named Enum (fixes any added enums that where then removed (bankfeeds test)
+                    if (!int.TryParse(item.ToString(), out int num))
                     {
-                        scopelist += " ";
+                        if (!string.IsNullOrEmpty(scopelist))
+                        {
+                            scopelist += " ";
+                        }
+                        if (item == XeroScope.offline_access)
+                        {
+                            scopelist += item.ToString();
+                        }
+                        else
+                        {
+                            scopelist += item.ToString().Replace("_", ".");
+                        }
                     }
-                    if (item == XeroScope.offline_access)
-                    {
-                        scopelist += item.ToString();
-                    } else
-                    {
-                        scopelist += item.ToString().Replace("_", ".");
-                    }                    
                 }
 
                 return scopelist;
@@ -264,5 +269,43 @@ namespace Xero.Net.Core.OAuth2.Model
         /// </summary>
         public bool? AutoSelectTenant { get; set; }
 
+        private string _AccessGrantedHTML { get; set; }
+        /// <summary>
+        /// Override the default Access Granted message
+        /// </summary>
+        public string AccessGrantedHTML
+        {
+            get
+            {
+                if (_AccessGrantedHTML == null)
+                {
+                    _AccessGrantedHTML = XeroConstants.XERO_AUTH_ACCESS_GRANTED_HTML;
+                }
+                return _AccessGrantedHTML;
+            }
+            set
+            {
+                _AccessGrantedHTML = value;
+            }
+        }
+        private string _AccessDeniedHTML { get; set; }
+        /// <summary>
+        /// Override the default Access Denied message
+        /// </summary>
+        public string AccessDeniedHTML
+        {
+            get
+            {
+                if (_AccessDeniedHTML == null)
+                {
+                    _AccessDeniedHTML = XeroConstants.XERO_AUTH_ACCESS_DENIED_HTML;
+                }
+                return _AccessDeniedHTML;
+            }
+            set
+            {
+                _AccessDeniedHTML = value;
+            }
+        }
     }
 }

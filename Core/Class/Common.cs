@@ -27,7 +27,7 @@ namespace Xero.Net.Core
         {
             List<string> itemList = objectList.ConvertAll(f => f.ToString());
             string filter = string.Empty;
-           
+
             if (itemList != null)
             {
                 foreach (var itm in itemList)
@@ -52,13 +52,46 @@ namespace Xero.Net.Core
         internal static string BuildFilterString<T>(string fieldName, T enumItem)
         {
             string filter = string.Empty;
-             
+
             if (enumItem != null)
-            {                
+            {
                 filter += $"{fieldName}=\"{enumItem}\"";
             }
             return filter;
         }
-         
+
+        /// <summary>
+        /// Decode and convert a JSON Web Token string to a JSON object string
+        /// </summary>
+        /// <param name="JWTTokenString">The JWT token to be decoded</param>
+        /// <returns>string containing the JSON object</returns>
+        public static string JWTtoJSON(string JWTTokenString)
+        {
+            var jwtHandler = new System.IdentityModel.Tokens.Jwt.JwtSecurityTokenHandler();
+            string jsonResult = string.Empty;
+
+            //Check if readable token (string is in a JWT format)            
+            if (jwtHandler.CanReadToken(JWTTokenString))
+            {
+                var token = jwtHandler.ReadJwtToken(JWTTokenString);
+
+                //Extract the payload of the JWT                
+                string payload = "{";
+                foreach (var item in token.Payload)
+                {
+                    if (item.Value.GetType().Name == "JArray")
+                    {
+                        payload += '"' + item.Key + "\":" + item.Value + ",";
+                    }
+                    else
+                    {
+                        payload += '"' + item.Key + "\":\"" + item.Value + "\",";
+                    }
+                }
+                payload += "}";
+                return Newtonsoft.Json.Linq.JToken.Parse(payload).ToString(Newtonsoft.Json.Formatting.Indented);
+            }
+            return null;
+        }
     }
 }
