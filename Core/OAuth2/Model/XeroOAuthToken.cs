@@ -39,12 +39,40 @@ namespace Xero.Net.Core.OAuth2.Model
         /// JWT Decoded object holding the Access Token record
         /// </summary>
         [JsonProperty]
-        public JWTAccessToken AccessTokenRecord { get; internal set; }
+        public JWTAccessToken AccessTokenRecord
+        {
+            get
+            {
+                // Unpack the JWT Token
+                if (!string.IsNullOrEmpty(AccessToken))
+                {
+                    return Common.DeSerializeObject<JWTAccessToken>(Common.JWTtoJSON(AccessToken));
+                }
+                else
+                {
+                    return null;
+                }
+            }
+        }
         /// <summary>
         /// JWT Decoded object holding the ID Token record
         /// </summary>
         [JsonProperty]
-        public JWTIDToken IDTokenRecord { get; internal set; }
+        public JWTIDToken IDTokenRecord
+        {
+            get
+            {
+                // Unpack the JWT Token
+                if (!string.IsNullOrEmpty(IdToken))
+                {
+                    return Common.DeSerializeObject<JWTIDToken>(Common.JWTtoJSON(IdToken));
+                }
+                else
+                {
+                    return null;
+                }
+            }
+        }
         /// <summary>
         /// List of authorised tenants
         /// </summary>

@@ -9,14 +9,35 @@ namespace Xero.Net.Core.OAuth2.Model
     /// </summary>
     public class JWTIDToken
     {
-        public string nbf { get; set; }
-        public string exp { get; set; }
+        public long nbf { get; set; }
+        public DateTime? nbf_DateTime
+        {
+            get
+            {
+                return Common.DateTimeFromUnixTime(nbf);
+            }
+        }
+        public long exp { get; set; }
+        public DateTime exp_DateTime
+        {
+            get
+            {
+                return Common.DateTimeFromUnixTime(exp);
+            }
+        }
         public string iss { get; set; }
         public string aud { get; set; }
-        public string iat { get; set; }
+        public long iat { get; set; }
         public string at_hash { get; set; }
         public string sub { get; set; }
-        public string auth_time { get; set; }
+        public long auth_time { get; set; }
+        public DateTime auth_time_DateTime
+        {
+            get
+            {
+                return Common.DateTimeFromUnixTime(auth_time);
+            }
+        }
         /// <summary>
         /// The Xero User ID
         /// </summary>

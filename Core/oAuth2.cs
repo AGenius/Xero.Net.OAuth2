@@ -312,13 +312,17 @@ namespace Xero.Net.Core
                     {
                         throw new Exception(content);
                     }
+ 
+                    XeroConfig.AccessTokenSet = UnpackToken(content, true); 
 
-                    var prevTenants = XeroConfig.AccessTokenSet.Tenants;
+                    client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", XeroConfig.AccessTokenSet.AccessToken);                    
 
-                    XeroConfig.AccessTokenSet = UnpackToken(content, true);
-                    XeroConfig.AccessTokenSet.Tenants = prevTenants;
+                    // Refresh the Authorised Tenants collection
+                    var tenantsresponse = Task.Run(() => client.GetAsync(XeroConstants.XERO_TENANTS_URL)).ConfigureAwait(false).GetAwaiter().GetResult();
+                    var tenantscontent = Task.Run(() => tenantsresponse.Content.ReadAsStringAsync()).ConfigureAwait(false).GetAwaiter().GetResult();
 
-                    client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", XeroConfig.AccessTokenSet.AccessToken);
+                    // Record the Available Tenants
+                    XeroConfig.AccessTokenSet.Tenants = Common.DeSerializeObject<List<Tenant>>(tenantscontent);
 
                     onStatusUpdates("Token Refresh Success", XeroEventStatus.Refreshed);
                 }
@@ -369,9 +373,6 @@ namespace Xero.Net.Core
                 // Ensure the scopes list is left intact!
                 newToken.RequestedScopes = XeroConfig.AccessTokenSet.RequestedScopes;
             }
-            // Unpack the JWT Tokens
-            newToken.AccessTokenRecord = Common.DeSerializeObject<JWTAccessToken>(Common.JWTtoJSON(newToken.AccessToken));
-            newToken.IDTokenRecord = Common.DeSerializeObject<JWTIDToken>(Common.JWTtoJSON(newToken.IdToken));
             return newToken;
         }
 
