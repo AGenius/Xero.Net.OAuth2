@@ -146,6 +146,39 @@ namespace Xero.Net.Core
 
             return null;
         }
+        /// <summary>Write the contents of a string to a file </summary>
+        /// <param name="filepath">File to write to</param>      
+        /// <returns>Returns the full file path (if filename was only passed the result will include the full path based on the location of the calling application)</returns>
+        public static string WriteTextFile(string filepath, string contents)
+        {
+            try
+            {
+                string test = Path.GetPathRoot(filepath);
+
+                if (String.IsNullOrEmpty(test) || (test.StartsWith(@"\") && test.Substring(1, 1) != @"\"))
+                {
+
+                    // No Full path supplied so start from Application root
+                    if (test.StartsWith(@"\"))
+                    {
+                        filepath = ApplicationPath + filepath;
+                    }
+                    else
+                    {
+                        filepath = $"{ApplicationPath}\\{filepath}";
+                    }
+                }
+                using (StreamWriter sw = new StreamWriter(filepath))
+                {
+                    sw.WriteLine(contents);
+                }
+                return filepath;
+            }
+            catch (Exception)
+            {
+            }
+            return null;
+        }
         /// <summary>
         /// Return a DateTime derived from a Unix Epoch time (seconds from 01/01/1970
         /// </summary>

@@ -312,10 +312,10 @@ namespace Xero.Net.Core
                     {
                         throw new Exception(content);
                     }
- 
-                    XeroConfig.AccessTokenSet = UnpackToken(content, true); 
 
-                    client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", XeroConfig.AccessTokenSet.AccessToken);                    
+                    XeroConfig.AccessTokenSet = UnpackToken(content, true);
+
+                    client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", XeroConfig.AccessTokenSet.AccessToken);
 
                     // Refresh the Authorised Tenants collection
                     var tenantsresponse = Task.Run(() => client.GetAsync(XeroConstants.XERO_TENANTS_URL)).ConfigureAwait(false).GetAwaiter().GetResult();

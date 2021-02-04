@@ -4,6 +4,7 @@ using System.Security.Cryptography;
 using System.Text;
 using System.Linq;
 using Newtonsoft.Json;
+using System.IO;
 
 namespace Xero.Net.Core.OAuth2.Model
 {
@@ -41,6 +42,43 @@ namespace Xero.Net.Core.OAuth2.Model
             catch (Exception)
             {
                 throw;
+            }
+        }
+        /// <summary>
+        /// Serialize the Config to a json string
+        /// </summary>
+        /// <returns></returns>
+        public string ToJson()
+        {
+            return Common.SerializeObject(this);
+        }
+        /// <summary>
+        /// Save the Config to a file as a json string
+        /// </summary>
+        public string SaveToFile(string filePath, bool CreateFolders = false)
+        {
+            try
+            {
+                string content = Common.SerializeObject(this);
+                string path = Path.GetPathRoot(filePath);
+
+                if (!string.IsNullOrEmpty(path))
+                {
+                    if (!Directory.Exists(path) && CreateFolders)
+                    {
+                        Directory.CreateDirectory(path);
+                    }
+                    else
+                    {
+                        return null;
+                    }
+                }
+
+                return Common.WriteTextFile(filePath, content);
+            }
+            catch (Exception)
+            {
+                return null;
             }
         }
         /// <summary>
