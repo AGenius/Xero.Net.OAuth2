@@ -11,7 +11,7 @@ namespace Xero.Net.Core.Api
     /// </summary>
     public class PayrollAuApi : Xero.Net.Api.Api.ProjectApi, ICoreAPI
     {
-        Xero.Net.Api.Api.PayrollAuApi APIClient = new Xero.Net.Api.Api.PayrollAuApi();
+        Xero.Net.Api.Api.PayrollAuApi APIClient;
         internal API APICore { get; set; }
         /// <summary>
         /// Return the Rate Limit info collected on last call
@@ -27,6 +27,11 @@ namespace Xero.Net.Core.Api
         /// Throw errors for Items not found
         /// </summary>
         public bool? RaiseNotFoundErrors { get; set; }
-
+        public PayrollAuApi()
+        {
+            Xero.Net.Api.Client.Configuration confg = new Net.Api.Client.Configuration();
+            confg.UserAgent = "Xero.Net.Api-" + APICore.Version;
+            APIClient = new Xero.Net.Api.Api.PayrollAuApi(confg);
+        }
     }
 }

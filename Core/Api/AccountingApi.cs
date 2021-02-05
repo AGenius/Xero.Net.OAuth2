@@ -10,7 +10,7 @@ namespace Xero.Net.Core.Api
     /// </summary>
     public class AccountingApi : Xero.Net.Api.Api.AccountingApi, ICoreAPI
     {
-        Xero.Net.Api.Api.AccountingApi APIClient = new Xero.Net.Api.Api.AccountingApi();
+        Xero.Net.Api.Api.AccountingApi APIClient;
         internal API APICore { get; set; }
         /// <summary>
         /// Throw errors for Items not found
@@ -26,7 +26,12 @@ namespace Xero.Net.Core.Api
                 return APIClient.AsynchronousClient.RateInfo;
             }
         }
-
+        public AccountingApi()
+        {
+            Xero.Net.Api.Client.Configuration confg = new Net.Api.Client.Configuration();
+            confg.UserAgent = "Xero.Net.Api-" + APICore.Version;
+            APIClient = new Xero.Net.Api.Api.AccountingApi(confg);
+        }
 
 
         #region Accounts

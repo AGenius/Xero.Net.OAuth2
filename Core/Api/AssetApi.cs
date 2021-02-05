@@ -10,7 +10,7 @@ namespace Xero.Net.Core.Api
     /// </summary>
     public class AssetApi : Xero.Net.Api.Api.AssetApi, ICoreAPI
     {
-        Xero.Net.Api.Api.AssetApi APIClient = new Xero.Net.Api.Api.AssetApi();
+        Xero.Net.Api.Api.AssetApi APIClient;
         internal API APICore { get; set; }
         /// <summary>
         /// Return the Rate Limit info collected on last call
@@ -26,7 +26,12 @@ namespace Xero.Net.Core.Api
         /// Throw errors for Items not found
         /// </summary>
         public bool? RaiseNotFoundErrors { get; set; }
-
+        public AssetApi()
+        {
+            Xero.Net.Api.Client.Configuration confg = new Net.Api.Client.Configuration();
+            confg.UserAgent = "Xero.Net.Api-" + APICore.Version;
+            APIClient = new Xero.Net.Api.Api.AssetApi(confg);
+        }
         #region Assets
         /// <summary>
         /// Return a list of fixed assets
@@ -85,7 +90,7 @@ namespace Xero.Net.Core.Api
             try
             {
                 var results = Task.Run(() => APIClient.GetAssetTypesAsync(APICore.XeroConfig.AccessTokenSet.AccessToken, APICore.XeroConfig.SelectedTenantID)).ConfigureAwait(false).GetAwaiter().GetResult(); ;
-               
+
                 if (results.Count > 0)
                 {
                     return results;

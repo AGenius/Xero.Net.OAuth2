@@ -9,7 +9,7 @@ namespace Xero.Net.Core.Api
     /// </summary>
     public class ProjectApi : Xero.Net.Api.Api.ProjectApi, ICoreAPI
     {
-        Xero.Net.Api.Api.ProjectApi APIClient = new Xero.Net.Api.Api.ProjectApi();
+        Xero.Net.Api.Api.ProjectApi APIClient;
         internal API APICore { get; set; }
         /// <summary>
         /// Return the Rate Limit info collected on last call
@@ -25,7 +25,12 @@ namespace Xero.Net.Core.Api
         /// Throw errors for Items not found
         /// </summary>
         public bool? RaiseNotFoundErrors { get; set; }
-
+        public ProjectApi()
+        {
+            Xero.Net.Api.Client.Configuration confg = new Net.Api.Client.Configuration();
+            confg.UserAgent = "Xero.Net.Api-" + APICore.Version;
+            APIClient = new Xero.Net.Api.Api.ProjectApi(confg);
+        }
 
         /// <summary>
         /// Return a list or Projects
