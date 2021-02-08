@@ -29,8 +29,8 @@ namespace Xero.Net.Core.Api
         /// <summary>
         /// Default 'ctor
         /// </summary>
-        public AccountingApi( )
-        {         
+        public AccountingApi()
+        {
             APIClient = new Xero.Net.Api.Api.AccountingApi();
         }
         /// <summary>
@@ -1453,7 +1453,7 @@ namespace Xero.Net.Core.Api
         /// <param name="invoiceNumbers">Filter by a comma-separated list of InvoiceNumbers. (optional)</param>
         /// <param name="contactIDs">Filter by a comma-separated list of ContactIDs. (optional)</param>
         /// <param name="statuses">Filter by a comma-separated list Statuses. For faster response times it is recommend using these explicit parameters instead of passing OR conditions into the Where filter. (optional)</param>
-        /// <param name="includeArchived">e.g. includeArchived&#x3D;true - Contacts with a status of ARCHIVED will be included in the response (optional)</param>
+        /// <param name="includeArchived">e.g. includeArchived = true - Contacts with a status of ARCHIVED will be included in the response (optional)</param>
         /// <param name="createdByMyApp">When set to true you&#39;ll only retrieve Invoices created by your app (optional)</param>
         /// <param name="unitdp">(Unit Decimal Places) You can opt in to use four decimal places for unit amounts (optional)</param>
         /// <returns></returns>
@@ -1572,6 +1572,93 @@ namespace Xero.Net.Core.Api
                 if (results._Invoices.Count > 0)
                 {
                     return results._Invoices[0];
+                }
+            }
+            catch (Exception ex)
+            {
+                var er = ex.InnerException as Xero.Net.Api.Client.ApiException;
+                if (er.ErrorCode == 404)
+                {
+                    // Not Found
+                    if (!RaiseNotFoundErrors.HasValue || RaiseNotFoundErrors.Value == true)
+                    {
+                        throw new Xero.Net.Api.Client.ApiException(er.ErrorCode, er.Message, er.ErrorContent);
+                    }
+                    else
+                    {
+                        return null;
+                    }
+                }
+                throw new Xero.Net.Api.Client.ApiException(er.ErrorCode, er.Message, er.ErrorContent);
+            }
+
+            return null;
+        }
+        /// <summary>
+        /// Return a single Invoice Record by Invoice Number
+        /// </summary>
+        /// <param name="invoiceNumber">invoice number for the record</param>
+        /// <param name="includeArchived">e.g. includeArchived&#x3D;true - Contacts with a status of ARCHIVED will be included in the response (optional)</param>
+        /// <param name="unitdp">(Unit Decimal Places) You can opt in to use four decimal places for unit amounts (optional)</param>
+        /// <returns></returns>
+        public Invoice Invoice(string invoiceNumber, int? unitdp = null, bool? includeArchived = null)
+        {
+            if (invoiceNumber == null)
+            {
+                throw new ArgumentNullException("Missing InvoiceNumber");
+            }
+            try
+            {
+                List<string> invoices = new List<string> { invoiceNumber };
+                var results = Invoices(null, null, null, null, null, invoices, null, null, null, includeArchived, unitdp);
+
+                // Return the Single Invoice if found
+                if (results.Count > 0)
+                {
+                    return results[0];
+                }            
+            }
+            catch (Exception ex)
+            {
+                var er = ex.InnerException as Xero.Net.Api.Client.ApiException;
+                if (er.ErrorCode == 404)
+                {
+                    // Not Found
+                    if (!RaiseNotFoundErrors.HasValue || RaiseNotFoundErrors.Value == true)
+                    {
+                        throw new Xero.Net.Api.Client.ApiException(er.ErrorCode, er.Message, er.ErrorContent);
+                    }
+                    else
+                    {
+                        return null;
+                    }
+                }
+                throw new Xero.Net.Api.Client.ApiException(er.ErrorCode, er.Message, er.ErrorContent);
+            }
+
+            return null;
+        }
+        /// <summary>
+        /// Return a list of Invoice Records by Invoice Number
+        /// </summary>
+        /// <param name="invoiceNumbers">String list of invoice numbers to return</param>
+        /// <param name="includeArchived">e.g. includeArchived = true - Contacts with a status of ARCHIVED will be included in the response (optional)</param>
+        /// <param name="unitdp">(Unit Decimal Places) You can opt in to use four decimal places for unit amounts (optional)</param>
+        /// <returns></returns>
+        public List<Invoice> Invoices(List<string> invoiceNumbers, int? unitdp = null, bool? includeArchived = null)
+        {
+            if (invoiceNumbers == null)
+            {
+                throw new ArgumentNullException("Missing InvoiceNumbers");
+            }
+            try
+            {              
+                var results = Invoices(null, null, null, null, null, invoiceNumbers, null, null, null, includeArchived, unitdp);
+
+                // Return the Single Invoice if found
+                if (results.Count > 0)
+                {
+                    return results;
                 }
             }
             catch (Exception ex)
