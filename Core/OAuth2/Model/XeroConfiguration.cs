@@ -64,14 +64,17 @@ namespace Xero.Net.Core.OAuth2.Model
 
                 if (!string.IsNullOrEmpty(path))
                 {
-                    if (!Directory.Exists(path) && CreateFolders)
+                    if (!Directory.Exists(path))
                     {
-                        Directory.CreateDirectory(path);
-                    }
-                    else
-                    {
-                        return null;
-                    }
+                        if (CreateFolders)
+                        {
+                            Directory.CreateDirectory(path);
+                        }
+                        else
+                        {
+                            return null;
+                        }
+                    }                   
                 }
 
                 return Common.WriteTextFile(filePath, content);
