@@ -82,23 +82,21 @@ namespace Xero.Net.Core
 
         // Setup the sub API objects
         /// <summary>Exposes the AccountingApi Object</summary>
-        public Api.AccountingApi AccountingApi = new Api.AccountingApi();
+        public Api.AccountingApi AccountingApi;
         /// <summary>Exposes the AssetApi Object</summary>
-        public Api.AssetApi AssetApi = new Api.AssetApi();
+        public Api.AssetApi AssetApi;
         /// <summary>Exposes the BankFeedsApi Object</summary>
-        public Api.BankFeedsApi BankFeedsApi = new Api.BankFeedsApi();
+        public Api.BankFeedsApi BankFeedsApi;
         /// <summary>Exposes the PayrollAuApi Object</summary>
-        public Api.PayrollAuApi PayrollAuApi = new Api.PayrollAuApi();
+        public Api.PayrollAuApi PayrollAuApi;
         /// <summary>Exposes the PayrollNzApi Object</summary>
-        public Api.PayrollNzApi PayrollNzApi = new Api.PayrollNzApi();
+        public Api.PayrollNzApi PayrollNzApi;
         /// <summary>Exposes the PayrollUkApi Object</summary>
-        public Api.PayrollUkApi PayrollUkApi = new Api.PayrollUkApi();
+        public Api.PayrollUkApi PayrollUkApi;
         /// <summary>Exposes the IdentityApi Object</summary>
-        public Api.IdentityApi IdentityApi = new Api.IdentityApi();
+        public Api.IdentityApi IdentityApi;
         /// <summary>Exposes the ProjectApi Object</summary>
-        public Api.ProjectApi ProjectApi = new Api.ProjectApi();
-
-
+        public Api.ProjectApi ProjectApi;
 
 
         #region Event
@@ -137,12 +135,16 @@ namespace Xero.Net.Core
         {
             _authClient = new oAuth2();
             _authClient.ParentAPI = this;
-            // Setup the reference to the core wrapper
-            AccountingApi.APICore = this;
-            AssetApi.APICore = this;
-            ProjectApi.APICore = this;
+            //
+            AccountingApi = new Api.AccountingApi(this);
+            AssetApi = new Api.AssetApi(this);
+            BankFeedsApi = new Api.BankFeedsApi(this);
+            PayrollAuApi = new Api.PayrollAuApi(this);
+            PayrollNzApi = new Api.PayrollNzApi(this);
+            PayrollUkApi = new Api.PayrollUkApi(this);
+            IdentityApi = new Api.IdentityApi(this);
+            ProjectApi = new Api.ProjectApi(this);
             isConnected = false;
-
         }
         /// <summary>Instantiate the API with a Configuration record already setup</summary>
         /// <param name="config">The configuration record to use <see cref="XeroConfiguration"/></param>
@@ -168,11 +170,15 @@ namespace Xero.Net.Core
             _authClient.ParentAPI = this;
             _authClient.XeroConfig = XeroConfig;
             // Setup the reference to the core wrapper
-            AccountingApi.APICore = this;
-            AssetApi.APICore = this;
-            ProjectApi.APICore = this;
+            AccountingApi = new Api.AccountingApi(this);
+            AssetApi = new Api.AssetApi(this);
+            BankFeedsApi = new Api.BankFeedsApi(this);
+            PayrollAuApi = new Api.PayrollAuApi(this);
+            PayrollNzApi = new Api.PayrollNzApi(this);
+            PayrollUkApi = new Api.PayrollUkApi(this);
+            IdentityApi = new Api.IdentityApi(this);
+            ProjectApi = new Api.ProjectApi(this);
             isConnected = false;
-
         }
         /// <summary>
         /// Setup the API and refresh token or re-authorise if needed/requested

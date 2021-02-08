@@ -31,7 +31,16 @@ namespace Xero.Net.Core.Api
         /// Default 'ctor
         /// </summary>
         public IdentityApi()
+        {                        
+            APIClient = new Xero.Net.Api.Api.IdentityApi();
+        }
+        /// <summary>
+        /// 'ctor - pass Parent API class
+        /// </summary>
+        /// <param name="parentAPI">ref to the parent API object</param>
+        public IdentityApi(API parentAPI)
         {
+            this.APICore = parentAPI;
             Xero.Net.Api.Client.Configuration confg = new Net.Api.Client.Configuration();
             confg.UserAgent = "Xero.Net.Api-" + APICore.Version;
             APIClient = new Xero.Net.Api.Api.IdentityApi(confg);
