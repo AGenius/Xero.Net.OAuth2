@@ -19,7 +19,7 @@ namespace Xero.Net.Core
         {
             get
             {
-                return "This API Version : 1.2021.0203 - Compatible with Xero-Standard API : 3.13.1";
+                return "1.2021.0208,Xero-Standard: 3.14.0";
             }
         }
         oAuth2 _authClient = null;
