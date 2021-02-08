@@ -5,11 +5,12 @@ using System.Text.RegularExpressions;
 using Newtonsoft.Json;
 using Xero.Net.Core.OAuth2.Model;
 
-/// <summary>
-/// thanks for code found at http://www.gabescode.com/dotnet/2018/11/01/basic-HttpListener-web-service.html 
-/// </summary>
+
 namespace Xero.Net.Core
 {
+    /// <summary>
+    /// thanks for code found at http://www.gabescode.com/dotnet/2018/11/01/basic-HttpListener-web-service.html 
+    /// </summary>
     class LocalHttpListener
     {
         public Uri callBackUri { get; set; } // The Call Back Uri - the port and path will be extracted 
@@ -101,8 +102,7 @@ namespace Xero.Net.Core
         }
         /// <summary>
         /// Handle an incoming request
-        /// </summary>
-        /// <param name="returnCode">The Object to hold the returned code</param>
+        /// </summary>        
         /// <param name="context">The context of the incoming request</param>
         private void ProcessRequest(HttpListenerContext context)
         {
@@ -139,8 +139,7 @@ namespace Xero.Net.Core
         /// <summary>
         /// Handle the returned date and extract the code
         /// </summary>
-        /// <param name="context"></param>
-        /// <param name="returnCode">Object holding the returned access code</param>
+        /// <param name="context"></param>        
         /// <param name="response"></param>
         /// <returns>true/false</returns>
         private bool HandleCallbackRequest(HttpListenerContext context, HttpListenerResponse response)

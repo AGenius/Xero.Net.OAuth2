@@ -26,6 +26,9 @@ namespace Xero.Net.Core.Api
         /// Throw errors for Items not found
         /// </summary>
         public bool? RaiseNotFoundErrors { get; set; }
+        /// <summary>
+        /// Default 'ctor
+        /// </summary>
         public AssetApi()
         {
             Xero.Net.Api.Client.Configuration confg = new Net.Api.Client.Configuration();

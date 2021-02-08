@@ -9,7 +9,9 @@ namespace Xero.Net.Core.OAuth2.Model
     /// </summary>
     public class JWTIDToken
     {
+        /// <summary></summary>
         public long nbf { get; set; }
+        /// <summary></summary>
         public DateTime? nbf_DateTime
         {
             get
@@ -17,7 +19,9 @@ namespace Xero.Net.Core.OAuth2.Model
                 return Common.DateTimeFromUnixTime(nbf);
             }
         }
+        /// <summary></summary>
         public long exp { get; set; }
+        /// <summary></summary>
         public DateTime exp_DateTime
         {
             get
@@ -25,12 +29,19 @@ namespace Xero.Net.Core.OAuth2.Model
                 return Common.DateTimeFromUnixTime(exp);
             }
         }
+        /// <summary></summary>
         public string iss { get; set; }
+        /// <summary></summary>
         public string aud { get; set; }
+        /// <summary></summary>
         public long iat { get; set; }
+        /// <summary></summary>
         public string at_hash { get; set; }
+        /// <summary></summary>
         public string sub { get; set; }
+        /// <summary></summary>
         public long auth_time { get; set; }
+        /// <summary></summary>
         public DateTime auth_time_DateTime
         {
             get

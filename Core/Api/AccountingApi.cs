@@ -26,6 +26,9 @@ namespace Xero.Net.Core.Api
                 return APIClient.AsynchronousClient.RateInfo;
             }
         }
+        /// <summary>
+        /// Default 'ctor
+        /// </summary>
         public AccountingApi()
         {
             Xero.Net.Api.Client.Configuration confg = new Net.Api.Client.Configuration();

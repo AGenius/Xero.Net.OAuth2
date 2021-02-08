@@ -107,10 +107,18 @@ namespace Xero.Net.Core
         /// </summary>
         public class LogMessage
         {
+            /// <summary>
+            /// The message
+            /// </summary>
             public string MessageText { get; set; }
+            /// <summary>
+            /// The status
+            /// </summary>            
             public XeroEventStatus Status { get; set; }
         }
+        /// <summary></summary>
         public event EventHandler<StatusEventArgs> StatusUpdates;
+        /// <summary></summary>
         public class StatusEventArgs : EventArgs
         {
             public string MessageText { get; set; }

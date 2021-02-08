@@ -147,7 +147,8 @@ namespace Xero.Net.Core
             return null;
         }
         /// <summary>Write the contents of a string to a file </summary>
-        /// <param name="filepath">File to write to</param>      
+        /// <param name="filepath">File to write to</param>
+        /// <param name="contents">The file contents to write</param>
         /// <returns>Returns the full file path (if filename was only passed the result will include the full path based on the location of the calling application)</returns>
         public static string WriteTextFile(string filepath, string contents)
         {
