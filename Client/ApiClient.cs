@@ -44,13 +44,32 @@ namespace Xero.Net.Api.Client
             // OpenAPI generated types generally hide default constructors.
             ConstructorHandling = ConstructorHandling.AllowNonPublicDefaultConstructor,
             ContractResolver = new DefaultContractResolver
-            {
-                NamingStrategy = new DefaultNamingStrategy()
-                {
-                    OverrideSpecifiedNames = true
-                }
-            },
-            DateTimeZoneHandling = DateTimeZoneHandling.Utc
+              {
+                  NamingStrategy = new DefaultNamingStrategy()
+                  {
+                      OverrideSpecifiedNames = true
+                  }
+              },
+            DateTimeZoneHandling = DateTimeZoneHandling.Utc,
+            CheckAdditionalContent = false,
+            Culture = CultureInfo.InvariantCulture,
+            DateFormatHandling = DateFormatHandling.IsoDateFormat,
+            DateFormatString = "yyyy'-'MM'-'dd'T'HH':'mm':'ss.FFFFFFFK",
+        	DateParseHandling = DateParseHandling.DateTime,
+            DefaultValueHandling = DefaultValueHandling.Include,
+        	FloatFormatHandling = FloatFormatHandling.String,
+            FloatParseHandling = FloatParseHandling.Double,
+            Formatting = Formatting.None,
+            MaxDepth = null,
+            MetadataPropertyHandling = MetadataPropertyHandling.Default,
+            MissingMemberHandling = MissingMemberHandling.Ignore,
+        	NullValueHandling = NullValueHandling.Include,
+            ObjectCreationHandling = ObjectCreationHandling.Auto,
+            PreserveReferencesHandling = PreserveReferencesHandling.None,
+            ReferenceLoopHandling = ReferenceLoopHandling.Error,
+        	StringEscapeHandling = StringEscapeHandling.Default,
+            TypeNameAssemblyFormatHandling = TypeNameAssemblyFormatHandling.Simple,
+            TypeNameHandling = TypeNameHandling.None
         };
 
         public CustomJsonCodec(IReadableConfiguration configuration)
@@ -69,38 +88,37 @@ namespace Xero.Net.Api.Client
         public string Serialize(object obj)
         {
             String result = JsonConvert.SerializeObject(obj, _serializerSettings);
-
+            
             // when dealing with AU Payroll & Accounting API, we should convert DateTime object to Wcf Json Date String
-            if (obj.GetType().FullName.Contains(@"Xero.Net.Api.Model.Accounting") || obj.GetType().FullName.Contains(@"Xero.Net.Api.Model.PayrollAu"))
+            if (obj.GetType().FullName.Contains(@"Xero.Net.Api.Model.Accounting") || obj.GetType().FullName.Contains(@"Xero.Net.Api.Model.PayrollAu") )
             {
-                string dateTimePattern = @"\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}Z";
+              string dateTimePattern = @"\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}Z";
 
-                Regex rgx = new Regex(dateTimePattern);
-                Match match = rgx.Match(result);
-
-                if (match.Success)
+              Regex rgx = new Regex(dateTimePattern);
+              Match match = rgx.Match(result);
+              
+              if (match.Success) {
+                int indexAdjust = 0;
+                foreach (Match m in rgx.Matches(result))
                 {
-                    int indexAdjust = 0;
-                    foreach (Match m in rgx.Matches(result))
-                    {
-                        DateTime dateTime = DateTime.Parse(m.Value);
-                        DateTimeOffset dateTimeOffset = new DateTimeOffset(dateTime);
-                        var unixDateTime = dateTimeOffset.ToUniversalTime().ToUnixTimeMilliseconds();
-                        var wcfJsonDateString = "/Date(" + unixDateTime + "+0000)/";
-                        result = result.Remove(m.Index + indexAdjust, m.Length).Insert(m.Index + indexAdjust, wcfJsonDateString);
-                        indexAdjust = indexAdjust + (wcfJsonDateString.Length - m.Value.Length);
-                    }
+                  DateTime dateTime = DateTime.Parse(m.Value);
+                  DateTimeOffset dateTimeOffset   = new DateTimeOffset(dateTime);
+                  var unixDateTime = dateTimeOffset.ToUniversalTime().ToUnixTimeMilliseconds();
+                  var wcfJsonDateString = "/Date(" + unixDateTime + "+0000)/";
+                  result = result.Remove(m.Index + indexAdjust, m.Length).Insert(m.Index + indexAdjust, wcfJsonDateString);
+                  indexAdjust = indexAdjust + (wcfJsonDateString.Length - m.Value.Length);
                 }
+              }
 
-                return result;
+              return result;
             };
-
+            
             return result;
         }
 
         public T Deserialize<T>(IRestResponse response)
         {
-            var result = (T)Deserialize(response, typeof(T));
+            var result = (T) Deserialize(response, typeof(T));
             return result;
         }
 
@@ -228,7 +246,7 @@ namespace Xero.Net.Api.Client
         /// <param name="response">The RestSharp response object</param>
         protected virtual void InterceptResponse(IRestRequest request, IRestResponse response)
         {
-
+            
         }
         /// <summary>
         /// Allows for extending result processing for <see cref="ApiClient"/> generated code.
@@ -266,7 +284,7 @@ namespace Xero.Net.Api.Client
         /// <exception cref="ArgumentException"></exception>
         public ApiClient(String basePath)
         {
-            if (String.IsNullOrEmpty(basePath))
+           if (String.IsNullOrEmpty(basePath))
                 throw new ArgumentException("basePath cannot be empty");
 
             _baseUrl = basePath;
@@ -332,7 +350,7 @@ namespace Xero.Net.Api.Client
             if (path == null) throw new ArgumentNullException("path");
             if (options == null) throw new ArgumentNullException("options");
             if (configuration == null) throw new ArgumentNullException("configuration");
-
+            
             RestRequest request = new RestRequest(Method(method))
             {
                 Resource = path,
@@ -346,7 +364,7 @@ namespace Xero.Net.Api.Client
                     request.AddParameter(pathParam.Key, pathParam.Value, ParameterType.UrlSegment);
                 }
             }
-
+            
             if (options.QueryParameters != null)
             {
                 foreach (var queryParam in options.QueryParameters)
@@ -400,12 +418,12 @@ namespace Xero.Net.Api.Client
                 if (options.PathParameters.ContainsKey("FileName"))
                 {
                     //restsharp needs the bytestream to go here. addfile adds metadata which corrupts file. 
-                    request.AddParameter("application/octet-stream", (byte[])options.Data, ParameterType.RequestBody);
+                    request.AddParameter("application/octet-stream",(byte[])options.Data,ParameterType.RequestBody);
                 }
                 else
                 {
                     request.AddJsonBody(options.Data);
-                }
+                }            
             }
 
             if (options.FileParameters != null)
@@ -428,7 +446,7 @@ namespace Xero.Net.Api.Client
                         var bytes = memStream.ToArray();
                         var hasName = options.FormParameters.TryGetValue("filename", out var name);
                         options.FormParameters.TryGetValue("mimeType", out var contentType);
-
+                        
                         if (!hasName)
                         {
                             throw new ApiException(400, "Files API: No filename provided when uploading file");
@@ -457,7 +475,7 @@ namespace Xero.Net.Api.Client
                     request.AddCookie(cookie.Name, cookie.Value);
                 }
             }
-
+            
             return request;
         }
 
@@ -470,7 +488,7 @@ namespace Xero.Net.Api.Client
                 Cookies = new List<Cookie>(),
                 Content = response.Content
             };
-
+            
             if (response.Headers != null)
             {
                 foreach (var responseHeader in response.Headers)
@@ -485,9 +503,9 @@ namespace Xero.Net.Api.Client
                 {
                     transformed.Cookies.Add(
                         new Cookie(
-                            responseCookies.Name,
-                            responseCookies.Value,
-                            responseCookies.Path,
+                            responseCookies.Name, 
+                            responseCookies.Value, 
+                            responseCookies.Path, 
                             responseCookies.Domain)
                         );
                 }
@@ -545,7 +563,7 @@ namespace Xero.Net.Api.Client
 
             if (response.Cookies != null && response.Cookies.Count > 0)
             {
-                if (result.Cookies == null) result.Cookies = new List<Cookie>();
+                if(result.Cookies == null) result.Cookies = new List<Cookie>();
                 foreach (var restResponseCookie in response.Cookies)
                 {
                     var cookie = new Cookie(
@@ -565,7 +583,7 @@ namespace Xero.Net.Api.Client
                         Secure = restResponseCookie.Secure,
                         Version = restResponseCookie.Version
                     };
-
+                    
                     result.Cookies.Add(cookie);
                 }
             }
@@ -574,7 +592,7 @@ namespace Xero.Net.Api.Client
 
             return result;
         }
-
+        
         #region IAsynchronousClient
         /// <summary>
         /// Make a HTTP GET request (async).
