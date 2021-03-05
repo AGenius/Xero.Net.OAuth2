@@ -148,6 +148,7 @@
     <Compile Include="Core\oAuth2.cs" />
     <Compile Include="Core\OAuth2\Model\JWTIDToken.cs" />
     <Compile Include="Core\OAuth2\Model\JWTAccessToken.cs" />
+    <Compile Include="GlobalSuppressions.cs" />
     <Compile Include="Model\Accounting\Account.cs" />
     <Compile Include="Model\Accounting\Accounts.cs" />
     <Compile Include="Model\Accounting\AccountsPayable.cs" />

@@ -10,7 +10,7 @@ namespace Xero.Net.Core.Api
     /// </summary>
     public class AccountingApi : Xero.Net.Api.Api.AccountingApi, ICoreAPI
     {
-        Xero.Net.Api.Api.AccountingApi APIClient;
+        readonly Xero.Net.Api.Api.AccountingApi APIClient;
         internal API APICore { get; set; }
         /// <summary>
         /// Throw errors for Items not found
@@ -40,8 +40,10 @@ namespace Xero.Net.Core.Api
         public AccountingApi(API parentAPI)
         {
             this.APICore = parentAPI;
-            Xero.Net.Api.Client.Configuration confg = new Net.Api.Client.Configuration();
-            confg.UserAgent = "Xero.Net.Api-" + APICore.Version;
+            Xero.Net.Api.Client.Configuration confg = new Net.Api.Client.Configuration
+            {
+                UserAgent = "Xero.Net.Api-" + APICore.Version
+            };
             APIClient = new Xero.Net.Api.Api.AccountingApi(confg);
         }
 
@@ -225,11 +227,9 @@ namespace Xero.Net.Core.Api
             }
             try
             {
-                var list = new List<Account>();
-                list.Add(record);
+                var list = new List<Account> { record };
 
-                var header = new Accounts();
-                header._Accounts = list;
+                var header = new Accounts { _Accounts = list };
 
                 var results = Task.Run(() => APIClient.UpdateAccountAsync(APICore.XeroConfig.AccessTokenSet.AccessToken, APICore.XeroConfig.SelectedTenantID, record.AccountID.Value, header)).ConfigureAwait(false).GetAwaiter().GetResult();
 
@@ -437,11 +437,9 @@ namespace Xero.Net.Core.Api
             }
             try
             {
-                var list = new List<BankTransfer>();
-                list.Add(record);
+                var list = new List<BankTransfer> { record };
 
-                var header = new BankTransfers();
-                header._BankTransfers = list;
+                var header = new BankTransfers { _BankTransfers = list };
 
                 var results = Task.Run(() => APIClient.CreateBankTransferAsync(APICore.XeroConfig.AccessTokenSet.AccessToken, APICore.XeroConfig.SelectedTenantID, header)).ConfigureAwait(false).GetAwaiter().GetResult();
 
@@ -471,8 +469,7 @@ namespace Xero.Net.Core.Api
             }
             try
             {
-                var header = new BankTransfers();
-                header._BankTransfers = records;
+                var header = new BankTransfers { _BankTransfers = records };
 
                 var results = Task.Run(() => APIClient.CreateBankTransferAsync(APICore.XeroConfig.AccessTokenSet.AccessToken, APICore.XeroConfig.SelectedTenantID, header)).ConfigureAwait(false).GetAwaiter().GetResult();
 
@@ -534,11 +531,9 @@ namespace Xero.Net.Core.Api
             }
             try
             {
-                var list = new List<BatchPayment>();
-                list.Add(record);
+                var list = new List<BatchPayment> { record };
 
-                var header = new BatchPayments();
-                header._BatchPayments = list;
+                var header = new BatchPayments { _BatchPayments = list };
 
                 var results = Task.Run(() => APIClient.CreateBatchPaymentAsync(APICore.XeroConfig.AccessTokenSet.AccessToken, APICore.XeroConfig.SelectedTenantID, header)).ConfigureAwait(false).GetAwaiter().GetResult();
 
@@ -568,8 +563,7 @@ namespace Xero.Net.Core.Api
             }
             try
             {
-                var header = new BatchPayments();
-                header._BatchPayments = records;
+                var header = new BatchPayments { _BatchPayments = records };
 
                 var results = Task.Run(() => APIClient.CreateBatchPaymentAsync(APICore.XeroConfig.AccessTokenSet.AccessToken, APICore.XeroConfig.SelectedTenantID, header)).ConfigureAwait(false).GetAwaiter().GetResult();
 
@@ -835,11 +829,8 @@ namespace Xero.Net.Core.Api
             }
             try
             {
-                var list = new List<Contact>();
-                list.Add(record);
-
-                var header = new Contacts();
-                header._Contacts = list;
+                var list = new List<Contact> { record };
+                var header = new Contacts { _Contacts = list };
 
                 var results = Task.Run(() => APIClient.CreateContactsAsync(APICore.XeroConfig.AccessTokenSet.AccessToken, APICore.XeroConfig.SelectedTenantID, header)).ConfigureAwait(false).GetAwaiter().GetResult();
 
@@ -869,8 +860,7 @@ namespace Xero.Net.Core.Api
             }
             try
             {
-                var header = new Contacts();
-                header._Contacts = records;
+                var header = new Contacts { _Contacts = records };
 
                 var results = Task.Run(() => APIClient.CreateContactsAsync(APICore.XeroConfig.AccessTokenSet.AccessToken, APICore.XeroConfig.SelectedTenantID, header)).ConfigureAwait(false).GetAwaiter().GetResult();
 
@@ -900,11 +890,8 @@ namespace Xero.Net.Core.Api
             }
             try
             {
-                var list = new List<Contact>();
-                list.Add(record);
-
-                var header = new Contacts();
-                header._Contacts = list;
+                var list = new List<Contact> { record };
+                var header = new Contacts { _Contacts = list };
 
                 var results = Task.Run(() => APIClient.UpdateContactAsync(APICore.XeroConfig.AccessTokenSet.AccessToken, APICore.XeroConfig.SelectedTenantID, record.ContactID.Value, header)).ConfigureAwait(false).GetAwaiter().GetResult();
 
@@ -934,8 +921,7 @@ namespace Xero.Net.Core.Api
             }
             try
             {
-                var header = new Contacts();
-                header._Contacts = records;
+                var header = new Contacts { _Contacts = records };
 
                 var results = Task.Run(() => APIClient.UpdateContactAsync(APICore.XeroConfig.AccessTokenSet.AccessToken, APICore.XeroConfig.SelectedTenantID, new Guid(), header)).ConfigureAwait(false).GetAwaiter().GetResult();
 
@@ -1031,11 +1017,8 @@ namespace Xero.Net.Core.Api
             }
             try
             {
-                var list = new List<ContactGroup>();
-                list.Add(record);
-
-                var header = new ContactGroups();
-                header._ContactGroups = list;
+                var list = new List<ContactGroup> { record };
+                var header = new ContactGroups { _ContactGroups = list };
 
                 var results = Task.Run(() => APIClient.CreateContactGroupAsync(APICore.XeroConfig.AccessTokenSet.AccessToken, APICore.XeroConfig.SelectedTenantID, header)).ConfigureAwait(false).GetAwaiter().GetResult();
 
@@ -1065,8 +1048,7 @@ namespace Xero.Net.Core.Api
             }
             try
             {
-                var header = new ContactGroups();
-                header._ContactGroups = records;
+                var header = new ContactGroups { _ContactGroups = records };
 
                 var results = Task.Run(() => APIClient.CreateContactGroupAsync(APICore.XeroConfig.AccessTokenSet.AccessToken, APICore.XeroConfig.SelectedTenantID, header)).ConfigureAwait(false).GetAwaiter().GetResult();
 
@@ -1316,11 +1298,9 @@ namespace Xero.Net.Core.Api
             }
             try
             {
-                var list = new List<CreditNote>();
-                list.Add(record);
+                var list = new List<CreditNote> { record };
 
-                var header = new CreditNotes();
-                header._CreditNotes = list;
+                var header = new CreditNotes { _CreditNotes = list };
 
                 var results = Task.Run(() => APIClient.CreateCreditNotesAsync(APICore.XeroConfig.AccessTokenSet.AccessToken, APICore.XeroConfig.SelectedTenantID, header, null, unitdp)).ConfigureAwait(false).GetAwaiter().GetResult();
 
@@ -1340,10 +1320,9 @@ namespace Xero.Net.Core.Api
         /// <summary>
         /// Update Existing Credit Note
         /// </summary>
-        /// <param name="record">Credit Note Record</param>
-        /// <param name="unitdp">(Unit Decimal Places) You can opt in to use four decimal places for unit amounts (optional)</param>
+        /// <param name="record">Credit Note Record</param>       
         /// <returns></returns>
-        public CreditNote UpdateCreditNote(CreditNote record, int? unitdp = null)
+        public CreditNote UpdateCreditNote(CreditNote record)
         {
             if (record == null)
             {
@@ -1351,11 +1330,8 @@ namespace Xero.Net.Core.Api
             }
             try
             {
-                var list = new List<CreditNote>();
-                list.Add(record);
-
-                var header = new CreditNotes();
-                header._CreditNotes = list;
+                var list = new List<CreditNote> { record };
+                var header = new CreditNotes { _CreditNotes = list };
 
                 var results = Task.Run(() => APIClient.UpdateCreditNoteAsync(APICore.XeroConfig.AccessTokenSet.AccessToken, APICore.XeroConfig.SelectedTenantID, record.CreditNoteID.Value, header)).ConfigureAwait(false).GetAwaiter().GetResult();
 
@@ -1616,7 +1592,7 @@ namespace Xero.Net.Core.Api
                 if (results.Count > 0)
                 {
                     return results[0];
-                }            
+                }
             }
             catch (Exception ex)
             {
@@ -1652,7 +1628,7 @@ namespace Xero.Net.Core.Api
                 throw new ArgumentNullException("Missing InvoiceNumbers");
             }
             try
-            {              
+            {
                 var results = Invoices(null, null, null, null, null, invoiceNumbers, null, null, null, includeArchived, unitdp);
 
                 // Return the Single Invoice if found
@@ -1695,11 +1671,8 @@ namespace Xero.Net.Core.Api
             }
             try
             {
-                var list = new List<Invoice>();
-                list.Add(record);
-
-                var header = new Invoices();
-                header._Invoices = list;
+                var list = new List<Invoice> { record };
+                var header = new Invoices { _Invoices = list };
 
                 var results = Task.Run(() => APIClient.CreateInvoicesAsync(APICore.XeroConfig.AccessTokenSet.AccessToken, APICore.XeroConfig.SelectedTenantID, header, null, unitdp)).ConfigureAwait(false).GetAwaiter().GetResult();
 
@@ -1730,8 +1703,7 @@ namespace Xero.Net.Core.Api
             }
             try
             {
-                var header = new Invoices();
-                header._Invoices = records;
+                var header = new Invoices { _Invoices = records };
 
                 var results = Task.Run(() => APIClient.CreateInvoicesAsync(APICore.XeroConfig.AccessTokenSet.AccessToken, APICore.XeroConfig.SelectedTenantID, header, null, unitdp)).ConfigureAwait(false).GetAwaiter().GetResult();
 
@@ -1762,11 +1734,8 @@ namespace Xero.Net.Core.Api
             }
             try
             {
-                var list = new List<Invoice>();
-                list.Add(record);
-
-                var header = new Invoices();
-                header._Invoices = list;
+                var list = new List<Invoice> { record };
+                var header = new Invoices { _Invoices = list };
 
                 var results = Task.Run(() => APIClient.UpdateInvoiceAsync(APICore.XeroConfig.AccessTokenSet.AccessToken, APICore.XeroConfig.SelectedTenantID, record.InvoiceID.Value, header, unitdp)).ConfigureAwait(false).GetAwaiter().GetResult();
 
@@ -1872,11 +1841,8 @@ namespace Xero.Net.Core.Api
             }
             try
             {
-                var list = new List<Item>();
-                list.Add(record);
-
-                var header = new Items();
-                header._Items = list;
+                var list = new List<Item> { record };
+                var header = new Items { _Items = list };
 
                 var results = Task.Run(() => APIClient.UpdateItemAsync(APICore.XeroConfig.AccessTokenSet.AccessToken, APICore.XeroConfig.SelectedTenantID, record.ItemID.Value, header, unitdp)).ConfigureAwait(false).GetAwaiter().GetResult();
 
@@ -1907,11 +1873,8 @@ namespace Xero.Net.Core.Api
             }
             try
             {
-                var list = new List<Item>();
-                list.Add(record);
-
-                var header = new Items();
-                header._Items = list;
+                var list = new List<Item> { record };
+                var header = new Items { _Items = list };
 
                 var results = Task.Run(() => APIClient.CreateItemsAsync(APICore.XeroConfig.AccessTokenSet.AccessToken, APICore.XeroConfig.SelectedTenantID, header, null, unitdp)).ConfigureAwait(false).GetAwaiter().GetResult();
 
@@ -1942,8 +1905,7 @@ namespace Xero.Net.Core.Api
             }
             try
             {
-                var header = new Items();
-                header._Items = records;
+                var header = new Items { _Items = records };
 
                 var results = Task.Run(() => APIClient.CreateItemsAsync(APICore.XeroConfig.AccessTokenSet.AccessToken, APICore.XeroConfig.SelectedTenantID, header, null, unitdp)).ConfigureAwait(false).GetAwaiter().GetResult();
                 if (results._Items.Count > 0)
@@ -2165,11 +2127,8 @@ namespace Xero.Net.Core.Api
             }
             try
             {
-                var list = new List<Quote>();
-                list.Add(record);
-
-                var header = new Quotes();
-                header._Quotes = list;
+                var list = new List<Quote> { record };
+                var header = new Quotes { _Quotes = list };
 
                 var results = Task.Run(() => APIClient.CreateQuotesAsync(APICore.XeroConfig.AccessTokenSet.AccessToken, APICore.XeroConfig.SelectedTenantID, header)).ConfigureAwait(false).GetAwaiter().GetResult();
 
@@ -2255,11 +2214,8 @@ namespace Xero.Net.Core.Api
             }
             try
             {
-                var list = new List<TaxRate>();
-                list.Add(record);
-
-                var header = new TaxRates();
-                header._TaxRates = list;
+                var list = new List<TaxRate> { record };
+                var header = new TaxRates { _TaxRates = list };
 
                 var results = Task.Run(() => APIClient.CreateTaxRatesAsync(APICore.XeroConfig.AccessTokenSet.AccessToken, APICore.XeroConfig.SelectedTenantID, header)).ConfigureAwait(false).GetAwaiter().GetResult();
 
@@ -2289,8 +2245,7 @@ namespace Xero.Net.Core.Api
             }
             try
             {
-                var header = new TaxRates();
-                header._TaxRates = records;
+                var header = new TaxRates { _TaxRates = records };
 
                 var results = Task.Run(() => APIClient.CreateTaxRatesAsync(APICore.XeroConfig.AccessTokenSet.AccessToken, APICore.XeroConfig.SelectedTenantID, header)).ConfigureAwait(false).GetAwaiter().GetResult();
 
@@ -2320,11 +2275,8 @@ namespace Xero.Net.Core.Api
             }
             try
             {
-                var list = new List<TaxRate>();
-                list.Add(record);
-
-                var header = new TaxRates();
-                header._TaxRates = list;
+                var list = new List<TaxRate> { record };
+                var header = new TaxRates { _TaxRates = list };
 
                 var results = Task.Run(() => APIClient.UpdateTaxRateAsync(APICore.XeroConfig.AccessTokenSet.AccessToken, APICore.XeroConfig.SelectedTenantID, header)).ConfigureAwait(false).GetAwaiter().GetResult();
 
@@ -2354,8 +2306,7 @@ namespace Xero.Net.Core.Api
             }
             try
             {
-                var header = new TaxRates();
-                header._TaxRates = records;
+                var header = new TaxRates { _TaxRates = records };
 
                 var results = Task.Run(() => APIClient.UpdateTaxRateAsync(APICore.XeroConfig.AccessTokenSet.AccessToken, APICore.XeroConfig.SelectedTenantID, header)).ConfigureAwait(false).GetAwaiter().GetResult();
 
