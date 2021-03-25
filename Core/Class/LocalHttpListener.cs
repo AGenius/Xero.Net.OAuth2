@@ -13,7 +13,7 @@ namespace Xero.Net.Core
     /// </summary>
     class LocalHttpListener
     {
-        public Uri callBackUri { get; set; } // The Call Back Uri - the port and path will be extracted 
+        public Uri CallBackUri { get; set; } // The Call Back Uri - the port and path will be extracted 
 
         private HttpListener Listener = null; // Holder for the main listener
 
@@ -73,7 +73,7 @@ namespace Xero.Net.Core
         {
             // Prefixes = { $"http://localhost:{Port}/" } };
 
-            Listener = new HttpListener { Prefixes = { $"{callBackUri.GetComponents(UriComponents.SchemeAndServer, UriFormat.UriEscaped)}/" } };
+            Listener = new HttpListener { Prefixes = { $"{CallBackUri.GetComponents(UriComponents.SchemeAndServer, UriFormat.UriEscaped)}/" } };
 
             Listener.Start();
 
@@ -112,7 +112,7 @@ namespace Xero.Net.Core
                 {
                     var handled = false;
 
-                    if (context.Request.Url.AbsolutePath == callBackUri.GetComponents(UriComponents.PathAndQuery, UriFormat.UriEscaped))
+                    if (context.Request.Url.AbsolutePath == CallBackUri.GetComponents(UriComponents.PathAndQuery, UriFormat.UriEscaped))
                     {
                         handled = HandleCallbackRequest(context, response);
                     }

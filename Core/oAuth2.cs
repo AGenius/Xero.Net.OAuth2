@@ -129,7 +129,7 @@ namespace Xero.Net.Core
             //start webserver to listen for the callback
             responseListener = new LocalHttpListener();
             responseListener.Message += MessageResponse;
-            responseListener.callBackUri = XeroConfig.CallbackUri;
+            responseListener.CallBackUri = XeroConfig.CallbackUri;
             responseListener.config = XeroConfig;
             responseListener.StartWebServer();
 
