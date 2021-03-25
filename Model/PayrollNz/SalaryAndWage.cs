@@ -47,7 +47,13 @@ namespace Xero.Net.Api.Model.PayrollNz
             /// Enum Pending for value: Pending
             /// </summary>
             [EnumMember(Value = "Pending")]
-            Pending = 2
+            Pending = 2,
+
+            /// <summary>
+            /// Enum History for value: History
+            /// </summary>
+            [EnumMember(Value = "History")]
+            History = 3
 
         }
 

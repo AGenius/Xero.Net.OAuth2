@@ -53,7 +53,13 @@ namespace Xero.Net.Api.Model.PayrollNz
             /// Enum Completed for value: Completed
             /// </summary>
             [EnumMember(Value = "Completed")]
-            Completed = 3
+            Completed = 3,
+
+            /// <summary>
+            /// Enum Requested for value: Requested
+            /// </summary>
+            [EnumMember(Value = "Requested")]
+            Requested = 4
 
         }
 
