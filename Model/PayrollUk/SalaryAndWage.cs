@@ -74,7 +74,13 @@ namespace Xero.Net.Api.Model.PayrollUk
             /// Enum Salary for value: Salary
             /// </summary>
             [EnumMember(Value = "Salary")]
-            Salary = 1
+            Salary = 1,
+
+            /// <summary>
+            /// Enum Hourly for value: Hourly
+            /// </summary>
+            [EnumMember(Value = "Hourly")]
+            Hourly = 2
 
         }
 

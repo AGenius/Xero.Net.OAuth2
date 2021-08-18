@@ -117,6 +117,11 @@
     <Compile Include="Model\Accounting\Bill.cs" />
     <Compile Include="Model\Accounting\BrandingTheme.cs" />
     <Compile Include="Model\Accounting\BrandingThemes.cs" />
+    <Compile Include="Model\Accounting\Budget.cs" />
+    <Compile Include="Model\Accounting\BudgetBalance.cs" />
+    <Compile Include="Model\Accounting\BudgetLine.cs" />
+    <Compile Include="Model\Accounting\BudgetLines.cs" />
+    <Compile Include="Model\Accounting\Budgets.cs" />
     <Compile Include="Model\Accounting\CISOrgSetting.cs" />
     <Compile Include="Model\Accounting\CISOrgSettings.cs" />
     <Compile Include="Model\Accounting\CISSetting.cs" />

@@ -32,9 +32,9 @@ namespace Xero.Net.Api.Model.Accounting
     {
         
         /// <summary>
-        /// Report id
+        /// ID of the Report
         /// </summary>
-        /// <value>Report id</value>
+        /// <value>ID of the Report</value>
         [DataMember(Name="ReportID", EmitDefaultValue=false)]
         public string ReportID { get; set; }
 
