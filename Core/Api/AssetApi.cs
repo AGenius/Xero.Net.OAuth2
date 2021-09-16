@@ -84,7 +84,7 @@ namespace Xero.Net.Core.Api
                     if (onlypage.HasValue) count = -1;
                 }
 
-                if (records.Count > 0)
+                if (records != null && records.Count > 0)
                 {
                     return records;
                 }
@@ -103,7 +103,7 @@ namespace Xero.Net.Core.Api
             {
                 var results = Task.Run(() => APIClient.GetAssetTypesAsync(APICore.XeroConfig.AccessTokenSet.AccessToken, APICore.XeroConfig.SelectedTenantID)).ConfigureAwait(false).GetAwaiter().GetResult(); ;
 
-                if (results.Count > 0)
+                if (results != null && results.Count > 0)
                 {
                     return results;
                 }

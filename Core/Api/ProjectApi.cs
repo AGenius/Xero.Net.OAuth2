@@ -78,7 +78,7 @@ namespace Xero.Net.Core.Api
                     if (onlypage.HasValue) count = -1;
                 }
 
-                if (records.Count > 0)
+                if (records != null && records.Count > 0)
                 {
                     return records;
                 }
