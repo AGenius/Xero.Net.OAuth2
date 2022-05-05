@@ -20,9 +20,9 @@ using System.Runtime.Serialization;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
 using System.ComponentModel.DataAnnotations;
-using OpenAPIDateConverter = Xero.NetStandard.OAuth2.Client.OpenAPIDateConverter;
+using OpenAPIDateConverter = Xero.Net.Api.Client.OpenAPIDateConverter;
 
-namespace Xero.NetStandard.OAuth2.Model.Appstore
+namespace Xero.Net.Api.Model.Appstore
 {
     /// <summary>
     /// Plan
@@ -31,9 +31,9 @@ namespace Xero.NetStandard.OAuth2.Model.Appstore
     public partial class Plan :  IEquatable<Plan>, IValidatableObject
     {
         /// <summary>
-        /// Status of the plan. Available statuses are ACTIVE, PENDING_ACTIVATION. 
+        /// Status of the plan. Available statuses are ACTIVE, CANCELED, and PENDING_ACTIVATION. 
         /// </summary>
-        /// <value>Status of the plan. Available statuses are ACTIVE, PENDING_ACTIVATION. </value>
+        /// <value>Status of the plan. Available statuses are ACTIVE, CANCELED, and PENDING_ACTIVATION. </value>
         [JsonConverter(typeof(Client.CustomStringEnumConverter))]
         public enum StatusEnum
         {
@@ -44,17 +44,23 @@ namespace Xero.NetStandard.OAuth2.Model.Appstore
             ACTIVE = 1,
 
             /// <summary>
+            /// Enum CANCELED for value: CANCELED
+            /// </summary>
+            [EnumMember(Value = "CANCELED")]
+            CANCELED = 2,
+
+            /// <summary>
             /// Enum PENDINGACTIVATION for value: PENDING_ACTIVATION
             /// </summary>
             [EnumMember(Value = "PENDING_ACTIVATION")]
-            PENDINGACTIVATION = 2
+            PENDINGACTIVATION = 3
 
         }
 
         /// <summary>
-        /// Status of the plan. Available statuses are ACTIVE, PENDING_ACTIVATION. 
+        /// Status of the plan. Available statuses are ACTIVE, CANCELED, and PENDING_ACTIVATION. 
         /// </summary>
-        /// <value>Status of the plan. Available statuses are ACTIVE, PENDING_ACTIVATION. </value>
+        /// <value>Status of the plan. Available statuses are ACTIVE, CANCELED, and PENDING_ACTIVATION. </value>
         [DataMember(Name="status", EmitDefaultValue=false)]
         public StatusEnum Status { get; set; }
         /// <summary>

@@ -20,9 +20,9 @@ using System.Runtime.Serialization;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
 using System.ComponentModel.DataAnnotations;
-using OpenAPIDateConverter = Xero.NetStandard.OAuth2.Client.OpenAPIDateConverter;
+using OpenAPIDateConverter = Xero.Net.Api.Client.OpenAPIDateConverter;
 
-namespace Xero.NetStandard.OAuth2.Model.Appstore
+namespace Xero.Net.Api.Model.Appstore
 {
     /// <summary>
     /// Product
@@ -31,9 +31,9 @@ namespace Xero.NetStandard.OAuth2.Model.Appstore
     public partial class Product :  IEquatable<Product>, IValidatableObject
     {
         /// <summary>
-        /// The pricing model of the product: * FIXED: Customers are charged a fixed amount for each billing period * PER_SEAT: Customers are charged based on the number of units they purchase 
+        /// The pricing model of the product: * FIXED: Customers are charged a fixed amount for each billing period * PER_SEAT: Customers are charged based on the number of units they purchase * METERED: Customers are charged per use of this product 
         /// </summary>
-        /// <value>The pricing model of the product: * FIXED: Customers are charged a fixed amount for each billing period * PER_SEAT: Customers are charged based on the number of units they purchase </value>
+        /// <value>The pricing model of the product: * FIXED: Customers are charged a fixed amount for each billing period * PER_SEAT: Customers are charged based on the number of units they purchase * METERED: Customers are charged per use of this product </value>
         [JsonConverter(typeof(Client.CustomStringEnumConverter))]
         public enum TypeEnum
         {
@@ -47,14 +47,20 @@ namespace Xero.NetStandard.OAuth2.Model.Appstore
             /// Enum PERSEAT for value: PER_SEAT
             /// </summary>
             [EnumMember(Value = "PER_SEAT")]
-            PERSEAT = 2
+            PERSEAT = 2,
+
+            /// <summary>
+            /// Enum METERED for value: METERED
+            /// </summary>
+            [EnumMember(Value = "METERED")]
+            METERED = 3
 
         }
 
         /// <summary>
-        /// The pricing model of the product: * FIXED: Customers are charged a fixed amount for each billing period * PER_SEAT: Customers are charged based on the number of units they purchase 
+        /// The pricing model of the product: * FIXED: Customers are charged a fixed amount for each billing period * PER_SEAT: Customers are charged based on the number of units they purchase * METERED: Customers are charged per use of this product 
         /// </summary>
-        /// <value>The pricing model of the product: * FIXED: Customers are charged a fixed amount for each billing period * PER_SEAT: Customers are charged based on the number of units they purchase </value>
+        /// <value>The pricing model of the product: * FIXED: Customers are charged a fixed amount for each billing period * PER_SEAT: Customers are charged based on the number of units they purchase * METERED: Customers are charged per use of this product </value>
         [DataMember(Name="type", EmitDefaultValue=false)]
         public TypeEnum Type { get; set; }
         
@@ -73,6 +79,20 @@ namespace Xero.NetStandard.OAuth2.Model.Appstore
         public string Name { get; set; }
 
         /// <summary>
+        /// The unit of the per seat product. e.g. \&quot;user\&quot;, \&quot;organisation\&quot;, \&quot;SMS\&quot;, etc
+        /// </summary>
+        /// <value>The unit of the per seat product. e.g. \&quot;user\&quot;, \&quot;organisation\&quot;, \&quot;SMS\&quot;, etc</value>
+        [DataMember(Name="seatUnit", EmitDefaultValue=false)]
+        public string SeatUnit { get; set; }
+
+        /// <summary>
+        /// The unit of the usage product. e.g. \&quot;user\&quot;, \&quot;minutes\&quot;, \&quot;SMS\&quot;, etc
+        /// </summary>
+        /// <value>The unit of the usage product. e.g. \&quot;user\&quot;, \&quot;minutes\&quot;, \&quot;SMS\&quot;, etc</value>
+        [DataMember(Name="usageUnit", EmitDefaultValue=false)]
+        public string UsageUnit { get; set; }
+
+        /// <summary>
         /// Returns the string presentation of the object
         /// </summary>
         /// <returns>String presentation of the object</returns>
@@ -82,7 +102,9 @@ namespace Xero.NetStandard.OAuth2.Model.Appstore
             sb.Append("class Product {\n");
             sb.Append("  Id: ").Append(Id).Append("\n");
             sb.Append("  Name: ").Append(Name).Append("\n");
+            sb.Append("  SeatUnit: ").Append(SeatUnit).Append("\n");
             sb.Append("  Type: ").Append(Type).Append("\n");
+            sb.Append("  UsageUnit: ").Append(UsageUnit).Append("\n");
             sb.Append("}\n");
             return sb.ToString();
         }
@@ -128,8 +150,18 @@ namespace Xero.NetStandard.OAuth2.Model.Appstore
                     this.Name.Equals(input.Name))
                 ) && 
                 (
+                    this.SeatUnit == input.SeatUnit ||
+                    (this.SeatUnit != null &&
+                    this.SeatUnit.Equals(input.SeatUnit))
+                ) && 
+                (
                     this.Type == input.Type ||
                     this.Type.Equals(input.Type)
+                ) && 
+                (
+                    this.UsageUnit == input.UsageUnit ||
+                    (this.UsageUnit != null &&
+                    this.UsageUnit.Equals(input.UsageUnit))
                 );
         }
 
@@ -146,7 +178,11 @@ namespace Xero.NetStandard.OAuth2.Model.Appstore
                     hashCode = hashCode * 59 + this.Id.GetHashCode();
                 if (this.Name != null)
                     hashCode = hashCode * 59 + this.Name.GetHashCode();
+                if (this.SeatUnit != null)
+                    hashCode = hashCode * 59 + this.SeatUnit.GetHashCode();
                 hashCode = hashCode * 59 + this.Type.GetHashCode();
+                if (this.UsageUnit != null)
+                    hashCode = hashCode * 59 + this.UsageUnit.GetHashCode();
                 return hashCode;
             }
         }

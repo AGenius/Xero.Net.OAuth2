@@ -322,6 +322,8 @@ if (invoiceRecord.ValidationErrors == null || invoiceRecord.ValidationErrors.Cou
 * Need to add Simplified Payroll (Au, Nz and Uk) Access (Base NetStandard access is available)
 * Need to add Simplified BankFeeds Access (Base NetStandard access is available)
 * Need to add Simplified Identity Access (Base NetStandard access is available)
+* Need to add Simplified Files Access (Base NetStandard access is available)
+* Need to add Simplified Asset Access (Base NetStandard access is available)
 
 
 ## License

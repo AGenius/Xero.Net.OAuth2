@@ -20,9 +20,9 @@ using System.Runtime.Serialization;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
 using System.ComponentModel.DataAnnotations;
-using OpenAPIDateConverter = Xero.NetStandard.OAuth2.Client.OpenAPIDateConverter;
+using OpenAPIDateConverter = Xero.Net.Api.Client.OpenAPIDateConverter;
 
-namespace Xero.NetStandard.OAuth2.Model.Files
+namespace Xero.Net.Api.Model.Files
 {
     /// <summary>
     /// The Object Type
@@ -361,7 +361,13 @@ namespace Xero.NetStandard.OAuth2.Model.Files
         /// Enum NonCurrent for value: NonCurrent
         /// </summary>
         [EnumMember(Value = "NonCurrent")]
-        NonCurrent = 55
+        NonCurrent = 55,
+
+        /// <summary>
+        /// Enum SalesQuote for value: SalesQuote
+        /// </summary>
+        [EnumMember(Value = "SalesQuote")]
+        SalesQuote = 56
 
     }
 

@@ -51,8 +51,10 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Api\AccountingApi.cs" />
+    <Compile Include="Api\AppStoreApi.cs" />
     <Compile Include="Api\AssetApi.cs" />
     <Compile Include="Api\BankFeedsApi.cs" />
+    <Compile Include="Api\FilesApi.cs" />
     <Compile Include="Api\IdentityApi.cs" />
     <Compile Include="Api\PayrollAUApi.cs" />
     <Compile Include="Api\PayrollNZApi.cs" />
@@ -163,6 +165,7 @@
     <Compile Include="Model\Accounting\Journals.cs" />
     <Compile Include="Model\Accounting\LineAmountTypes.cs" />
     <Compile Include="Model\Accounting\LineItem.cs" />
+    <Compile Include="Model\Accounting\LineItemItem.cs" />
     <Compile Include="Model\Accounting\LineItemTracking.cs" />
     <Compile Include="Model\Accounting\LinkedTransaction.cs" />
     <Compile Include="Model\Accounting\LinkedTransactions.cs" />
@@ -224,6 +227,12 @@
     <Compile Include="Model\Accounting\User.cs" />
     <Compile Include="Model\Accounting\Users.cs" />
     <Compile Include="Model\Accounting\ValidationError.cs" />
+    <Compile Include="Model\Appstore\Plan.cs" />
+    <Compile Include="Model\Appstore\Price.cs" />
+    <Compile Include="Model\Appstore\ProblemDetails.cs" />
+    <Compile Include="Model\Appstore\Product.cs" />
+    <Compile Include="Model\Appstore\Subscription.cs" />
+    <Compile Include="Model\Appstore\SubscriptionItem.cs" />
     <Compile Include="Model\Asset\Asset.cs" />
     <Compile Include="Model\Asset\Assets.cs" />
     <Compile Include="Model\Asset\AssetStatus.cs" />
@@ -248,11 +257,76 @@
     <Compile Include="Model\Bankfeeds\Statement.cs" />
     <Compile Include="Model\Bankfeeds\StatementLine.cs" />
     <Compile Include="Model\Bankfeeds\Statements.cs" />
+    <Compile Include="Model\Files\Association.cs" />
+    <Compile Include="Model\Files\FileObject.cs" />
+    <Compile Include="Model\Files\FileResponse204.cs" />
+    <Compile Include="Model\Files\Files.cs" />
+    <Compile Include="Model\Files\Folder.cs" />
+    <Compile Include="Model\Files\Folders.cs" />
+    <Compile Include="Model\Files\InlineObject.cs" />
+    <Compile Include="Model\Files\ObjectGroup.cs" />
+    <Compile Include="Model\Files\ObjectType.cs" />
+    <Compile Include="Model\Files\User.cs" />
+    <Compile Include="Model\Finance\AccountUsage.cs" />
+    <Compile Include="Model\Finance\AccountUsageResponse.cs" />
+    <Compile Include="Model\Finance\BalanceSheetAccountDetail.cs" />
+    <Compile Include="Model\Finance\BalanceSheetAccountGroup.cs" />
+    <Compile Include="Model\Finance\BalanceSheetAccountType.cs" />
+    <Compile Include="Model\Finance\BalanceSheetResponse.cs" />
+    <Compile Include="Model\Finance\BankStatementAccountingResponse.cs" />
+    <Compile Include="Model\Finance\BankStatementResponse.cs" />
+    <Compile Include="Model\Finance\BankTransactionResponse.cs" />
+    <Compile Include="Model\Finance\CashAccountResponse.cs" />
+    <Compile Include="Model\Finance\CashBalance.cs" />
+    <Compile Include="Model\Finance\CashflowAccount.cs" />
+    <Compile Include="Model\Finance\CashflowActivity.cs" />
+    <Compile Include="Model\Finance\CashflowResponse.cs" />
+    <Compile Include="Model\Finance\CashflowType.cs" />
+    <Compile Include="Model\Finance\CashValidationResponse.cs" />
+    <Compile Include="Model\Finance\ContactDetail.cs" />
+    <Compile Include="Model\Finance\ContactResponse.cs" />
+    <Compile Include="Model\Finance\ContactTotalDetail.cs" />
+    <Compile Include="Model\Finance\ContactTotalOther.cs" />
+    <Compile Include="Model\Finance\CreditNoteResponse.cs" />
+    <Compile Include="Model\Finance\CurrentStatementResponse.cs" />
+    <Compile Include="Model\Finance\DataSourceResponse.cs" />
+    <Compile Include="Model\Finance\HistoryRecordResponse.cs" />
+    <Compile Include="Model\Finance\IncomeByContactResponse.cs" />
+    <Compile Include="Model\Finance\InvoiceResponse.cs" />
+    <Compile Include="Model\Finance\LineItemResponse.cs" />
+    <Compile Include="Model\Finance\LockHistoryModel.cs" />
+    <Compile Include="Model\Finance\LockHistoryResponse.cs" />
+    <Compile Include="Model\Finance\ManualJournalTotal.cs" />
+    <Compile Include="Model\Finance\OverpaymentResponse.cs" />
+    <Compile Include="Model\Finance\PaymentResponse.cs" />
+    <Compile Include="Model\Finance\PnlAccount.cs" />
+    <Compile Include="Model\Finance\PnlAccountClass.cs" />
+    <Compile Include="Model\Finance\PnlAccountType.cs" />
+    <Compile Include="Model\Finance\PracticeResponse.cs" />
+    <Compile Include="Model\Finance\PrepaymentResponse.cs" />
+    <Compile Include="Model\Finance\Problem.cs" />
+    <Compile Include="Model\Finance\ProblemType.cs" />
+    <Compile Include="Model\Finance\ProfitAndLossResponse.cs" />
+    <Compile Include="Model\Finance\ReportHistoryModel.cs" />
+    <Compile Include="Model\Finance\ReportHistoryResponse.cs" />
+    <Compile Include="Model\Finance\StatementBalanceResponse.cs" />
+    <Compile Include="Model\Finance\StatementLineResponse.cs" />
+    <Compile Include="Model\Finance\StatementLinesResponse.cs" />
+    <Compile Include="Model\Finance\StatementResponse.cs" />
+    <Compile Include="Model\Finance\TotalDetail.cs" />
+    <Compile Include="Model\Finance\TotalOther.cs" />
+    <Compile Include="Model\Finance\TrialBalanceAccount.cs" />
+    <Compile Include="Model\Finance\TrialBalanceEntry.cs" />
+    <Compile Include="Model\Finance\TrialBalanceMovement.cs" />
+    <Compile Include="Model\Finance\TrialBalanceResponse.cs" />
+    <Compile Include="Model\Finance\UserActivitiesResponse.cs" />
+    <Compile Include="Model\Finance\UserResponse.cs" />
     <Compile Include="Model\Identity\AccessToken.cs" />
     <Compile Include="Model\Identity\Connection.cs" />
     <Compile Include="Model\Identity\RefreshToken.cs" />
     <Compile Include="Model\PayrollAu\Account.cs" />
     <Compile Include="Model\PayrollAu\AccountType.cs" />
+    <Compile Include="Model\PayrollAu\AllowanceCategory.cs" />
     <Compile Include="Model\PayrollAu\AllowanceType.cs" />
     <Compile Include="Model\PayrollAu\APIException.cs" />
     <Compile Include="Model\PayrollAu\BankAccount.cs" />
@@ -550,10 +624,10 @@
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="CompareNETObjects">
-      <Version>4.73.0</Version>
+      <Version>4.77.0</Version>
     </PackageReference>
     <PackageReference Include="IdentityModel">
-      <Version>5.1.0</Version>
+      <Version>6.0.0</Version>
     </PackageReference>
     <PackageReference Include="JsonSubTypes">
       <Version>1.8.0</Version>
@@ -562,13 +636,13 @@
       <Version>13.0.1</Version>
     </PackageReference>
     <PackageReference Include="RestSharp">
-      <Version>106.12.0</Version>
+      <Version>106.15.0</Version>
     </PackageReference>
     <PackageReference Include="System.ComponentModel.Annotations">
       <Version>5.0.0</Version>
     </PackageReference>
     <PackageReference Include="System.IdentityModel.Tokens.Jwt">
-      <Version>6.12.2</Version>
+      <Version>6.17.0</Version>
     </PackageReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

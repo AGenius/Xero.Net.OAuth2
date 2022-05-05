@@ -227,7 +227,7 @@ namespace Xero.Net.Api.Client
         /// Returned Rate Limit Information
         /// </summary>
         public Model.RateLimitInfo RateInfo { get; set; }
-
+        
         private readonly String _baseUrl;
 
         /// <summary>

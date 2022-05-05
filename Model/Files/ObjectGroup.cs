@@ -20,9 +20,9 @@ using System.Runtime.Serialization;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
 using System.ComponentModel.DataAnnotations;
-using OpenAPIDateConverter = Xero.NetStandard.OAuth2.Client.OpenAPIDateConverter;
+using OpenAPIDateConverter = Xero.Net.Api.Client.OpenAPIDateConverter;
 
-namespace Xero.NetStandard.OAuth2.Model.Files
+namespace Xero.Net.Api.Model.Files
 {
     /// <summary>
     /// The Object Group that the object is in. These roughly correlate to the endpoints that can be used to retrieve the object via the core accounting API.
@@ -94,10 +94,16 @@ namespace Xero.NetStandard.OAuth2.Model.Files
         Prepayment = 10,
 
         /// <summary>
+        /// Enum Quote for value: Quote
+        /// </summary>
+        [EnumMember(Value = "Quote")]
+        Quote = 11,
+
+        /// <summary>
         /// Enum Receipt for value: Receipt
         /// </summary>
         [EnumMember(Value = "Receipt")]
-        Receipt = 11
+        Receipt = 12
 
     }
 

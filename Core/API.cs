@@ -261,6 +261,28 @@ namespace Xero.Net.Core
                 .Replace('/', '_');
             return codeVerifier;
         }
+        internal Xero.Net.Api.Client.ApiException GetException(Exception ex, bool? RaiseNotFoundErrors)
+        {
+            var er = ex.InnerException as Xero.Net.Api.Client.ApiException;
+            if (er == null)
+            {
+                // Recast as API Error
+                er = ex as Xero.Net.Api.Client.ApiException;
+            }
+            if (er.ErrorCode == 404 || er.ErrorCode == 400)
+            {
+                // Not Found
+                if (!RaiseNotFoundErrors.HasValue || RaiseNotFoundErrors.Value == true)
+                {
+                    return new Xero.Net.Api.Client.ApiException(er.ErrorCode, er.Message, er.ErrorContent);
+                }
+                else
+                {
+                    return null;
+                }
+            }
+            return new Xero.Net.Api.Client.ApiException(er.ErrorCode, er.Message, er.ErrorContent);
+        }
 
     }
 }

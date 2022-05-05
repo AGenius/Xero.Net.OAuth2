@@ -90,7 +90,19 @@ namespace Xero.Net.Api.Model.PayrollAu
         /// Enum LUMPSUME for value: LUMPSUME
         /// </summary>
         [EnumMember(Value = "LUMPSUME")]
-        LUMPSUME = 10
+        LUMPSUME = 10,
+
+        /// <summary>
+        /// Enum LUMPSUMW for value: LUMPSUMW
+        /// </summary>
+        [EnumMember(Value = "LUMPSUMW")]
+        LUMPSUMW = 11,
+
+        /// <summary>
+        /// Enum DIRECTORSFEES for value: DIRECTORSFEES
+        /// </summary>
+        [EnumMember(Value = "DIRECTORSFEES")]
+        DIRECTORSFEES = 12
 
     }
 

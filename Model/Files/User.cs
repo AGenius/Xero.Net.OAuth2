@@ -20,9 +20,9 @@ using System.Runtime.Serialization;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
 using System.ComponentModel.DataAnnotations;
-using OpenAPIDateConverter = Xero.NetStandard.OAuth2.Client.OpenAPIDateConverter;
+using OpenAPIDateConverter = Xero.Net.Api.Client.OpenAPIDateConverter;
 
-namespace Xero.NetStandard.OAuth2.Model.Files
+namespace Xero.Net.Api.Model.Files
 {
     /// <summary>
     /// User

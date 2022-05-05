@@ -70,8 +70,13 @@ namespace Xero.Net.Core.Api
             }
             catch (Exception ex)
             {
-                var er = ex.InnerException as Xero.Net.Api.Client.ApiException;
-                throw new Xero.Net.Api.Client.ApiException(er.ErrorCode, er.Message, er.ErrorContent);
+                Xero.Net.Api.Client.ApiException err = APICore.GetException(ex, RaiseNotFoundErrors);
+                if (err != null)
+                {
+                    throw err;
+                }
+
+                throw ex;
             }
 
             return null;
@@ -169,20 +174,13 @@ namespace Xero.Net.Core.Api
             }
             catch (Exception ex)
             {
-                var er = ex.InnerException as Xero.Net.Api.Client.ApiException;
-                if (er.ErrorCode == 404)
+                Xero.Net.Api.Client.ApiException err = APICore.GetException(ex, RaiseNotFoundErrors);
+                if (err != null)
                 {
-                    // Not Found
-                    if (!RaiseNotFoundErrors.HasValue || RaiseNotFoundErrors.Value == true)
-                    {
-                        throw new Xero.Net.Api.Client.ApiException(er.ErrorCode, er.Message, er.ErrorContent);
-                    }
-                    else
-                    {
-                        return null;
-                    }
+                    throw err;
                 }
-                throw new Xero.Net.Api.Client.ApiException(er.ErrorCode, er.Message, er.ErrorContent);
+
+                throw ex;
             }
 
             return null;
@@ -208,8 +206,13 @@ namespace Xero.Net.Core.Api
             }
             catch (Exception ex)
             {
-                var er = ex.InnerException as Xero.Net.Api.Client.ApiException;
-                throw new Xero.Net.Api.Client.ApiException(er.ErrorCode, er.Message, er.ErrorContent);
+                Xero.Net.Api.Client.ApiException err = APICore.GetException(ex, RaiseNotFoundErrors);
+                if (err != null)
+                {
+                    throw err;
+                }
+
+                throw ex;
             }
 
             return null;
@@ -240,8 +243,13 @@ namespace Xero.Net.Core.Api
             }
             catch (Exception ex)
             {
-                var er = ex.InnerException as Xero.Net.Api.Client.ApiException;
-                throw new Xero.Net.Api.Client.ApiException(er.ErrorCode, er.Message, er.ErrorContent);
+                Xero.Net.Api.Client.ApiException err = APICore.GetException(ex, RaiseNotFoundErrors);
+                if (err != null)
+                {
+                    throw err;
+                }
+
+                throw ex;
             }
 
             return null;
@@ -270,8 +278,13 @@ namespace Xero.Net.Core.Api
             }
             catch (Exception ex)
             {
-                var er = ex.InnerException as Xero.Net.Api.Client.ApiException;
-                throw new Xero.Net.Api.Client.ApiException(er.ErrorCode, er.Message, er.ErrorContent);
+                Xero.Net.Api.Client.ApiException err = APICore.GetException(ex, RaiseNotFoundErrors);
+                if (err != null)
+                {
+                    throw err;
+                }
+
+                throw ex;
             }
 
             return false;
@@ -326,8 +339,13 @@ namespace Xero.Net.Core.Api
             }
             catch (Exception ex)
             {
-                var er = ex.InnerException as Xero.Net.Api.Client.ApiException;
-                throw new Xero.Net.Api.Client.ApiException(er.ErrorCode, er.Message, er.ErrorContent);
+                Xero.Net.Api.Client.ApiException err = APICore.GetException(ex, RaiseNotFoundErrors);
+                if (err != null)
+                {
+                    throw err;
+                }
+
+                throw ex;
             }
 
             return null;
@@ -350,8 +368,13 @@ namespace Xero.Net.Core.Api
             }
             catch (Exception ex)
             {
-                var er = ex.InnerException as Xero.Net.Api.Client.ApiException;
-                throw new Xero.Net.Api.Client.ApiException(er.ErrorCode, er.Message, er.ErrorContent);
+                Xero.Net.Api.Client.ApiException err = APICore.GetException(ex, RaiseNotFoundErrors);
+                if (err != null)
+                {
+                    throw err;
+                }
+
+                throw ex;
             }
 
             return null;
@@ -382,8 +405,13 @@ namespace Xero.Net.Core.Api
             }
             catch (Exception ex)
             {
-                var er = ex.InnerException as Xero.Net.Api.Client.ApiException;
-                throw new Xero.Net.Api.Client.ApiException(er.ErrorCode, er.Message, er.ErrorContent);
+                Xero.Net.Api.Client.ApiException err = APICore.GetException(ex, RaiseNotFoundErrors);
+                if (err != null)
+                {
+                    throw err;
+                }
+
+                throw ex;
             }
 
             return null;
@@ -406,20 +434,13 @@ namespace Xero.Net.Core.Api
             }
             catch (Exception ex)
             {
-                var er = ex.InnerException as Xero.Net.Api.Client.ApiException;
-                if (er.ErrorCode == 404)
+                Xero.Net.Api.Client.ApiException err = APICore.GetException(ex, RaiseNotFoundErrors);
+                if (err != null)
                 {
-                    // Not Found
-                    if (!RaiseNotFoundErrors.HasValue || RaiseNotFoundErrors.Value == true)
-                    {
-                        throw new Xero.Net.Api.Client.ApiException(er.ErrorCode, er.Message, er.ErrorContent);
-                    }
-                    else
-                    {
-                        return null;
-                    }
+                    throw err;
                 }
-                throw new Xero.Net.Api.Client.ApiException(er.ErrorCode, er.Message, er.ErrorContent);
+
+                throw ex;
             }
 
             return null;
@@ -450,8 +471,13 @@ namespace Xero.Net.Core.Api
             }
             catch (Exception ex)
             {
-                var er = ex.InnerException as Xero.Net.Api.Client.ApiException;
-                throw new Xero.Net.Api.Client.ApiException(er.ErrorCode, er.Message, er.ErrorContent);
+                Xero.Net.Api.Client.ApiException err = APICore.GetException(ex, RaiseNotFoundErrors);
+                if (err != null)
+                {
+                    throw err;
+                }
+
+                throw ex;
             }
 
             return null;
@@ -480,8 +506,13 @@ namespace Xero.Net.Core.Api
             }
             catch (Exception ex)
             {
-                var er = ex.InnerException as Xero.Net.Api.Client.ApiException;
-                throw new Xero.Net.Api.Client.ApiException(er.ErrorCode, er.Message, er.ErrorContent);
+                Xero.Net.Api.Client.ApiException err = APICore.GetException(ex, RaiseNotFoundErrors);
+                if (err != null)
+                {
+                    throw err;
+                }
+
+                throw ex;
             }
 
             return null;
@@ -512,8 +543,13 @@ namespace Xero.Net.Core.Api
             }
             catch (Exception ex)
             {
-                var er = ex.InnerException as Xero.Net.Api.Client.ApiException;
-                throw new Xero.Net.Api.Client.ApiException(er.ErrorCode, er.Message, er.ErrorContent);
+                Xero.Net.Api.Client.ApiException err = APICore.GetException(ex, RaiseNotFoundErrors);
+                if (err != null)
+                {
+                    throw err;
+                }
+
+                throw ex;
             }
 
             return null;
@@ -544,8 +580,13 @@ namespace Xero.Net.Core.Api
             }
             catch (Exception ex)
             {
-                var er = ex.InnerException as Xero.Net.Api.Client.ApiException;
-                throw new Xero.Net.Api.Client.ApiException(er.ErrorCode, er.Message, er.ErrorContent);
+                Xero.Net.Api.Client.ApiException err = APICore.GetException(ex, RaiseNotFoundErrors);
+                if (err != null)
+                {
+                    throw err;
+                }
+
+                throw ex;
             }
 
             return null;
@@ -574,8 +615,13 @@ namespace Xero.Net.Core.Api
             }
             catch (Exception ex)
             {
-                var er = ex.InnerException as Xero.Net.Api.Client.ApiException;
-                throw new Xero.Net.Api.Client.ApiException(er.ErrorCode, er.Message, er.ErrorContent);
+                Xero.Net.Api.Client.ApiException err = APICore.GetException(ex, RaiseNotFoundErrors);
+                if (err != null)
+                {
+                    throw err;
+                }
+
+                throw ex;
             }
 
             return null;
@@ -603,8 +649,13 @@ namespace Xero.Net.Core.Api
             }
             catch (Exception ex)
             {
-                var er = ex.InnerException as Xero.Net.Api.Client.ApiException;
-                throw new Xero.Net.Api.Client.ApiException(er.ErrorCode, er.Message, er.ErrorContent);
+                Xero.Net.Api.Client.ApiException err = APICore.GetException(ex, RaiseNotFoundErrors);
+                if (err != null)
+                {
+                    throw err;
+                }
+
+                throw ex;
             }
 
             return null;
@@ -627,20 +678,13 @@ namespace Xero.Net.Core.Api
             }
             catch (Exception ex)
             {
-                var er = ex.InnerException as Xero.Net.Api.Client.ApiException;
-                if (er.ErrorCode == 404)
+                Xero.Net.Api.Client.ApiException err = APICore.GetException(ex, RaiseNotFoundErrors);
+                if (err != null)
                 {
-                    // Not Found
-                    if (!RaiseNotFoundErrors.HasValue || RaiseNotFoundErrors.Value == true)
-                    {
-                        throw new Xero.Net.Api.Client.ApiException(er.ErrorCode, er.Message, er.ErrorContent);
-                    }
-                    else
-                    {
-                        return null;
-                    }
+                    throw err;
                 }
-                throw new Xero.Net.Api.Client.ApiException(er.ErrorCode, er.Message, er.ErrorContent);
+
+                throw ex;
             }
 
             return null;
@@ -711,8 +755,13 @@ namespace Xero.Net.Core.Api
             }
             catch (Exception ex)
             {
-                var er = ex.InnerException as Xero.Net.Api.Client.ApiException;
-                throw new Xero.Net.Api.Client.ApiException(er.ErrorCode, er.Message, er.ErrorContent);
+                Xero.Net.Api.Client.ApiException err = APICore.GetException(ex, RaiseNotFoundErrors);
+                if (err != null)
+                {
+                    throw err;
+                }
+
+                throw ex;
             }
 
             return null;
@@ -798,20 +847,13 @@ namespace Xero.Net.Core.Api
             }
             catch (Exception ex)
             {
-                var er = ex.InnerException as Xero.Net.Api.Client.ApiException;
-                if (er.ErrorCode == 404)
+                Xero.Net.Api.Client.ApiException err = APICore.GetException(ex, RaiseNotFoundErrors);
+                if (err != null)
                 {
-                    // Not Found
-                    if (!RaiseNotFoundErrors.HasValue || RaiseNotFoundErrors.Value == true)
-                    {
-                        throw new Xero.Net.Api.Client.ApiException(er.ErrorCode, er.Message, er.ErrorContent);
-                    }
-                    else
-                    {
-                        return null;
-                    }
+                    throw err;
                 }
-                throw new Xero.Net.Api.Client.ApiException(er.ErrorCode, er.Message, er.ErrorContent);
+
+                throw ex;
             }
 
             return null;
@@ -841,8 +883,13 @@ namespace Xero.Net.Core.Api
             }
             catch (Exception ex)
             {
-                var er = ex.InnerException as Xero.Net.Api.Client.ApiException;
-                throw new Xero.Net.Api.Client.ApiException(er.ErrorCode, er.Message, er.ErrorContent);
+                Xero.Net.Api.Client.ApiException err = APICore.GetException(ex, RaiseNotFoundErrors);
+                if (err != null)
+                {
+                    throw err;
+                }
+
+                throw ex;
             }
 
             return null;
@@ -871,8 +918,13 @@ namespace Xero.Net.Core.Api
             }
             catch (Exception ex)
             {
-                var er = ex.InnerException as Xero.Net.Api.Client.ApiException;
-                throw new Xero.Net.Api.Client.ApiException(er.ErrorCode, er.Message, er.ErrorContent);
+                Xero.Net.Api.Client.ApiException err = APICore.GetException(ex, RaiseNotFoundErrors);
+                if (err != null)
+                {
+                    throw err;
+                }
+
+                throw ex;
             }
 
             return null;
@@ -902,8 +954,13 @@ namespace Xero.Net.Core.Api
             }
             catch (Exception ex)
             {
-                var er = ex.InnerException as Xero.Net.Api.Client.ApiException;
-                throw new Xero.Net.Api.Client.ApiException(er.ErrorCode, er.Message, er.ErrorContent);
+                Xero.Net.Api.Client.ApiException err = APICore.GetException(ex, RaiseNotFoundErrors);
+                if (err != null)
+                {
+                    throw err;
+                }
+
+                throw ex;
             }
 
             return null;
@@ -932,8 +989,13 @@ namespace Xero.Net.Core.Api
             }
             catch (Exception ex)
             {
-                var er = ex.InnerException as Xero.Net.Api.Client.ApiException;
-                throw new Xero.Net.Api.Client.ApiException(er.ErrorCode, er.Message, er.ErrorContent);
+                Xero.Net.Api.Client.ApiException err = APICore.GetException(ex, RaiseNotFoundErrors);
+                if (err != null)
+                {
+                    throw err;
+                }
+
+                throw ex;
             }
 
             return null;
@@ -962,8 +1024,13 @@ namespace Xero.Net.Core.Api
             }
             catch (Exception ex)
             {
-                var er = ex.InnerException as Xero.Net.Api.Client.ApiException;
-                throw new Xero.Net.Api.Client.ApiException(er.ErrorCode, er.Message, er.ErrorContent);
+                Xero.Net.Api.Client.ApiException err = APICore.GetException(ex, RaiseNotFoundErrors);
+                if (err != null)
+                {
+                    throw err;
+                }
+
+                throw ex;
             }
 
             return null;
@@ -986,20 +1053,13 @@ namespace Xero.Net.Core.Api
             }
             catch (Exception ex)
             {
-                var er = ex.InnerException as Xero.Net.Api.Client.ApiException;
-                if (er.ErrorCode == 404)
+                Xero.Net.Api.Client.ApiException err = APICore.GetException(ex, RaiseNotFoundErrors);
+                if (err != null)
                 {
-                    // Not Found
-                    if (!RaiseNotFoundErrors.HasValue || RaiseNotFoundErrors.Value == true)
-                    {
-                        throw new Xero.Net.Api.Client.ApiException(er.ErrorCode, er.Message, er.ErrorContent);
-                    }
-                    else
-                    {
-                        return null;
-                    }
+                    throw err;
                 }
-                throw new Xero.Net.Api.Client.ApiException(er.ErrorCode, er.Message, er.ErrorContent);
+
+                throw ex;
             }
 
             return null;
@@ -1029,8 +1089,13 @@ namespace Xero.Net.Core.Api
             }
             catch (Exception ex)
             {
-                var er = ex.InnerException as Xero.Net.Api.Client.ApiException;
-                throw new Xero.Net.Api.Client.ApiException(er.ErrorCode, er.Message, er.ErrorContent);
+                Xero.Net.Api.Client.ApiException err = APICore.GetException(ex, RaiseNotFoundErrors);
+                if (err != null)
+                {
+                    throw err;
+                }
+
+                throw ex;
             }
 
             return null;
@@ -1059,8 +1124,13 @@ namespace Xero.Net.Core.Api
             }
             catch (Exception ex)
             {
-                var er = ex.InnerException as Xero.Net.Api.Client.ApiException;
-                throw new Xero.Net.Api.Client.ApiException(er.ErrorCode, er.Message, er.ErrorContent);
+                Xero.Net.Api.Client.ApiException err = APICore.GetException(ex, RaiseNotFoundErrors);
+                if (err != null)
+                {
+                    throw err;
+                }
+
+                throw ex;
             }
 
             return null;
@@ -1088,8 +1158,13 @@ namespace Xero.Net.Core.Api
             }
             catch (Exception ex)
             {
-                var er = ex.InnerException as Xero.Net.Api.Client.ApiException;
-                throw new Xero.Net.Api.Client.ApiException(er.ErrorCode, er.Message, er.ErrorContent);
+                Xero.Net.Api.Client.ApiException err = APICore.GetException(ex, RaiseNotFoundErrors);
+                if (err != null)
+                {
+                    throw err;
+                }
+
+                throw ex;
             }
 
             return false;
@@ -1116,8 +1191,13 @@ namespace Xero.Net.Core.Api
             }
             catch (Exception ex)
             {
-                var er = ex.InnerException as Xero.Net.Api.Client.ApiException;
-                throw new Xero.Net.Api.Client.ApiException(er.ErrorCode, er.Message, er.ErrorContent);
+                Xero.Net.Api.Client.ApiException err = APICore.GetException(ex, RaiseNotFoundErrors);
+                if (err != null)
+                {
+                    throw err;
+                }
+
+                throw ex;
             }
 
 
@@ -1173,8 +1253,13 @@ namespace Xero.Net.Core.Api
             }
             catch (Exception ex)
             {
-                var er = ex.InnerException as Xero.Net.Api.Client.ApiException;
-                throw new Xero.Net.Api.Client.ApiException(er.ErrorCode, er.Message, er.ErrorContent);
+                Xero.Net.Api.Client.ApiException err = APICore.GetException(ex, RaiseNotFoundErrors);
+                if (err != null)
+                {
+                    throw err;
+                }
+
+                throw ex;
             }
 
             return null;
@@ -1266,20 +1351,13 @@ namespace Xero.Net.Core.Api
             }
             catch (Exception ex)
             {
-                var er = ex.InnerException as Xero.Net.Api.Client.ApiException;
-                if (er.ErrorCode == 404)
+                Xero.Net.Api.Client.ApiException err = APICore.GetException(ex, RaiseNotFoundErrors);
+                if (err != null)
                 {
-                    // Not Found
-                    if (!RaiseNotFoundErrors.HasValue || RaiseNotFoundErrors.Value == true)
-                    {
-                        throw new Xero.Net.Api.Client.ApiException(er.ErrorCode, er.Message, er.ErrorContent);
-                    }
-                    else
-                    {
-                        return null;
-                    }
+                    throw err;
                 }
-                throw new Xero.Net.Api.Client.ApiException(er.ErrorCode, er.Message, er.ErrorContent);
+
+                throw ex;
             }
 
             return null;
@@ -1311,8 +1389,13 @@ namespace Xero.Net.Core.Api
             }
             catch (Exception ex)
             {
-                var er = ex.InnerException as Xero.Net.Api.Client.ApiException;
-                throw new Xero.Net.Api.Client.ApiException(er.ErrorCode, er.Message, er.ErrorContent);
+                Xero.Net.Api.Client.ApiException err = APICore.GetException(ex, RaiseNotFoundErrors);
+                if (err != null)
+                {
+                    throw err;
+                }
+
+                throw ex;
             }
 
             return null;
@@ -1342,8 +1425,13 @@ namespace Xero.Net.Core.Api
             }
             catch (Exception ex)
             {
-                var er = ex.InnerException as Xero.Net.Api.Client.ApiException;
-                throw new Xero.Net.Api.Client.ApiException(er.ErrorCode, er.Message, er.ErrorContent);
+                Xero.Net.Api.Client.ApiException err = APICore.GetException(ex, RaiseNotFoundErrors);
+                if (err != null)
+                {
+                    throw err;
+                }
+
+                throw ex;
             }
 
             return null;
@@ -1373,8 +1461,13 @@ namespace Xero.Net.Core.Api
             }
             catch (Exception ex)
             {
-                var er = ex.InnerException as Xero.Net.Api.Client.ApiException;
-                throw new Xero.Net.Api.Client.ApiException(er.ErrorCode, er.Message, er.ErrorContent);
+                Xero.Net.Api.Client.ApiException err = APICore.GetException(ex, RaiseNotFoundErrors);
+                if (err != null)
+                {
+                    throw err;
+                }
+
+                throw ex;
             }
 
             return null;
@@ -1397,8 +1490,13 @@ namespace Xero.Net.Core.Api
             }
             catch (Exception ex)
             {
-                var er = ex.InnerException as Xero.Net.Api.Client.ApiException;
-                throw new Xero.Net.Api.Client.ApiException(er.ErrorCode, er.Message, er.ErrorContent);
+                Xero.Net.Api.Client.ApiException err = APICore.GetException(ex, RaiseNotFoundErrors);
+                if (err != null)
+                {
+                    throw err;
+                }
+
+                throw ex;
             }
 
             return null;
@@ -1471,8 +1569,13 @@ namespace Xero.Net.Core.Api
             }
             catch (Exception ex)
             {
-                var er = ex.InnerException as Xero.Net.Api.Client.ApiException;
-                throw new Xero.Net.Api.Client.ApiException(er.ErrorCode, er.Message, er.ErrorContent);
+                Xero.Net.Api.Client.ApiException err = APICore.GetException(ex, RaiseNotFoundErrors);
+                if (err != null)
+                {
+                    throw err;
+                }
+
+                throw ex;
             }
 
             return null;
@@ -1552,20 +1655,13 @@ namespace Xero.Net.Core.Api
             }
             catch (Exception ex)
             {
-                var er = ex.InnerException as Xero.Net.Api.Client.ApiException;
-                if (er.ErrorCode == 404)
+                Xero.Net.Api.Client.ApiException err = APICore.GetException(ex, RaiseNotFoundErrors);
+                if (err != null)
                 {
-                    // Not Found
-                    if (!RaiseNotFoundErrors.HasValue || RaiseNotFoundErrors.Value == true)
-                    {
-                        throw new Xero.Net.Api.Client.ApiException(er.ErrorCode, er.Message, er.ErrorContent);
-                    }
-                    else
-                    {
-                        return null;
-                    }
+                    throw err;
                 }
-                throw new Xero.Net.Api.Client.ApiException(er.ErrorCode, er.Message, er.ErrorContent);
+
+                throw ex;
             }
 
             return null;
@@ -1596,20 +1692,13 @@ namespace Xero.Net.Core.Api
             }
             catch (Exception ex)
             {
-                var er = ex.InnerException as Xero.Net.Api.Client.ApiException;
-                if (er.ErrorCode == 404)
+                Xero.Net.Api.Client.ApiException err = APICore.GetException(ex, RaiseNotFoundErrors);
+                if (err != null)
                 {
-                    // Not Found
-                    if (!RaiseNotFoundErrors.HasValue || RaiseNotFoundErrors.Value == true)
-                    {
-                        throw new Xero.Net.Api.Client.ApiException(er.ErrorCode, er.Message, er.ErrorContent);
-                    }
-                    else
-                    {
-                        return null;
-                    }
+                    throw err;
                 }
-                throw new Xero.Net.Api.Client.ApiException(er.ErrorCode, er.Message, er.ErrorContent);
+
+                throw ex;
             }
 
             return null;
@@ -1639,20 +1728,13 @@ namespace Xero.Net.Core.Api
             }
             catch (Exception ex)
             {
-                var er = ex.InnerException as Xero.Net.Api.Client.ApiException;
-                if (er.ErrorCode == 404)
+                Xero.Net.Api.Client.ApiException err = APICore.GetException(ex, RaiseNotFoundErrors);
+                if (err != null)
                 {
-                    // Not Found
-                    if (!RaiseNotFoundErrors.HasValue || RaiseNotFoundErrors.Value == true)
-                    {
-                        throw new Xero.Net.Api.Client.ApiException(er.ErrorCode, er.Message, er.ErrorContent);
-                    }
-                    else
-                    {
-                        return null;
-                    }
+                    throw err;
                 }
-                throw new Xero.Net.Api.Client.ApiException(er.ErrorCode, er.Message, er.ErrorContent);
+
+                throw ex;
             }
 
             return null;
@@ -1683,8 +1765,13 @@ namespace Xero.Net.Core.Api
             }
             catch (Exception ex)
             {
-                var er = ex.InnerException as Xero.Net.Api.Client.ApiException;
-                throw new Xero.Net.Api.Client.ApiException(er.ErrorCode, er.Message, er.ErrorContent);
+                Xero.Net.Api.Client.ApiException err = APICore.GetException(ex, RaiseNotFoundErrors);
+                if (err != null)
+                {
+                    throw err;
+                }
+
+                throw ex;
             }
 
             return null;
@@ -1714,8 +1801,13 @@ namespace Xero.Net.Core.Api
             }
             catch (Exception ex)
             {
-                var er = ex.InnerException as Xero.Net.Api.Client.ApiException;
-                throw new Xero.Net.Api.Client.ApiException(er.ErrorCode, er.Message, er.ErrorContent);
+                Xero.Net.Api.Client.ApiException err = APICore.GetException(ex, RaiseNotFoundErrors);
+                if (err != null)
+                {
+                    throw err;
+                }
+
+                throw ex;
             }
 
             return null;
@@ -1746,8 +1838,13 @@ namespace Xero.Net.Core.Api
             }
             catch (Exception ex)
             {
-                var er = ex.InnerException as Xero.Net.Api.Client.ApiException;
-                throw new Xero.Net.Api.Client.ApiException(er.ErrorCode, er.Message, er.ErrorContent);
+                Xero.Net.Api.Client.ApiException err = APICore.GetException(ex, RaiseNotFoundErrors);
+                if (err != null)
+                {
+                    throw err;
+                }
+
+                throw ex;
             }
 
             return null;
@@ -1780,8 +1877,13 @@ namespace Xero.Net.Core.Api
             }
             catch (Exception ex)
             {
-                var er = ex.InnerException as Xero.Net.Api.Client.ApiException;
-                throw new Xero.Net.Api.Client.ApiException(er.ErrorCode, er.Message, er.ErrorContent);
+                Xero.Net.Api.Client.ApiException err = APICore.GetException(ex, RaiseNotFoundErrors);
+                if (err != null)
+                {
+                    throw err;
+                }
+
+                throw ex;
             }
 
             return null;
@@ -1809,20 +1911,13 @@ namespace Xero.Net.Core.Api
             }
             catch (Exception ex)
             {
-                var er = ex.InnerException as Xero.Net.Api.Client.ApiException;
-                if (er.ErrorCode == 404)
+                Xero.Net.Api.Client.ApiException err = APICore.GetException(ex, RaiseNotFoundErrors);
+                if (err != null)
                 {
-                    // Not Found
-                    if (!RaiseNotFoundErrors.HasValue || RaiseNotFoundErrors.Value == true)
-                    {
-                        throw new Xero.Net.Api.Client.ApiException(er.ErrorCode, er.Message, er.ErrorContent);
-                    }
-                    else
-                    {
-                        return null;
-                    }
+                    throw err;
                 }
-                throw new Xero.Net.Api.Client.ApiException(er.ErrorCode, er.Message, er.ErrorContent);
+
+                throw ex;
             }
 
             return null;
@@ -1853,8 +1948,13 @@ namespace Xero.Net.Core.Api
             }
             catch (Exception ex)
             {
-                var er = ex.InnerException as Xero.Net.Api.Client.ApiException;
-                throw new Xero.Net.Api.Client.ApiException(er.ErrorCode, er.Message, er.ErrorContent);
+                Xero.Net.Api.Client.ApiException err = APICore.GetException(ex, RaiseNotFoundErrors);
+                if (err != null)
+                {
+                    throw err;
+                }
+
+                throw ex;
             }
 
             return null;
@@ -1885,8 +1985,13 @@ namespace Xero.Net.Core.Api
             }
             catch (Exception ex)
             {
-                var er = ex.InnerException as Xero.Net.Api.Client.ApiException;
-                throw new Xero.Net.Api.Client.ApiException(er.ErrorCode, er.Message, er.ErrorContent);
+                Xero.Net.Api.Client.ApiException err = APICore.GetException(ex, RaiseNotFoundErrors);
+                if (err != null)
+                {
+                    throw err;
+                }
+
+                throw ex;
             }
 
             return null;
@@ -1915,8 +2020,13 @@ namespace Xero.Net.Core.Api
             }
             catch (Exception ex)
             {
-                var er = ex.InnerException as Xero.Net.Api.Client.ApiException;
-                throw new Xero.Net.Api.Client.ApiException(er.ErrorCode, er.Message, er.ErrorContent);
+                Xero.Net.Api.Client.ApiException err = APICore.GetException(ex, RaiseNotFoundErrors);
+                if (err != null)
+                {
+                    throw err;
+                }
+
+                throw ex;
             }
 
             return null;
@@ -1942,8 +2052,13 @@ namespace Xero.Net.Core.Api
             }
             catch (Exception ex)
             {
-                var er = ex.InnerException as Xero.Net.Api.Client.ApiException;
-                throw new Xero.Net.Api.Client.ApiException(er.ErrorCode, er.Message, er.ErrorContent);
+                Xero.Net.Api.Client.ApiException err = APICore.GetException(ex, RaiseNotFoundErrors);
+                if (err != null)
+                {
+                    throw err;
+                }
+
+                throw ex;
             }
 
             return false;
@@ -1974,8 +2089,13 @@ namespace Xero.Net.Core.Api
             }
             catch (Exception ex)
             {
-                var er = ex.InnerException as Xero.Net.Api.Client.ApiException;
-                throw new Xero.Net.Api.Client.ApiException(er.ErrorCode, er.Message, er.ErrorContent);
+                Xero.Net.Api.Client.ApiException err = APICore.GetException(ex, RaiseNotFoundErrors);
+                if (err != null)
+                {
+                    throw err;
+                }
+
+                throw ex;
             }
 
             return null;
@@ -2003,8 +2123,13 @@ namespace Xero.Net.Core.Api
             }
             catch (Exception ex)
             {
-                var er = ex.InnerException as Xero.Net.Api.Client.ApiException;
-                throw new Xero.Net.Api.Client.ApiException(er.ErrorCode, er.Message, er.ErrorContent);
+                Xero.Net.Api.Client.ApiException err = APICore.GetException(ex, RaiseNotFoundErrors);
+                if (err != null)
+                {
+                    throw err;
+                }
+
+                throw ex;
             }
 
             return null;
@@ -2066,8 +2191,13 @@ namespace Xero.Net.Core.Api
             }
             catch (Exception ex)
             {
-                var er = ex.InnerException as Xero.Net.Api.Client.ApiException;
-                throw new Xero.Net.Api.Client.ApiException(er.ErrorCode, er.Message, er.ErrorContent);
+                Xero.Net.Api.Client.ApiException err = APICore.GetException(ex, RaiseNotFoundErrors);
+                if (err != null)
+                {
+                    throw err;
+                }
+
+                throw ex;
             }
 
             return null;
@@ -2095,20 +2225,13 @@ namespace Xero.Net.Core.Api
             }
             catch (Exception ex)
             {
-                var er = ex.InnerException as Xero.Net.Api.Client.ApiException;
-                if (er.ErrorCode == 404)
+                Xero.Net.Api.Client.ApiException err = APICore.GetException(ex, RaiseNotFoundErrors);
+                if (err != null)
                 {
-                    // Not Found
-                    if (!RaiseNotFoundErrors.HasValue || RaiseNotFoundErrors.Value == true)
-                    {
-                        throw new Xero.Net.Api.Client.ApiException(er.ErrorCode, er.Message, er.ErrorContent);
-                    }
-                    else
-                    {
-                        return null;
-                    }
+                    throw err;
                 }
-                throw new Xero.Net.Api.Client.ApiException(er.ErrorCode, er.Message, er.ErrorContent);
+
+                throw ex;
             }
 
             return null;
@@ -2139,8 +2262,13 @@ namespace Xero.Net.Core.Api
             }
             catch (Exception ex)
             {
-                var er = ex.InnerException as Xero.Net.Api.Client.ApiException;
-                throw new Xero.Net.Api.Client.ApiException(er.ErrorCode, er.Message, er.ErrorContent);
+                Xero.Net.Api.Client.ApiException err = APICore.GetException(ex, RaiseNotFoundErrors);
+                if (err != null)
+                {
+                    throw err;
+                }
+
+                throw ex;
             }
 
             return null;
@@ -2171,8 +2299,13 @@ namespace Xero.Net.Core.Api
             }
             catch (Exception ex)
             {
-                var er = ex.InnerException as Xero.Net.Api.Client.ApiException;
-                throw new Xero.Net.Api.Client.ApiException(er.ErrorCode, er.Message, er.ErrorContent);
+                Xero.Net.Api.Client.ApiException err = APICore.GetException(ex, RaiseNotFoundErrors);
+                if (err != null)
+                {
+                    throw err;
+                }
+
+                throw ex;
             }
 
             return null;
@@ -2195,8 +2328,13 @@ namespace Xero.Net.Core.Api
             }
             catch (Exception ex)
             {
-                var er = ex.InnerException as Xero.Net.Api.Client.ApiException;
-                throw new Xero.Net.Api.Client.ApiException(er.ErrorCode, er.Message, er.ErrorContent);
+                Xero.Net.Api.Client.ApiException err = APICore.GetException(ex, RaiseNotFoundErrors);
+                if (err != null)
+                {
+                    throw err;
+                }
+
+                throw ex;
             }
 
             return null;
@@ -2226,8 +2364,13 @@ namespace Xero.Net.Core.Api
             }
             catch (Exception ex)
             {
-                var er = ex.InnerException as Xero.Net.Api.Client.ApiException;
-                throw new Xero.Net.Api.Client.ApiException(er.ErrorCode, er.Message, er.ErrorContent);
+                Xero.Net.Api.Client.ApiException err = APICore.GetException(ex, RaiseNotFoundErrors);
+                if (err != null)
+                {
+                    throw err;
+                }
+
+                throw ex;
             }
 
             return null;
@@ -2256,8 +2399,13 @@ namespace Xero.Net.Core.Api
             }
             catch (Exception ex)
             {
-                var er = ex.InnerException as Xero.Net.Api.Client.ApiException;
-                throw new Xero.Net.Api.Client.ApiException(er.ErrorCode, er.Message, er.ErrorContent);
+                Xero.Net.Api.Client.ApiException err = APICore.GetException(ex, RaiseNotFoundErrors);
+                if (err != null)
+                {
+                    throw err;
+                }
+
+                throw ex;
             }
 
             return null;
@@ -2287,8 +2435,13 @@ namespace Xero.Net.Core.Api
             }
             catch (Exception ex)
             {
-                var er = ex.InnerException as Xero.Net.Api.Client.ApiException;
-                throw new Xero.Net.Api.Client.ApiException(er.ErrorCode, er.Message, er.ErrorContent);
+                Xero.Net.Api.Client.ApiException err = APICore.GetException(ex, RaiseNotFoundErrors);
+                if (err != null)
+                {
+                    throw err;
+                }
+
+                throw ex;
             }
 
             return null;
@@ -2317,8 +2470,13 @@ namespace Xero.Net.Core.Api
             }
             catch (Exception ex)
             {
-                var er = ex.InnerException as Xero.Net.Api.Client.ApiException;
-                throw new Xero.Net.Api.Client.ApiException(er.ErrorCode, er.Message, er.ErrorContent);
+                Xero.Net.Api.Client.ApiException err = APICore.GetException(ex, RaiseNotFoundErrors);
+                if (err != null)
+                {
+                    throw err;
+                }
+
+                throw ex;
             }
 
             return null;
@@ -2349,8 +2507,13 @@ namespace Xero.Net.Core.Api
             }
             catch (Exception ex)
             {
-                var er = ex.InnerException as Xero.Net.Api.Client.ApiException;
-                throw new Xero.Net.Api.Client.ApiException(er.ErrorCode, er.Message, er.ErrorContent);
+                Xero.Net.Api.Client.ApiException err = APICore.GetException(ex, RaiseNotFoundErrors);
+                if (err != null)
+                {
+                    throw err;
+                }
+
+                throw ex;
             }
 
             return null;
@@ -2417,8 +2580,13 @@ namespace Xero.Net.Core.Api
             }
             catch (Exception ex)
             {
-                var er = ex.InnerException as Xero.Net.Api.Client.ApiException;
-                throw new Xero.Net.Api.Client.ApiException(er.ErrorCode, er.Message, er.ErrorContent);
+                Xero.Net.Api.Client.ApiException err = APICore.GetException(ex, RaiseNotFoundErrors);
+                if (err != null)
+                {
+                    throw err;
+                }
+
+                throw ex;
             }
 
             return null;
@@ -2476,8 +2644,13 @@ namespace Xero.Net.Core.Api
             }
             catch (Exception ex)
             {
-                var er = ex.InnerException as Xero.Net.Api.Client.ApiException;
-                throw new Xero.Net.Api.Client.ApiException(er.ErrorCode, er.Message, er.ErrorContent);
+                Xero.Net.Api.Client.ApiException err = APICore.GetException(ex, RaiseNotFoundErrors);
+                if (err != null)
+                {
+                    throw err;
+                }
+
+                throw ex;
             }
 
             return null;
