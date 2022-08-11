@@ -1751,27 +1751,32 @@ namespace Xero.Net.Core.Api
             {
                 throw new ArgumentNullException("Missing Invoice Record");
             }
+            Invoices results = null;
             try
             {
                 var list = new List<Invoice> { record };
                 var header = new Invoices { _Invoices = list };
 
-                var results = Task.Run(() => APIClient.CreateInvoicesAsync(APICore.XeroConfig.AccessTokenSet.AccessToken, APICore.XeroConfig.SelectedTenantID, header, null, unitdp)).ConfigureAwait(false).GetAwaiter().GetResult();
+                results = Task.Run(() => APIClient.CreateInvoicesAsync(APICore.XeroConfig.AccessTokenSet.AccessToken, APICore.XeroConfig.SelectedTenantID, header, true, unitdp)).ConfigureAwait(false).GetAwaiter().GetResult();
 
-                if (results != null && results._Invoices.Count > 0)
+                if (results._Invoices.Count > 0)
                 {
-                    return results._Invoices[0];
+                    // Add missing error data for neatness
+                    Invoice returnedInv = results._Invoices[0];
+                    returnedInv.HasErrors = false;
+                    returnedInv.ValidationErrors = new List<ValidationError>();
+                    return returnedInv;
                 }
             }
             catch (Exception ex)
             {
-                Xero.Net.Api.Client.ApiException err = APICore.GetException(ex, RaiseNotFoundErrors);
-                if (err != null)
-                {
-                    throw err;
-                }
+                var er = ex as Xero.Net.Api.Client.ApiException;
+                Error vError = Common.DeSerializeObject<Error>(er.ErrorContent);
+                record.HasErrors = true;
+                record.ValidationErrors = new List<ValidationError>();
+                record.ValidationErrors.AddRange(vError.Elements[0].ValidationErrors);
 
-                throw ex;
+                return record;
             }
 
             return null;
@@ -1796,6 +1801,12 @@ namespace Xero.Net.Core.Api
 
                 if (results != null && results._Invoices.Count > 0)
                 {
+                    foreach (var returnedInv in results._Invoices)
+                    {
+                        // Add missing error data for neatness                       
+                        returnedInv.HasErrors = false;
+                        returnedInv.ValidationErrors = new List<ValidationError>();
+                    }
                     return results._Invoices;
                 }
             }
@@ -1838,13 +1849,15 @@ namespace Xero.Net.Core.Api
             }
             catch (Exception ex)
             {
-                Xero.Net.Api.Client.ApiException err = APICore.GetException(ex, RaiseNotFoundErrors);
-                if (err != null)
-                {
-                    throw err;
-                }
+                var er = ex as Xero.Net.Api.Client.ApiException;
+                Error vError = Common.DeSerializeObject<Error>(er.ErrorContent);
+                record.HasErrors = true;
+                record.ValidationErrors = new List<ValidationError>();
+                record.ValidationErrors.AddRange(vError.Elements[0].ValidationErrors);
 
-                throw ex;
+                return record;
+                // var er = ex.InnerException as Xero.Net.Api.Client.ApiException;
+                // throw new Xero.Net.Api.Client.ApiException(er.ErrorCode, er.Message, er.ErrorContent);
             }
 
             return null;
@@ -1985,13 +1998,15 @@ namespace Xero.Net.Core.Api
             }
             catch (Exception ex)
             {
-                Xero.Net.Api.Client.ApiException err = APICore.GetException(ex, RaiseNotFoundErrors);
-                if (err != null)
-                {
-                    throw err;
-                }
+                var er = ex as Xero.Net.Api.Client.ApiException;
+                Error vError = Common.DeSerializeObject<Error>(er.ErrorContent);
 
-                throw ex;
+                record.ValidationErrors = new List<ValidationError>();
+                record.ValidationErrors.AddRange(vError.Elements[0].ValidationErrors);
+
+                return record;
+                //var er = ex.InnerException as Xero.Net.Api.Client.ApiException;
+                //throw new Xero.Net.Api.Client.ApiException(er.ErrorCode, er.Message, er.ErrorContent);
             }
 
             return null;
