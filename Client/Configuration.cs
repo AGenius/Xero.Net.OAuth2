@@ -30,7 +30,7 @@ namespace Xero.Net.Api.Client
         /// Version of the package.
         /// </summary>
         /// <value>Version of the package.</value>
-        public const string Version = "3.24.0";
+        public const string Version = "3.27.0";
 
         /// <summary>
         /// Identifier for ISO 8601 DateTime Format
@@ -102,7 +102,7 @@ namespace Xero.Net.Api.Client
         [System.Diagnostics.CodeAnalysis.SuppressMessage("ReSharper", "VirtualMemberCallInConstructor")]
         public Configuration()
         {
-            UserAgent = "xero-netstandard-3.24.0";
+            UserAgent = "xero-netstandard-3.27.0";
             BasePath = "https://api.xero.com/api.xro/2.0";
             DefaultHeader = new ConcurrentDictionary<string, string>();
             ApiKey = new ConcurrentDictionary<string, string>();
