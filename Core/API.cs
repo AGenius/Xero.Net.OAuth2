@@ -269,6 +269,11 @@ namespace Xero.Net.Core
                 // Recast as API Error
                 er = ex as Xero.Net.Api.Client.ApiException;
             }
+            if (er == null)
+            {
+                // return original error as its not an API error
+                return new Xero.Net.Api.Client.ApiException(-1, ex.Message, ex.InnerException);
+            }
             if (er.ErrorCode == 404 || er.ErrorCode == 400)
             {
                 // Not Found
