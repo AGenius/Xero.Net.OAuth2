@@ -34,7 +34,7 @@ namespace Xero.Net.Core
             responseListener = new LocalHttpListener();
             if (!Timeout.HasValue)
             {
-                Timeout = 60;
+                Timeout = 240;
             }
             HasTimedout = false;
         }
@@ -75,7 +75,7 @@ namespace Xero.Net.Core
             {
                 if (!string.IsNullOrEmpty(XeroConfig.AccessTokenSet.RefreshToken) &&
                     (XeroConfig.AccessTokenSet.ExpiresAtUtc < DateTime.Now ||
-                    XeroConfig.AccessTokenSet.ExpiresAtUtc.AddDays(59) < DateTime.Now))
+                    XeroConfig.AccessTokenSet.ExpiresAtUtc.AddDays(50) < DateTime.Now))
                 {
                     // Do a refresh
                     try
@@ -93,9 +93,9 @@ namespace Xero.Net.Core
                     }
                 }
 
-                // Do a new authenticate if expired (over 59 days)
+                // Do a new authenticate if expired (over 50 days)
                 if (string.IsNullOrEmpty(XeroConfig.AccessTokenSet.RefreshToken) ||
-                    XeroConfig.AccessTokenSet.ExpiresAtUtc.AddDays(59) < DateTime.Now)
+                    XeroConfig.AccessTokenSet.ExpiresAtUtc.AddDays(50) < DateTime.Now)
                 {
                     doAuth = true;
                 }
@@ -288,7 +288,7 @@ namespace Xero.Net.Core
             XeroConfig.AccessTokenSet = new XeroTokenSet(); // Remove it as its no longer valid
 
         }
-        public void RefreshToken()
+        public bool RefreshToken()
         {
             onStatusUpdates("Begin Token Refresh", XeroEventStatus.Success);
             try
@@ -325,20 +325,24 @@ namespace Xero.Net.Core
                     XeroConfig.AccessTokenSet.Tenants = Common.DeSerializeObject<List<Tenant>>(tenantscontent);
 
                     onStatusUpdates("Token Refresh Success", XeroEventStatus.Refreshed);
+                    return true;
                 }
                 else
                 {
                     // Something didnt work - disconnected/revoked?
-                    throw new Exception(response.ReasonPhrase);
+                    // throw new Exception(response.ReasonPhrase);
+                    return false;
                 }
             }
             catch (Exception ex)
             {
                 // Raise event to the parent caller (your app)
                 onStatusUpdates($"Refresh Code Failed - {ex.Message}", XeroEventStatus.Failed);
-                throw new InvalidDataException($"Refresh Exchange Failed - {ex.Message}");
+                return false;
+                //throw new InvalidDataException($"Refresh Exchange Failed - {ex.Message}");
             }
         }
+
         /// <summary>
         /// Unpack the token data from the API Authentication or Refresh calls
         /// </summary>

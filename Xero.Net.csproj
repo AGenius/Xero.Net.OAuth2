@@ -55,6 +55,7 @@
     <Compile Include="Api\AssetApi.cs" />
     <Compile Include="Api\BankFeedsApi.cs" />
     <Compile Include="Api\FilesApi.cs" />
+    <Compile Include="Api\FinanceApi.cs" />
     <Compile Include="Api\IdentityApi.cs" />
     <Compile Include="Api\PayrollAUApi.cs" />
     <Compile Include="Api\PayrollNZApi.cs" />
