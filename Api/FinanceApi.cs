@@ -17,10 +17,10 @@ using System.IO;
 using System.Linq;
 using System.Net;
 using System.Net.Mime;
-using Xero.NetStandard.OAuth2.Client;
-using Xero.NetStandard.OAuth2.Model.Finance;
+using Xero.Net.Api.Client;
+using Xero.Net.Api.Model.Finance;
 
-namespace Xero.NetStandard.OAuth2.Api
+namespace Xero.Net.Api.Api
 {
 
     /// <summary>
@@ -35,7 +35,7 @@ namespace Xero.NetStandard.OAuth2.Api
         /// <remarks>
         /// A summary of how each account is being transacted on exposing the level of detail and amounts attributable to manual adjustments.
         /// </remarks>
-        /// <exception cref="Xero.NetStandard.OAuth2.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <exception cref="Xero.Net.Api.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="accessToken">Xero API OAuth 2.0 accessToken</param>
         /// <param name="xeroTenantId">Xero identifier for Tenant</param>
         /// <param name="startMonth">date, yyyy-MM                 If no parameter is provided, the month 12 months prior to the end month will be used.                Account usage for up to 12 months from this date will be returned. (optional)</param>
@@ -49,7 +49,7 @@ namespace Xero.NetStandard.OAuth2.Api
         /// <remarks>
         /// A summary of how each account is being transacted on exposing the level of detail and amounts attributable to manual adjustments.
         /// </remarks>
-        /// <exception cref="Xero.NetStandard.OAuth2.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <exception cref="Xero.Net.Api.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="accessToken">Xero API OAuth 2.0 accessToken</param>
         /// <param name="xeroTenantId">Xero identifier for Tenant</param>
         /// <param name="startMonth">date, yyyy-MM                 If no parameter is provided, the month 12 months prior to the end month will be used.                Account usage for up to 12 months from this date will be returned. (optional)</param>
@@ -62,7 +62,7 @@ namespace Xero.NetStandard.OAuth2.Api
         /// <remarks>
         /// Provides a history of locking of accounting books. Locking may be an indicator of good accounting practices that could reduce the risk of changes to accounting records in prior periods.
         /// </remarks>
-        /// <exception cref="Xero.NetStandard.OAuth2.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <exception cref="Xero.Net.Api.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="accessToken">Xero API OAuth 2.0 accessToken</param>
         /// <param name="xeroTenantId">Xero identifier for Tenant</param>
         /// <param name="endDate">date, yyyy-MM-dd                 If no parameter is provided, the current date will be used.                Any changes to hard or soft lock dates that were made within the period up to 12 months before this date will be returned.                Please be aware that there may be a delay of up to 3 days before a change is visible from this API. (optional)</param>
@@ -75,7 +75,7 @@ namespace Xero.NetStandard.OAuth2.Api
         /// <remarks>
         /// Provides a history of locking of accounting books. Locking may be an indicator of good accounting practices that could reduce the risk of changes to accounting records in prior periods.
         /// </remarks>
-        /// <exception cref="Xero.NetStandard.OAuth2.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <exception cref="Xero.Net.Api.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="accessToken">Xero API OAuth 2.0 accessToken</param>
         /// <param name="xeroTenantId">Xero identifier for Tenant</param>
         /// <param name="endDate">date, yyyy-MM-dd                 If no parameter is provided, the current date will be used.                Any changes to hard or soft lock dates that were made within the period up to 12 months before this date will be returned.                Please be aware that there may be a delay of up to 3 days before a change is visible from this API. (optional)</param>
@@ -87,7 +87,7 @@ namespace Xero.NetStandard.OAuth2.Api
         /// <remarks>
         /// For a specified organisation, provides a summary of all the reports published within a given period, which may be an indicator for good business management and oversight.
         /// </remarks>
-        /// <exception cref="Xero.NetStandard.OAuth2.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <exception cref="Xero.Net.Api.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="accessToken">Xero API OAuth 2.0 accessToken</param>
         /// <param name="xeroTenantId">Xero identifier for Tenant</param>
         /// <param name="endDate">date, yyyy-MM-dd                 If no parameter is provided, the current date will be used.                Any reports that were published within the period up to 12 months before this date will be returned.                Please be aware that there may be a delay of up to 3 days before a published report is visible from this API. (optional)</param>
@@ -100,7 +100,7 @@ namespace Xero.NetStandard.OAuth2.Api
         /// <remarks>
         /// For a specified organisation, provides a summary of all the reports published within a given period, which may be an indicator for good business management and oversight.
         /// </remarks>
-        /// <exception cref="Xero.NetStandard.OAuth2.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <exception cref="Xero.Net.Api.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="accessToken">Xero API OAuth 2.0 accessToken</param>
         /// <param name="xeroTenantId">Xero identifier for Tenant</param>
         /// <param name="endDate">date, yyyy-MM-dd                 If no parameter is provided, the current date will be used.                Any reports that were published within the period up to 12 months before this date will be returned.                Please be aware that there may be a delay of up to 3 days before a published report is visible from this API. (optional)</param>
@@ -112,7 +112,7 @@ namespace Xero.NetStandard.OAuth2.Api
         /// <remarks>
         /// For a specified organisation, provides a list of all the users registered, and a history of their accounting transactions. Also identifies the existence of an external accounting advisor and the level of interaction.
         /// </remarks>
-        /// <exception cref="Xero.NetStandard.OAuth2.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <exception cref="Xero.Net.Api.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="accessToken">Xero API OAuth 2.0 accessToken</param>
         /// <param name="xeroTenantId">Xero identifier for Tenant</param>
         /// <param name="dataMonth">date, yyyy-MM                 The specified month must be complete (in the past); The current month cannot be specified since it is not complete.                If no parameter is provided, the month immediately previous to the current month will be used.                Any user activities occurring within the specified month will be returned.                Please be aware that there may be a delay of up to 3 days before a user activity is visible from this API. (optional)</param>
@@ -125,7 +125,7 @@ namespace Xero.NetStandard.OAuth2.Api
         /// <remarks>
         /// For a specified organisation, provides a list of all the users registered, and a history of their accounting transactions. Also identifies the existence of an external accounting advisor and the level of interaction.
         /// </remarks>
-        /// <exception cref="Xero.NetStandard.OAuth2.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <exception cref="Xero.Net.Api.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="accessToken">Xero API OAuth 2.0 accessToken</param>
         /// <param name="xeroTenantId">Xero identifier for Tenant</param>
         /// <param name="dataMonth">date, yyyy-MM                 The specified month must be complete (in the past); The current month cannot be specified since it is not complete.                If no parameter is provided, the month immediately previous to the current month will be used.                Any user activities occurring within the specified month will be returned.                Please be aware that there may be a delay of up to 3 days before a user activity is visible from this API. (optional)</param>
@@ -137,7 +137,7 @@ namespace Xero.NetStandard.OAuth2.Api
         /// <remarks>
         /// For lenders that prefer using bank statement data as the source of truth.  We provide a data point that will allow access to customer bank statements, plus for reconciled bank transactions the matching accounting, invoice and billing data as well.  As customers reconcile bank statements to invoices and bills, this transaction detail will provide valuable insight for lender&#39;s assessment measures. 
         /// </remarks>
-        /// <exception cref="Xero.NetStandard.OAuth2.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <exception cref="Xero.Net.Api.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="accessToken">Xero API OAuth 2.0 accessToken</param>
         /// <param name="xeroTenantId">Xero identifier for Tenant</param>
         /// <param name="bankAccountID">string, GUID    Bank account Id</param>
@@ -153,7 +153,7 @@ namespace Xero.NetStandard.OAuth2.Api
         /// <remarks>
         /// For lenders that prefer using bank statement data as the source of truth.  We provide a data point that will allow access to customer bank statements, plus for reconciled bank transactions the matching accounting, invoice and billing data as well.  As customers reconcile bank statements to invoices and bills, this transaction detail will provide valuable insight for lender&#39;s assessment measures. 
         /// </remarks>
-        /// <exception cref="Xero.NetStandard.OAuth2.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <exception cref="Xero.Net.Api.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="accessToken">Xero API OAuth 2.0 accessToken</param>
         /// <param name="xeroTenantId">Xero identifier for Tenant</param>
         /// <param name="bankAccountID">string, GUID    Bank account Id</param>
@@ -168,7 +168,7 @@ namespace Xero.NetStandard.OAuth2.Api
         /// <remarks>
         /// Summarizes the total cash position for each account for an org
         /// </remarks>
-        /// <exception cref="Xero.NetStandard.OAuth2.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <exception cref="Xero.Net.Api.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="accessToken">Xero API OAuth 2.0 accessToken</param>
         /// <param name="xeroTenantId">Xero identifier for Tenant</param>
         /// <param name="balanceDate">date, yyyy-MM-dd     If no parameter is provided, the current date will be used.    The ‘balance date’ will return transactions based on the accounting date entered by the user.  Transactions before the balanceDate will be included.  The user has discretion as to which accounting period the transaction relates to.    The ‘balance date’  will control the latest maximum date of transactions included in the aggregate numbers.  Balance date does not affect the CurrentStatement object, as this will always return the most recent statement before asAtSystemDate (if specified) (optional)</param>
@@ -183,7 +183,7 @@ namespace Xero.NetStandard.OAuth2.Api
         /// <remarks>
         /// Summarizes the total cash position for each account for an org
         /// </remarks>
-        /// <exception cref="Xero.NetStandard.OAuth2.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <exception cref="Xero.Net.Api.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="accessToken">Xero API OAuth 2.0 accessToken</param>
         /// <param name="xeroTenantId">Xero identifier for Tenant</param>
         /// <param name="balanceDate">date, yyyy-MM-dd     If no parameter is provided, the current date will be used.    The ‘balance date’ will return transactions based on the accounting date entered by the user.  Transactions before the balanceDate will be included.  The user has discretion as to which accounting period the transaction relates to.    The ‘balance date’  will control the latest maximum date of transactions included in the aggregate numbers.  Balance date does not affect the CurrentStatement object, as this will always return the most recent statement before asAtSystemDate (if specified) (optional)</param>
@@ -197,7 +197,7 @@ namespace Xero.NetStandard.OAuth2.Api
         /// <remarks>
         /// The balance sheet report is a standard financial report which describes the financial position of an organisation at a point in time.
         /// </remarks>
-        /// <exception cref="Xero.NetStandard.OAuth2.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <exception cref="Xero.Net.Api.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="accessToken">Xero API OAuth 2.0 accessToken</param>
         /// <param name="xeroTenantId">Xero identifier for Tenant</param>
         /// <param name="balanceDate">Specifies the date for balance sheet report.    Format yyyy-MM-dd. If no parameter is provided, the current date will be used. (optional)</param>
@@ -210,7 +210,7 @@ namespace Xero.NetStandard.OAuth2.Api
         /// <remarks>
         /// The balance sheet report is a standard financial report which describes the financial position of an organisation at a point in time.
         /// </remarks>
-        /// <exception cref="Xero.NetStandard.OAuth2.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <exception cref="Xero.Net.Api.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="accessToken">Xero API OAuth 2.0 accessToken</param>
         /// <param name="xeroTenantId">Xero identifier for Tenant</param>
         /// <param name="balanceDate">Specifies the date for balance sheet report.    Format yyyy-MM-dd. If no parameter is provided, the current date will be used. (optional)</param>
@@ -222,7 +222,7 @@ namespace Xero.NetStandard.OAuth2.Api
         /// <remarks>
         /// The statement of cash flows - direct method, provides the year to date changes in operating, financing and investing cash flow activities for an organisation. Cashflow statement is not available in US region at this stage.
         /// </remarks>
-        /// <exception cref="Xero.NetStandard.OAuth2.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <exception cref="Xero.Net.Api.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="accessToken">Xero API OAuth 2.0 accessToken</param>
         /// <param name="xeroTenantId">Xero identifier for Tenant</param>
         /// <param name="startDate">Date e.g. yyyy-MM-dd    Specifies the start date for cash flow report.    If no parameter is provided, the date of 12 months before the end date will be used. (optional)</param>
@@ -236,7 +236,7 @@ namespace Xero.NetStandard.OAuth2.Api
         /// <remarks>
         /// The statement of cash flows - direct method, provides the year to date changes in operating, financing and investing cash flow activities for an organisation. Cashflow statement is not available in US region at this stage.
         /// </remarks>
-        /// <exception cref="Xero.NetStandard.OAuth2.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <exception cref="Xero.Net.Api.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="accessToken">Xero API OAuth 2.0 accessToken</param>
         /// <param name="xeroTenantId">Xero identifier for Tenant</param>
         /// <param name="startDate">Date e.g. yyyy-MM-dd    Specifies the start date for cash flow report.    If no parameter is provided, the date of 12 months before the end date will be used. (optional)</param>
@@ -249,7 +249,7 @@ namespace Xero.NetStandard.OAuth2.Api
         /// <remarks>
         /// The expense by contact report provides a year to date profit and loss for customers and suppliers for a given organisation, including detailed contact information.
         /// </remarks>
-        /// <exception cref="Xero.NetStandard.OAuth2.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <exception cref="Xero.Net.Api.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="accessToken">Xero API OAuth 2.0 accessToken</param>
         /// <param name="xeroTenantId">Xero identifier for Tenant</param>
         /// <param name="contactIds">Specifies the customer contacts to be included in the report.    If no parameter is provided, all customer contacts will be included (optional)</param>
@@ -265,7 +265,7 @@ namespace Xero.NetStandard.OAuth2.Api
         /// <remarks>
         /// The expense by contact report provides a year to date profit and loss for customers and suppliers for a given organisation, including detailed contact information.
         /// </remarks>
-        /// <exception cref="Xero.NetStandard.OAuth2.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <exception cref="Xero.Net.Api.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="accessToken">Xero API OAuth 2.0 accessToken</param>
         /// <param name="xeroTenantId">Xero identifier for Tenant</param>
         /// <param name="contactIds">Specifies the customer contacts to be included in the report.    If no parameter is provided, all customer contacts will be included (optional)</param>
@@ -280,7 +280,7 @@ namespace Xero.NetStandard.OAuth2.Api
         /// <remarks>
         /// The revenue by contact report provides a year to date profit and loss for customers and suppliers for a given organisation, including detailed contact information.
         /// </remarks>
-        /// <exception cref="Xero.NetStandard.OAuth2.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <exception cref="Xero.Net.Api.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="accessToken">Xero API OAuth 2.0 accessToken</param>
         /// <param name="xeroTenantId">Xero identifier for Tenant</param>
         /// <param name="contactIds">Specifies the customer contacts to be included in the report.    If no parameter is provided, all customer contacts will be included (optional)</param>
@@ -296,7 +296,7 @@ namespace Xero.NetStandard.OAuth2.Api
         /// <remarks>
         /// The revenue by contact report provides a year to date profit and loss for customers and suppliers for a given organisation, including detailed contact information.
         /// </remarks>
-        /// <exception cref="Xero.NetStandard.OAuth2.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <exception cref="Xero.Net.Api.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="accessToken">Xero API OAuth 2.0 accessToken</param>
         /// <param name="xeroTenantId">Xero identifier for Tenant</param>
         /// <param name="contactIds">Specifies the customer contacts to be included in the report.    If no parameter is provided, all customer contacts will be included (optional)</param>
@@ -311,7 +311,7 @@ namespace Xero.NetStandard.OAuth2.Api
         /// <remarks>
         /// The profit and loss statement is a standard financial report providing detailed year to date income and expense detail for an organisation.
         /// </remarks>
-        /// <exception cref="Xero.NetStandard.OAuth2.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <exception cref="Xero.Net.Api.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="accessToken">Xero API OAuth 2.0 accessToken</param>
         /// <param name="xeroTenantId">Xero identifier for Tenant</param>
         /// <param name="startDate">Date e.g. yyyy-MM-dd    Specifies the start date for profit and loss report    If no parameter is provided, the date of 12 months before the end date will be used. (optional)</param>
@@ -325,7 +325,7 @@ namespace Xero.NetStandard.OAuth2.Api
         /// <remarks>
         /// The profit and loss statement is a standard financial report providing detailed year to date income and expense detail for an organisation.
         /// </remarks>
-        /// <exception cref="Xero.NetStandard.OAuth2.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <exception cref="Xero.Net.Api.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="accessToken">Xero API OAuth 2.0 accessToken</param>
         /// <param name="xeroTenantId">Xero identifier for Tenant</param>
         /// <param name="startDate">Date e.g. yyyy-MM-dd    Specifies the start date for profit and loss report    If no parameter is provided, the date of 12 months before the end date will be used. (optional)</param>
@@ -338,7 +338,7 @@ namespace Xero.NetStandard.OAuth2.Api
         /// <remarks>
         /// The trial balance provides a detailed list of all accounts of an organisation at a point in time, with revenue and expense items being year to date.
         /// </remarks>
-        /// <exception cref="Xero.NetStandard.OAuth2.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <exception cref="Xero.Net.Api.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="accessToken">Xero API OAuth 2.0 accessToken</param>
         /// <param name="xeroTenantId">Xero identifier for Tenant</param>
         /// <param name="endDate">Date e.g. yyyy-MM-dd     Specifies the end date for trial balance report     If no parameter is provided, the current date will be used. (optional)</param>
@@ -351,7 +351,7 @@ namespace Xero.NetStandard.OAuth2.Api
         /// <remarks>
         /// The trial balance provides a detailed list of all accounts of an organisation at a point in time, with revenue and expense items being year to date.
         /// </remarks>
-        /// <exception cref="Xero.NetStandard.OAuth2.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <exception cref="Xero.Net.Api.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="accessToken">Xero API OAuth 2.0 accessToken</param>
         /// <param name="xeroTenantId">Xero identifier for Tenant</param>
         /// <param name="endDate">Date e.g. yyyy-MM-dd     Specifies the end date for trial balance report     If no parameter is provided, the current date will be used. (optional)</param>
@@ -373,7 +373,7 @@ namespace Xero.NetStandard.OAuth2.Api
     /// </summary>
     public partial class FinanceApi : IFinanceApi
     {
-        private Xero.NetStandard.OAuth2.Client.ExceptionFactory _exceptionFactory = (name, response) => null;
+        private Xero.Net.Api.Client.ExceptionFactory _exceptionFactory = (name, response) => null;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="FinanceApi"/> class.
@@ -381,12 +381,12 @@ namespace Xero.NetStandard.OAuth2.Api
         /// <returns></returns>
         public FinanceApi() : this((string) null)
         {
-            this.Configuration = Xero.NetStandard.OAuth2.Client.Configuration.MergeConfigurations(
-                Xero.NetStandard.OAuth2.Client.GlobalConfiguration.Instance,
-                new Xero.NetStandard.OAuth2.Client.Configuration { BasePath = "https://api.xero.com/finance.xro/1.0" }
+            this.Configuration = Xero.Net.Api.Client.Configuration.MergeConfigurations(
+                Xero.Net.Api.Client.GlobalConfiguration.Instance,
+                new Xero.Net.Api.Client.Configuration { BasePath = "https://api.xero.com/finance.xro/1.0" }
             );
-            this.AsynchronousClient = new Xero.NetStandard.OAuth2.Client.ApiClient(this.Configuration.BasePath);
-            this.ExceptionFactory = Xero.NetStandard.OAuth2.Client.Configuration.DefaultExceptionFactory;
+            this.AsynchronousClient = new Xero.Net.Api.Client.ApiClient(this.Configuration.BasePath);
+            this.ExceptionFactory = Xero.Net.Api.Client.Configuration.DefaultExceptionFactory;
         }
 
         /// <summary>
@@ -395,12 +395,12 @@ namespace Xero.NetStandard.OAuth2.Api
         /// <returns></returns>
         public FinanceApi(String basePath)
         {
-            this.Configuration = Xero.NetStandard.OAuth2.Client.Configuration.MergeConfigurations(
-                Xero.NetStandard.OAuth2.Client.GlobalConfiguration.Instance,
-                new Xero.NetStandard.OAuth2.Client.Configuration { BasePath = basePath }
+            this.Configuration = Xero.Net.Api.Client.Configuration.MergeConfigurations(
+                Xero.Net.Api.Client.GlobalConfiguration.Instance,
+                new Xero.Net.Api.Client.Configuration { BasePath = basePath }
             );
-            this.AsynchronousClient = new Xero.NetStandard.OAuth2.Client.ApiClient(this.Configuration.BasePath);
-            this.ExceptionFactory = Xero.NetStandard.OAuth2.Client.Configuration.DefaultExceptionFactory;
+            this.AsynchronousClient = new Xero.Net.Api.Client.ApiClient(this.Configuration.BasePath);
+            this.ExceptionFactory = Xero.Net.Api.Client.Configuration.DefaultExceptionFactory;
         }
 
         /// <summary>
@@ -409,16 +409,16 @@ namespace Xero.NetStandard.OAuth2.Api
         /// </summary>
         /// <param name="configuration">An instance of Configuration</param>
         /// <returns></returns>
-        public FinanceApi(Xero.NetStandard.OAuth2.Client.Configuration configuration)
+        public FinanceApi(Xero.Net.Api.Client.Configuration configuration)
         {
             if (configuration == null) throw new ArgumentNullException("configuration");
 
-            this.Configuration = Xero.NetStandard.OAuth2.Client.Configuration.MergeConfigurations(
-                Xero.NetStandard.OAuth2.Client.GlobalConfiguration.Instance,
+            this.Configuration = Xero.Net.Api.Client.Configuration.MergeConfigurations(
+                Xero.Net.Api.Client.GlobalConfiguration.Instance,
                 configuration
             );
-            this.AsynchronousClient = new Xero.NetStandard.OAuth2.Client.ApiClient(this.Configuration.BasePath);
-            ExceptionFactory = Xero.NetStandard.OAuth2.Client.Configuration.DefaultExceptionFactory;
+            this.AsynchronousClient = new Xero.Net.Api.Client.ApiClient(this.Configuration.BasePath);
+            ExceptionFactory = Xero.Net.Api.Client.Configuration.DefaultExceptionFactory;
         }
 
         /// <summary>
@@ -428,7 +428,7 @@ namespace Xero.NetStandard.OAuth2.Api
         /// <param name="client">The client interface for synchronous API access.</param>
         /// <param name="asyncClient">The client interface for asynchronous API access.</param>
         /// <param name="configuration">The configuration object.</param>
-        public FinanceApi(Xero.NetStandard.OAuth2.Client.ISynchronousClient client,Xero.NetStandard.OAuth2.Client.IAsynchronousClient asyncClient, Xero.NetStandard.OAuth2.Client.IReadableConfiguration configuration)
+        public FinanceApi(Xero.Net.Api.Client.ISynchronousClient client,Xero.Net.Api.Client.IAsynchronousClient asyncClient, Xero.Net.Api.Client.IReadableConfiguration configuration)
         {
             if(client == null) throw new ArgumentNullException("client");
             if(asyncClient == null) throw new ArgumentNullException("asyncClient");
@@ -436,13 +436,13 @@ namespace Xero.NetStandard.OAuth2.Api
 
             this.AsynchronousClient = asyncClient;
             this.Configuration = configuration;
-            this.ExceptionFactory = Xero.NetStandard.OAuth2.Client.Configuration.DefaultExceptionFactory;
+            this.ExceptionFactory = Xero.Net.Api.Client.Configuration.DefaultExceptionFactory;
         }
 
         /// <summary>
         /// The client for accessing this underlying API asynchronously.
         /// </summary>
-        public Xero.NetStandard.OAuth2.Client.IAsynchronousClient AsynchronousClient { get; set; }
+        public Xero.Net.Api.Client.IAsynchronousClient AsynchronousClient { get; set; }
 
         /// <summary>
         /// Gets the base path of the API client.
@@ -457,13 +457,13 @@ namespace Xero.NetStandard.OAuth2.Api
         /// Gets or sets the configuration object
         /// </summary>
         /// <value>An instance of the Configuration</value>
-        public Xero.NetStandard.OAuth2.Client.IReadableConfiguration Configuration {get; set;}
+        public Xero.Net.Api.Client.IReadableConfiguration Configuration {get; set;}
 
 
         /// <summary>
         /// Provides a factory method hook for the creation of exceptions.
         /// </summary>
-        public Xero.NetStandard.OAuth2.Client.ExceptionFactory ExceptionFactory
+        public Xero.Net.Api.Client.ExceptionFactory ExceptionFactory
         {
             get
             {
@@ -480,7 +480,7 @@ namespace Xero.NetStandard.OAuth2.Api
         /// <summary>
         /// Get account usage A summary of how each account is being transacted on exposing the level of detail and amounts attributable to manual adjustments.
         /// </summary>
-        /// <exception cref="Xero.NetStandard.OAuth2.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <exception cref="Xero.Net.Api.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="accessToken">Xero API OAuth 2.0 accessToken</param>
         /// <param name="xeroTenantId">Xero identifier for Tenant</param>
         /// <param name="startMonth">date, yyyy-MM                 If no parameter is provided, the month 12 months prior to the end month will be used.                Account usage for up to 12 months from this date will be returned. (optional)</param>
@@ -488,7 +488,7 @@ namespace Xero.NetStandard.OAuth2.Api
         /// <returns>Task of AccountUsageResponse</returns>
         public async System.Threading.Tasks.Task<AccountUsageResponse> GetAccountingActivityAccountUsageAsync (string accessToken, string xeroTenantId, string startMonth = null, string endMonth = null)
         {
-             Xero.NetStandard.OAuth2.Client.ApiResponse<AccountUsageResponse> localVarResponse = await GetAccountingActivityAccountUsageAsyncWithHttpInfo(accessToken, xeroTenantId, startMonth, endMonth);
+             Xero.Net.Api.Client.ApiResponse<AccountUsageResponse> localVarResponse = await GetAccountingActivityAccountUsageAsyncWithHttpInfo(accessToken, xeroTenantId, startMonth, endMonth);
              return localVarResponse.Data;
 
         }
@@ -496,20 +496,20 @@ namespace Xero.NetStandard.OAuth2.Api
         /// <summary>
         /// Get account usage A summary of how each account is being transacted on exposing the level of detail and amounts attributable to manual adjustments.
         /// </summary>
-        /// <exception cref="Xero.NetStandard.OAuth2.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <exception cref="Xero.Net.Api.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="accessToken">Xero API OAuth 2.0 accessToken</param>
         /// <param name="xeroTenantId">Xero identifier for Tenant</param>
         /// <param name="startMonth">date, yyyy-MM                 If no parameter is provided, the month 12 months prior to the end month will be used.                Account usage for up to 12 months from this date will be returned. (optional)</param>
         /// <param name="endMonth">date, yyyy-MM                 If no parameter is provided, the current month will be used.                Account usage for up to 12 months prior to this date will be returned. (optional)</param>
         /// <returns>Task of ApiResponse (AccountUsageResponse)</returns>
-        public async System.Threading.Tasks.Task<Xero.NetStandard.OAuth2.Client.ApiResponse<AccountUsageResponse>> GetAccountingActivityAccountUsageAsyncWithHttpInfo (string accessToken, string xeroTenantId, string startMonth = null, string endMonth = null)
+        public async System.Threading.Tasks.Task<Xero.Net.Api.Client.ApiResponse<AccountUsageResponse>> GetAccountingActivityAccountUsageAsyncWithHttpInfo (string accessToken, string xeroTenantId, string startMonth = null, string endMonth = null)
         {
             // verify the required parameter 'xeroTenantId' is set
             if (xeroTenantId == null)
-                throw new Xero.NetStandard.OAuth2.Client.ApiException(400, "Missing required parameter 'xeroTenantId' when calling FinanceApi->GetAccountingActivityAccountUsage");
+                throw new Xero.Net.Api.Client.ApiException(400, "Missing required parameter 'xeroTenantId' when calling FinanceApi->GetAccountingActivityAccountUsage");
 
 
-            Xero.NetStandard.OAuth2.Client.RequestOptions requestOptions = new Xero.NetStandard.OAuth2.Client.RequestOptions();
+            Xero.Net.Api.Client.RequestOptions requestOptions = new Xero.Net.Api.Client.RequestOptions();
 
             String[] @contentTypes = new String[] {
             };
@@ -528,7 +528,7 @@ namespace Xero.NetStandard.OAuth2.Api
 
             if (startMonth != null)
             {
-                foreach (var kvp in Xero.NetStandard.OAuth2.Client.ClientUtils.ParameterToMultiMap("", "startMonth", startMonth))
+                foreach (var kvp in Xero.Net.Api.Client.ClientUtils.ParameterToMultiMap("", "startMonth", startMonth))
                 {
                     foreach (var value in kvp.Value)
                     {
@@ -539,7 +539,7 @@ namespace Xero.NetStandard.OAuth2.Api
 
             if (endMonth != null)
             {
-                foreach (var kvp in Xero.NetStandard.OAuth2.Client.ClientUtils.ParameterToMultiMap("", "endMonth", endMonth))
+                foreach (var kvp in Xero.Net.Api.Client.ClientUtils.ParameterToMultiMap("", "endMonth", endMonth))
                 {
                     foreach (var value in kvp.Value)
                     {
@@ -548,7 +548,7 @@ namespace Xero.NetStandard.OAuth2.Api
                 }
             }
             if (xeroTenantId != null)
-                requestOptions.HeaderParameters.Add("xero-tenant-id", Xero.NetStandard.OAuth2.Client.ClientUtils.ParameterToString(xeroTenantId)); // header parameter
+                requestOptions.HeaderParameters.Add("xero-tenant-id", Xero.Net.Api.Client.ClientUtils.ParameterToString(xeroTenantId)); // header parameter
 
             // authentication (OAuth2) required
             // oauth required
@@ -575,14 +575,14 @@ namespace Xero.NetStandard.OAuth2.Api
         /// <summary>
         /// Get lock history Provides a history of locking of accounting books. Locking may be an indicator of good accounting practices that could reduce the risk of changes to accounting records in prior periods.
         /// </summary>
-        /// <exception cref="Xero.NetStandard.OAuth2.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <exception cref="Xero.Net.Api.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="accessToken">Xero API OAuth 2.0 accessToken</param>
         /// <param name="xeroTenantId">Xero identifier for Tenant</param>
         /// <param name="endDate">date, yyyy-MM-dd                 If no parameter is provided, the current date will be used.                Any changes to hard or soft lock dates that were made within the period up to 12 months before this date will be returned.                Please be aware that there may be a delay of up to 3 days before a change is visible from this API. (optional)</param>
         /// <returns>Task of LockHistoryResponse</returns>
         public async System.Threading.Tasks.Task<LockHistoryResponse> GetAccountingActivityLockHistoryAsync (string accessToken, string xeroTenantId, string endDate = null)
         {
-             Xero.NetStandard.OAuth2.Client.ApiResponse<LockHistoryResponse> localVarResponse = await GetAccountingActivityLockHistoryAsyncWithHttpInfo(accessToken, xeroTenantId, endDate);
+             Xero.Net.Api.Client.ApiResponse<LockHistoryResponse> localVarResponse = await GetAccountingActivityLockHistoryAsyncWithHttpInfo(accessToken, xeroTenantId, endDate);
              return localVarResponse.Data;
 
         }
@@ -590,19 +590,19 @@ namespace Xero.NetStandard.OAuth2.Api
         /// <summary>
         /// Get lock history Provides a history of locking of accounting books. Locking may be an indicator of good accounting practices that could reduce the risk of changes to accounting records in prior periods.
         /// </summary>
-        /// <exception cref="Xero.NetStandard.OAuth2.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <exception cref="Xero.Net.Api.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="accessToken">Xero API OAuth 2.0 accessToken</param>
         /// <param name="xeroTenantId">Xero identifier for Tenant</param>
         /// <param name="endDate">date, yyyy-MM-dd                 If no parameter is provided, the current date will be used.                Any changes to hard or soft lock dates that were made within the period up to 12 months before this date will be returned.                Please be aware that there may be a delay of up to 3 days before a change is visible from this API. (optional)</param>
         /// <returns>Task of ApiResponse (LockHistoryResponse)</returns>
-        public async System.Threading.Tasks.Task<Xero.NetStandard.OAuth2.Client.ApiResponse<LockHistoryResponse>> GetAccountingActivityLockHistoryAsyncWithHttpInfo (string accessToken, string xeroTenantId, string endDate = null)
+        public async System.Threading.Tasks.Task<Xero.Net.Api.Client.ApiResponse<LockHistoryResponse>> GetAccountingActivityLockHistoryAsyncWithHttpInfo (string accessToken, string xeroTenantId, string endDate = null)
         {
             // verify the required parameter 'xeroTenantId' is set
             if (xeroTenantId == null)
-                throw new Xero.NetStandard.OAuth2.Client.ApiException(400, "Missing required parameter 'xeroTenantId' when calling FinanceApi->GetAccountingActivityLockHistory");
+                throw new Xero.Net.Api.Client.ApiException(400, "Missing required parameter 'xeroTenantId' when calling FinanceApi->GetAccountingActivityLockHistory");
 
 
-            Xero.NetStandard.OAuth2.Client.RequestOptions requestOptions = new Xero.NetStandard.OAuth2.Client.RequestOptions();
+            Xero.Net.Api.Client.RequestOptions requestOptions = new Xero.Net.Api.Client.RequestOptions();
 
             String[] @contentTypes = new String[] {
             };
@@ -621,7 +621,7 @@ namespace Xero.NetStandard.OAuth2.Api
 
             if (endDate != null)
             {
-                foreach (var kvp in Xero.NetStandard.OAuth2.Client.ClientUtils.ParameterToMultiMap("", "endDate", endDate))
+                foreach (var kvp in Xero.Net.Api.Client.ClientUtils.ParameterToMultiMap("", "endDate", endDate))
                 {
                     foreach (var value in kvp.Value)
                     {
@@ -630,7 +630,7 @@ namespace Xero.NetStandard.OAuth2.Api
                 }
             }
             if (xeroTenantId != null)
-                requestOptions.HeaderParameters.Add("xero-tenant-id", Xero.NetStandard.OAuth2.Client.ClientUtils.ParameterToString(xeroTenantId)); // header parameter
+                requestOptions.HeaderParameters.Add("xero-tenant-id", Xero.Net.Api.Client.ClientUtils.ParameterToString(xeroTenantId)); // header parameter
 
             // authentication (OAuth2) required
             // oauth required
@@ -657,14 +657,14 @@ namespace Xero.NetStandard.OAuth2.Api
         /// <summary>
         /// Get report history For a specified organisation, provides a summary of all the reports published within a given period, which may be an indicator for good business management and oversight.
         /// </summary>
-        /// <exception cref="Xero.NetStandard.OAuth2.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <exception cref="Xero.Net.Api.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="accessToken">Xero API OAuth 2.0 accessToken</param>
         /// <param name="xeroTenantId">Xero identifier for Tenant</param>
         /// <param name="endDate">date, yyyy-MM-dd                 If no parameter is provided, the current date will be used.                Any reports that were published within the period up to 12 months before this date will be returned.                Please be aware that there may be a delay of up to 3 days before a published report is visible from this API. (optional)</param>
         /// <returns>Task of ReportHistoryResponse</returns>
         public async System.Threading.Tasks.Task<ReportHistoryResponse> GetAccountingActivityReportHistoryAsync (string accessToken, string xeroTenantId, string endDate = null)
         {
-             Xero.NetStandard.OAuth2.Client.ApiResponse<ReportHistoryResponse> localVarResponse = await GetAccountingActivityReportHistoryAsyncWithHttpInfo(accessToken, xeroTenantId, endDate);
+             Xero.Net.Api.Client.ApiResponse<ReportHistoryResponse> localVarResponse = await GetAccountingActivityReportHistoryAsyncWithHttpInfo(accessToken, xeroTenantId, endDate);
              return localVarResponse.Data;
 
         }
@@ -672,19 +672,19 @@ namespace Xero.NetStandard.OAuth2.Api
         /// <summary>
         /// Get report history For a specified organisation, provides a summary of all the reports published within a given period, which may be an indicator for good business management and oversight.
         /// </summary>
-        /// <exception cref="Xero.NetStandard.OAuth2.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <exception cref="Xero.Net.Api.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="accessToken">Xero API OAuth 2.0 accessToken</param>
         /// <param name="xeroTenantId">Xero identifier for Tenant</param>
         /// <param name="endDate">date, yyyy-MM-dd                 If no parameter is provided, the current date will be used.                Any reports that were published within the period up to 12 months before this date will be returned.                Please be aware that there may be a delay of up to 3 days before a published report is visible from this API. (optional)</param>
         /// <returns>Task of ApiResponse (ReportHistoryResponse)</returns>
-        public async System.Threading.Tasks.Task<Xero.NetStandard.OAuth2.Client.ApiResponse<ReportHistoryResponse>> GetAccountingActivityReportHistoryAsyncWithHttpInfo (string accessToken, string xeroTenantId, string endDate = null)
+        public async System.Threading.Tasks.Task<Xero.Net.Api.Client.ApiResponse<ReportHistoryResponse>> GetAccountingActivityReportHistoryAsyncWithHttpInfo (string accessToken, string xeroTenantId, string endDate = null)
         {
             // verify the required parameter 'xeroTenantId' is set
             if (xeroTenantId == null)
-                throw new Xero.NetStandard.OAuth2.Client.ApiException(400, "Missing required parameter 'xeroTenantId' when calling FinanceApi->GetAccountingActivityReportHistory");
+                throw new Xero.Net.Api.Client.ApiException(400, "Missing required parameter 'xeroTenantId' when calling FinanceApi->GetAccountingActivityReportHistory");
 
 
-            Xero.NetStandard.OAuth2.Client.RequestOptions requestOptions = new Xero.NetStandard.OAuth2.Client.RequestOptions();
+            Xero.Net.Api.Client.RequestOptions requestOptions = new Xero.Net.Api.Client.RequestOptions();
 
             String[] @contentTypes = new String[] {
             };
@@ -703,7 +703,7 @@ namespace Xero.NetStandard.OAuth2.Api
 
             if (endDate != null)
             {
-                foreach (var kvp in Xero.NetStandard.OAuth2.Client.ClientUtils.ParameterToMultiMap("", "endDate", endDate))
+                foreach (var kvp in Xero.Net.Api.Client.ClientUtils.ParameterToMultiMap("", "endDate", endDate))
                 {
                     foreach (var value in kvp.Value)
                     {
@@ -712,7 +712,7 @@ namespace Xero.NetStandard.OAuth2.Api
                 }
             }
             if (xeroTenantId != null)
-                requestOptions.HeaderParameters.Add("xero-tenant-id", Xero.NetStandard.OAuth2.Client.ClientUtils.ParameterToString(xeroTenantId)); // header parameter
+                requestOptions.HeaderParameters.Add("xero-tenant-id", Xero.Net.Api.Client.ClientUtils.ParameterToString(xeroTenantId)); // header parameter
 
             // authentication (OAuth2) required
             // oauth required
@@ -739,14 +739,14 @@ namespace Xero.NetStandard.OAuth2.Api
         /// <summary>
         /// Get user activities For a specified organisation, provides a list of all the users registered, and a history of their accounting transactions. Also identifies the existence of an external accounting advisor and the level of interaction.
         /// </summary>
-        /// <exception cref="Xero.NetStandard.OAuth2.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <exception cref="Xero.Net.Api.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="accessToken">Xero API OAuth 2.0 accessToken</param>
         /// <param name="xeroTenantId">Xero identifier for Tenant</param>
         /// <param name="dataMonth">date, yyyy-MM                 The specified month must be complete (in the past); The current month cannot be specified since it is not complete.                If no parameter is provided, the month immediately previous to the current month will be used.                Any user activities occurring within the specified month will be returned.                Please be aware that there may be a delay of up to 3 days before a user activity is visible from this API. (optional)</param>
         /// <returns>Task of UserActivitiesResponse</returns>
         public async System.Threading.Tasks.Task<UserActivitiesResponse> GetAccountingActivityUserActivitiesAsync (string accessToken, string xeroTenantId, string dataMonth = null)
         {
-             Xero.NetStandard.OAuth2.Client.ApiResponse<UserActivitiesResponse> localVarResponse = await GetAccountingActivityUserActivitiesAsyncWithHttpInfo(accessToken, xeroTenantId, dataMonth);
+             Xero.Net.Api.Client.ApiResponse<UserActivitiesResponse> localVarResponse = await GetAccountingActivityUserActivitiesAsyncWithHttpInfo(accessToken, xeroTenantId, dataMonth);
              return localVarResponse.Data;
 
         }
@@ -754,19 +754,19 @@ namespace Xero.NetStandard.OAuth2.Api
         /// <summary>
         /// Get user activities For a specified organisation, provides a list of all the users registered, and a history of their accounting transactions. Also identifies the existence of an external accounting advisor and the level of interaction.
         /// </summary>
-        /// <exception cref="Xero.NetStandard.OAuth2.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <exception cref="Xero.Net.Api.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="accessToken">Xero API OAuth 2.0 accessToken</param>
         /// <param name="xeroTenantId">Xero identifier for Tenant</param>
         /// <param name="dataMonth">date, yyyy-MM                 The specified month must be complete (in the past); The current month cannot be specified since it is not complete.                If no parameter is provided, the month immediately previous to the current month will be used.                Any user activities occurring within the specified month will be returned.                Please be aware that there may be a delay of up to 3 days before a user activity is visible from this API. (optional)</param>
         /// <returns>Task of ApiResponse (UserActivitiesResponse)</returns>
-        public async System.Threading.Tasks.Task<Xero.NetStandard.OAuth2.Client.ApiResponse<UserActivitiesResponse>> GetAccountingActivityUserActivitiesAsyncWithHttpInfo (string accessToken, string xeroTenantId, string dataMonth = null)
+        public async System.Threading.Tasks.Task<Xero.Net.Api.Client.ApiResponse<UserActivitiesResponse>> GetAccountingActivityUserActivitiesAsyncWithHttpInfo (string accessToken, string xeroTenantId, string dataMonth = null)
         {
             // verify the required parameter 'xeroTenantId' is set
             if (xeroTenantId == null)
-                throw new Xero.NetStandard.OAuth2.Client.ApiException(400, "Missing required parameter 'xeroTenantId' when calling FinanceApi->GetAccountingActivityUserActivities");
+                throw new Xero.Net.Api.Client.ApiException(400, "Missing required parameter 'xeroTenantId' when calling FinanceApi->GetAccountingActivityUserActivities");
 
 
-            Xero.NetStandard.OAuth2.Client.RequestOptions requestOptions = new Xero.NetStandard.OAuth2.Client.RequestOptions();
+            Xero.Net.Api.Client.RequestOptions requestOptions = new Xero.Net.Api.Client.RequestOptions();
 
             String[] @contentTypes = new String[] {
             };
@@ -785,7 +785,7 @@ namespace Xero.NetStandard.OAuth2.Api
 
             if (dataMonth != null)
             {
-                foreach (var kvp in Xero.NetStandard.OAuth2.Client.ClientUtils.ParameterToMultiMap("", "dataMonth", dataMonth))
+                foreach (var kvp in Xero.Net.Api.Client.ClientUtils.ParameterToMultiMap("", "dataMonth", dataMonth))
                 {
                     foreach (var value in kvp.Value)
                     {
@@ -794,7 +794,7 @@ namespace Xero.NetStandard.OAuth2.Api
                 }
             }
             if (xeroTenantId != null)
-                requestOptions.HeaderParameters.Add("xero-tenant-id", Xero.NetStandard.OAuth2.Client.ClientUtils.ParameterToString(xeroTenantId)); // header parameter
+                requestOptions.HeaderParameters.Add("xero-tenant-id", Xero.Net.Api.Client.ClientUtils.ParameterToString(xeroTenantId)); // header parameter
 
             // authentication (OAuth2) required
             // oauth required
@@ -821,7 +821,7 @@ namespace Xero.NetStandard.OAuth2.Api
         /// <summary>
         /// Get Bank Statement Accounting For lenders that prefer using bank statement data as the source of truth.  We provide a data point that will allow access to customer bank statements, plus for reconciled bank transactions the matching accounting, invoice and billing data as well.  As customers reconcile bank statements to invoices and bills, this transaction detail will provide valuable insight for lender&#39;s assessment measures. 
         /// </summary>
-        /// <exception cref="Xero.NetStandard.OAuth2.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <exception cref="Xero.Net.Api.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="accessToken">Xero API OAuth 2.0 accessToken</param>
         /// <param name="xeroTenantId">Xero identifier for Tenant</param>
         /// <param name="bankAccountID">string, GUID    Bank account Id</param>
@@ -831,7 +831,7 @@ namespace Xero.NetStandard.OAuth2.Api
         /// <returns>Task of BankStatementAccountingResponse</returns>
         public async System.Threading.Tasks.Task<BankStatementAccountingResponse> GetBankStatementAccountingAsync (string accessToken, string xeroTenantId, Guid bankAccountID, string fromDate, string toDate, bool? summaryOnly = null)
         {
-             Xero.NetStandard.OAuth2.Client.ApiResponse<BankStatementAccountingResponse> localVarResponse = await GetBankStatementAccountingAsyncWithHttpInfo(accessToken, xeroTenantId, bankAccountID, fromDate, toDate, summaryOnly);
+             Xero.Net.Api.Client.ApiResponse<BankStatementAccountingResponse> localVarResponse = await GetBankStatementAccountingAsyncWithHttpInfo(accessToken, xeroTenantId, bankAccountID, fromDate, toDate, summaryOnly);
              return localVarResponse.Data;
 
         }
@@ -839,7 +839,7 @@ namespace Xero.NetStandard.OAuth2.Api
         /// <summary>
         /// Get Bank Statement Accounting For lenders that prefer using bank statement data as the source of truth.  We provide a data point that will allow access to customer bank statements, plus for reconciled bank transactions the matching accounting, invoice and billing data as well.  As customers reconcile bank statements to invoices and bills, this transaction detail will provide valuable insight for lender&#39;s assessment measures. 
         /// </summary>
-        /// <exception cref="Xero.NetStandard.OAuth2.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <exception cref="Xero.Net.Api.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="accessToken">Xero API OAuth 2.0 accessToken</param>
         /// <param name="xeroTenantId">Xero identifier for Tenant</param>
         /// <param name="bankAccountID">string, GUID    Bank account Id</param>
@@ -847,26 +847,26 @@ namespace Xero.NetStandard.OAuth2.Api
         /// <param name="toDate">date, yyyy-MM-dd     Specifies the end date of the query period.   If the end date is a future date, the request will be rejected.</param>
         /// <param name="summaryOnly">boolean, true/false    The default value is true if no parameter is provided.    In summary mode, the response will exclude the computation-heavy LineItems fields from bank transaction, invoice, credit note, prepayment and overpayment data, making the API calls quicker and more efficient. (optional)</param>
         /// <returns>Task of ApiResponse (BankStatementAccountingResponse)</returns>
-        public async System.Threading.Tasks.Task<Xero.NetStandard.OAuth2.Client.ApiResponse<BankStatementAccountingResponse>> GetBankStatementAccountingAsyncWithHttpInfo (string accessToken, string xeroTenantId, Guid bankAccountID, string fromDate, string toDate, bool? summaryOnly = null)
+        public async System.Threading.Tasks.Task<Xero.Net.Api.Client.ApiResponse<BankStatementAccountingResponse>> GetBankStatementAccountingAsyncWithHttpInfo (string accessToken, string xeroTenantId, Guid bankAccountID, string fromDate, string toDate, bool? summaryOnly = null)
         {
             // verify the required parameter 'xeroTenantId' is set
             if (xeroTenantId == null)
-                throw new Xero.NetStandard.OAuth2.Client.ApiException(400, "Missing required parameter 'xeroTenantId' when calling FinanceApi->GetBankStatementAccounting");
+                throw new Xero.Net.Api.Client.ApiException(400, "Missing required parameter 'xeroTenantId' when calling FinanceApi->GetBankStatementAccounting");
 
             // verify the required parameter 'bankAccountID' is set
             if (bankAccountID == null)
-                throw new Xero.NetStandard.OAuth2.Client.ApiException(400, "Missing required parameter 'bankAccountID' when calling FinanceApi->GetBankStatementAccounting");
+                throw new Xero.Net.Api.Client.ApiException(400, "Missing required parameter 'bankAccountID' when calling FinanceApi->GetBankStatementAccounting");
 
             // verify the required parameter 'fromDate' is set
             if (fromDate == null)
-                throw new Xero.NetStandard.OAuth2.Client.ApiException(400, "Missing required parameter 'fromDate' when calling FinanceApi->GetBankStatementAccounting");
+                throw new Xero.Net.Api.Client.ApiException(400, "Missing required parameter 'fromDate' when calling FinanceApi->GetBankStatementAccounting");
 
             // verify the required parameter 'toDate' is set
             if (toDate == null)
-                throw new Xero.NetStandard.OAuth2.Client.ApiException(400, "Missing required parameter 'toDate' when calling FinanceApi->GetBankStatementAccounting");
+                throw new Xero.Net.Api.Client.ApiException(400, "Missing required parameter 'toDate' when calling FinanceApi->GetBankStatementAccounting");
 
 
-            Xero.NetStandard.OAuth2.Client.RequestOptions requestOptions = new Xero.NetStandard.OAuth2.Client.RequestOptions();
+            Xero.Net.Api.Client.RequestOptions requestOptions = new Xero.Net.Api.Client.RequestOptions();
 
             String[] @contentTypes = new String[] {
             };
@@ -885,7 +885,7 @@ namespace Xero.NetStandard.OAuth2.Api
 
             if (bankAccountID != null)
             {
-                foreach (var kvp in Xero.NetStandard.OAuth2.Client.ClientUtils.ParameterToMultiMap("", "BankAccountID", bankAccountID))
+                foreach (var kvp in Xero.Net.Api.Client.ClientUtils.ParameterToMultiMap("", "BankAccountID", bankAccountID))
                 {
                     foreach (var value in kvp.Value)
                     {
@@ -896,7 +896,7 @@ namespace Xero.NetStandard.OAuth2.Api
 
             if (fromDate != null)
             {
-                foreach (var kvp in Xero.NetStandard.OAuth2.Client.ClientUtils.ParameterToMultiMap("", "FromDate", fromDate))
+                foreach (var kvp in Xero.Net.Api.Client.ClientUtils.ParameterToMultiMap("", "FromDate", fromDate))
                 {
                     foreach (var value in kvp.Value)
                     {
@@ -907,7 +907,7 @@ namespace Xero.NetStandard.OAuth2.Api
 
             if (toDate != null)
             {
-                foreach (var kvp in Xero.NetStandard.OAuth2.Client.ClientUtils.ParameterToMultiMap("", "ToDate", toDate))
+                foreach (var kvp in Xero.Net.Api.Client.ClientUtils.ParameterToMultiMap("", "ToDate", toDate))
                 {
                     foreach (var value in kvp.Value)
                     {
@@ -922,7 +922,7 @@ namespace Xero.NetStandard.OAuth2.Api
             }
 
             if (xeroTenantId != null)
-                requestOptions.HeaderParameters.Add("xero-tenant-id", Xero.NetStandard.OAuth2.Client.ClientUtils.ParameterToString(xeroTenantId)); // header parameter
+                requestOptions.HeaderParameters.Add("xero-tenant-id", Xero.Net.Api.Client.ClientUtils.ParameterToString(xeroTenantId)); // header parameter
 
             // authentication (OAuth2) required
             // oauth required
@@ -949,7 +949,7 @@ namespace Xero.NetStandard.OAuth2.Api
         /// <summary>
         /// Get cash validation Summarizes the total cash position for each account for an org
         /// </summary>
-        /// <exception cref="Xero.NetStandard.OAuth2.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <exception cref="Xero.Net.Api.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="accessToken">Xero API OAuth 2.0 accessToken</param>
         /// <param name="xeroTenantId">Xero identifier for Tenant</param>
         /// <param name="balanceDate">date, yyyy-MM-dd     If no parameter is provided, the current date will be used.    The ‘balance date’ will return transactions based on the accounting date entered by the user.  Transactions before the balanceDate will be included.  The user has discretion as to which accounting period the transaction relates to.    The ‘balance date’  will control the latest maximum date of transactions included in the aggregate numbers.  Balance date does not affect the CurrentStatement object, as this will always return the most recent statement before asAtSystemDate (if specified) (optional)</param>
@@ -958,7 +958,7 @@ namespace Xero.NetStandard.OAuth2.Api
         /// <returns>Task of List&lt;CashValidationResponse&gt;</returns>
         public async System.Threading.Tasks.Task<List<CashValidationResponse>> GetCashValidationAsync (string accessToken, string xeroTenantId, string balanceDate = null, string asAtSystemDate = null, string beginDate = null)
         {
-             Xero.NetStandard.OAuth2.Client.ApiResponse<List<CashValidationResponse>> localVarResponse = await GetCashValidationAsyncWithHttpInfo(accessToken, xeroTenantId, balanceDate, asAtSystemDate, beginDate);
+             Xero.Net.Api.Client.ApiResponse<List<CashValidationResponse>> localVarResponse = await GetCashValidationAsyncWithHttpInfo(accessToken, xeroTenantId, balanceDate, asAtSystemDate, beginDate);
              return localVarResponse.Data;
 
         }
@@ -966,21 +966,21 @@ namespace Xero.NetStandard.OAuth2.Api
         /// <summary>
         /// Get cash validation Summarizes the total cash position for each account for an org
         /// </summary>
-        /// <exception cref="Xero.NetStandard.OAuth2.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <exception cref="Xero.Net.Api.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="accessToken">Xero API OAuth 2.0 accessToken</param>
         /// <param name="xeroTenantId">Xero identifier for Tenant</param>
         /// <param name="balanceDate">date, yyyy-MM-dd     If no parameter is provided, the current date will be used.    The ‘balance date’ will return transactions based on the accounting date entered by the user.  Transactions before the balanceDate will be included.  The user has discretion as to which accounting period the transaction relates to.    The ‘balance date’  will control the latest maximum date of transactions included in the aggregate numbers.  Balance date does not affect the CurrentStatement object, as this will always return the most recent statement before asAtSystemDate (if specified) (optional)</param>
         /// <param name="asAtSystemDate">date, yyyy-MM-dd     If no parameter is provided, the current date will be used.    The ‘as at’ date will return transactions based on the  creation date.  It reflects the date the transactions were entered into Xero, not the accounting date.  The ‘as at’ date can not be overridden by the user.  This can be used to estimate a ‘historical frequency of reconciliation’.    The ‘as at’ date will affect the current statement in the response, as any candidate statements created after this date will be filtered out.  Thus the current statement returned will be the most recent statement prior to the specified ‘as at’ date.  Be aware that neither the begin date, nor the balance date, will affect the current statement.    Note;  information is only presented when system architecture allows, meaning historical cash validation information will be an estimate. In addition, delete events are not aware of the ‘as at’ functionality in this endpoint, meaning that transactions deleted at the time the API is accessed will be considered to always have been deleted. (optional)</param>
         /// <param name="beginDate">date, yyyy-MM-dd     If no parameter is provided, the aggregate results will be drawn from the user’s total history.    The ‘begin date’ will return transactions based on the accounting date entered by the user. Transactions after the beginDate will be included.  The user has discretion as to which accounting period the transaction relates to. (optional)</param>
         /// <returns>Task of ApiResponse (List&lt;CashValidationResponse&gt;)</returns>
-        public async System.Threading.Tasks.Task<Xero.NetStandard.OAuth2.Client.ApiResponse<List<CashValidationResponse>>> GetCashValidationAsyncWithHttpInfo (string accessToken, string xeroTenantId, string balanceDate = null, string asAtSystemDate = null, string beginDate = null)
+        public async System.Threading.Tasks.Task<Xero.Net.Api.Client.ApiResponse<List<CashValidationResponse>>> GetCashValidationAsyncWithHttpInfo (string accessToken, string xeroTenantId, string balanceDate = null, string asAtSystemDate = null, string beginDate = null)
         {
             // verify the required parameter 'xeroTenantId' is set
             if (xeroTenantId == null)
-                throw new Xero.NetStandard.OAuth2.Client.ApiException(400, "Missing required parameter 'xeroTenantId' when calling FinanceApi->GetCashValidation");
+                throw new Xero.Net.Api.Client.ApiException(400, "Missing required parameter 'xeroTenantId' when calling FinanceApi->GetCashValidation");
 
 
-            Xero.NetStandard.OAuth2.Client.RequestOptions requestOptions = new Xero.NetStandard.OAuth2.Client.RequestOptions();
+            Xero.Net.Api.Client.RequestOptions requestOptions = new Xero.Net.Api.Client.RequestOptions();
 
             String[] @contentTypes = new String[] {
             };
@@ -999,7 +999,7 @@ namespace Xero.NetStandard.OAuth2.Api
 
             if (balanceDate != null)
             {
-                foreach (var kvp in Xero.NetStandard.OAuth2.Client.ClientUtils.ParameterToMultiMap("", "balanceDate", balanceDate))
+                foreach (var kvp in Xero.Net.Api.Client.ClientUtils.ParameterToMultiMap("", "balanceDate", balanceDate))
                 {
                     foreach (var value in kvp.Value)
                     {
@@ -1010,7 +1010,7 @@ namespace Xero.NetStandard.OAuth2.Api
 
             if (asAtSystemDate != null)
             {
-                foreach (var kvp in Xero.NetStandard.OAuth2.Client.ClientUtils.ParameterToMultiMap("", "asAtSystemDate", asAtSystemDate))
+                foreach (var kvp in Xero.Net.Api.Client.ClientUtils.ParameterToMultiMap("", "asAtSystemDate", asAtSystemDate))
                 {
                     foreach (var value in kvp.Value)
                     {
@@ -1021,7 +1021,7 @@ namespace Xero.NetStandard.OAuth2.Api
 
             if (beginDate != null)
             {
-                foreach (var kvp in Xero.NetStandard.OAuth2.Client.ClientUtils.ParameterToMultiMap("", "beginDate", beginDate))
+                foreach (var kvp in Xero.Net.Api.Client.ClientUtils.ParameterToMultiMap("", "beginDate", beginDate))
                 {
                     foreach (var value in kvp.Value)
                     {
@@ -1030,7 +1030,7 @@ namespace Xero.NetStandard.OAuth2.Api
                 }
             }
             if (xeroTenantId != null)
-                requestOptions.HeaderParameters.Add("xero-tenant-id", Xero.NetStandard.OAuth2.Client.ClientUtils.ParameterToString(xeroTenantId)); // header parameter
+                requestOptions.HeaderParameters.Add("xero-tenant-id", Xero.Net.Api.Client.ClientUtils.ParameterToString(xeroTenantId)); // header parameter
 
             // authentication (OAuth2) required
             // oauth required
@@ -1057,14 +1057,14 @@ namespace Xero.NetStandard.OAuth2.Api
         /// <summary>
         /// Get Balance Sheet report The balance sheet report is a standard financial report which describes the financial position of an organisation at a point in time.
         /// </summary>
-        /// <exception cref="Xero.NetStandard.OAuth2.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <exception cref="Xero.Net.Api.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="accessToken">Xero API OAuth 2.0 accessToken</param>
         /// <param name="xeroTenantId">Xero identifier for Tenant</param>
         /// <param name="balanceDate">Specifies the date for balance sheet report.    Format yyyy-MM-dd. If no parameter is provided, the current date will be used. (optional)</param>
         /// <returns>Task of BalanceSheetResponse</returns>
         public async System.Threading.Tasks.Task<BalanceSheetResponse> GetFinancialStatementBalanceSheetAsync (string accessToken, string xeroTenantId, string balanceDate = null)
         {
-             Xero.NetStandard.OAuth2.Client.ApiResponse<BalanceSheetResponse> localVarResponse = await GetFinancialStatementBalanceSheetAsyncWithHttpInfo(accessToken, xeroTenantId, balanceDate);
+             Xero.Net.Api.Client.ApiResponse<BalanceSheetResponse> localVarResponse = await GetFinancialStatementBalanceSheetAsyncWithHttpInfo(accessToken, xeroTenantId, balanceDate);
              return localVarResponse.Data;
 
         }
@@ -1072,19 +1072,19 @@ namespace Xero.NetStandard.OAuth2.Api
         /// <summary>
         /// Get Balance Sheet report The balance sheet report is a standard financial report which describes the financial position of an organisation at a point in time.
         /// </summary>
-        /// <exception cref="Xero.NetStandard.OAuth2.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <exception cref="Xero.Net.Api.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="accessToken">Xero API OAuth 2.0 accessToken</param>
         /// <param name="xeroTenantId">Xero identifier for Tenant</param>
         /// <param name="balanceDate">Specifies the date for balance sheet report.    Format yyyy-MM-dd. If no parameter is provided, the current date will be used. (optional)</param>
         /// <returns>Task of ApiResponse (BalanceSheetResponse)</returns>
-        public async System.Threading.Tasks.Task<Xero.NetStandard.OAuth2.Client.ApiResponse<BalanceSheetResponse>> GetFinancialStatementBalanceSheetAsyncWithHttpInfo (string accessToken, string xeroTenantId, string balanceDate = null)
+        public async System.Threading.Tasks.Task<Xero.Net.Api.Client.ApiResponse<BalanceSheetResponse>> GetFinancialStatementBalanceSheetAsyncWithHttpInfo (string accessToken, string xeroTenantId, string balanceDate = null)
         {
             // verify the required parameter 'xeroTenantId' is set
             if (xeroTenantId == null)
-                throw new Xero.NetStandard.OAuth2.Client.ApiException(400, "Missing required parameter 'xeroTenantId' when calling FinanceApi->GetFinancialStatementBalanceSheet");
+                throw new Xero.Net.Api.Client.ApiException(400, "Missing required parameter 'xeroTenantId' when calling FinanceApi->GetFinancialStatementBalanceSheet");
 
 
-            Xero.NetStandard.OAuth2.Client.RequestOptions requestOptions = new Xero.NetStandard.OAuth2.Client.RequestOptions();
+            Xero.Net.Api.Client.RequestOptions requestOptions = new Xero.Net.Api.Client.RequestOptions();
 
             String[] @contentTypes = new String[] {
             };
@@ -1103,7 +1103,7 @@ namespace Xero.NetStandard.OAuth2.Api
 
             if (balanceDate != null)
             {
-                foreach (var kvp in Xero.NetStandard.OAuth2.Client.ClientUtils.ParameterToMultiMap("", "balanceDate", balanceDate))
+                foreach (var kvp in Xero.Net.Api.Client.ClientUtils.ParameterToMultiMap("", "balanceDate", balanceDate))
                 {
                     foreach (var value in kvp.Value)
                     {
@@ -1112,7 +1112,7 @@ namespace Xero.NetStandard.OAuth2.Api
                 }
             }
             if (xeroTenantId != null)
-                requestOptions.HeaderParameters.Add("xero-tenant-id", Xero.NetStandard.OAuth2.Client.ClientUtils.ParameterToString(xeroTenantId)); // header parameter
+                requestOptions.HeaderParameters.Add("xero-tenant-id", Xero.Net.Api.Client.ClientUtils.ParameterToString(xeroTenantId)); // header parameter
 
             // authentication (OAuth2) required
             // oauth required
@@ -1139,7 +1139,7 @@ namespace Xero.NetStandard.OAuth2.Api
         /// <summary>
         /// Get Cash flow report The statement of cash flows - direct method, provides the year to date changes in operating, financing and investing cash flow activities for an organisation. Cashflow statement is not available in US region at this stage.
         /// </summary>
-        /// <exception cref="Xero.NetStandard.OAuth2.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <exception cref="Xero.Net.Api.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="accessToken">Xero API OAuth 2.0 accessToken</param>
         /// <param name="xeroTenantId">Xero identifier for Tenant</param>
         /// <param name="startDate">Date e.g. yyyy-MM-dd    Specifies the start date for cash flow report.    If no parameter is provided, the date of 12 months before the end date will be used. (optional)</param>
@@ -1147,7 +1147,7 @@ namespace Xero.NetStandard.OAuth2.Api
         /// <returns>Task of CashflowResponse</returns>
         public async System.Threading.Tasks.Task<CashflowResponse> GetFinancialStatementCashflowAsync (string accessToken, string xeroTenantId, string startDate = null, string endDate = null)
         {
-             Xero.NetStandard.OAuth2.Client.ApiResponse<CashflowResponse> localVarResponse = await GetFinancialStatementCashflowAsyncWithHttpInfo(accessToken, xeroTenantId, startDate, endDate);
+             Xero.Net.Api.Client.ApiResponse<CashflowResponse> localVarResponse = await GetFinancialStatementCashflowAsyncWithHttpInfo(accessToken, xeroTenantId, startDate, endDate);
              return localVarResponse.Data;
 
         }
@@ -1155,20 +1155,20 @@ namespace Xero.NetStandard.OAuth2.Api
         /// <summary>
         /// Get Cash flow report The statement of cash flows - direct method, provides the year to date changes in operating, financing and investing cash flow activities for an organisation. Cashflow statement is not available in US region at this stage.
         /// </summary>
-        /// <exception cref="Xero.NetStandard.OAuth2.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <exception cref="Xero.Net.Api.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="accessToken">Xero API OAuth 2.0 accessToken</param>
         /// <param name="xeroTenantId">Xero identifier for Tenant</param>
         /// <param name="startDate">Date e.g. yyyy-MM-dd    Specifies the start date for cash flow report.    If no parameter is provided, the date of 12 months before the end date will be used. (optional)</param>
         /// <param name="endDate">Date e.g. yyyy-MM-dd    Specifies the end date for cash flow report.    If no parameter is provided, the current date will be used. (optional)</param>
         /// <returns>Task of ApiResponse (CashflowResponse)</returns>
-        public async System.Threading.Tasks.Task<Xero.NetStandard.OAuth2.Client.ApiResponse<CashflowResponse>> GetFinancialStatementCashflowAsyncWithHttpInfo (string accessToken, string xeroTenantId, string startDate = null, string endDate = null)
+        public async System.Threading.Tasks.Task<Xero.Net.Api.Client.ApiResponse<CashflowResponse>> GetFinancialStatementCashflowAsyncWithHttpInfo (string accessToken, string xeroTenantId, string startDate = null, string endDate = null)
         {
             // verify the required parameter 'xeroTenantId' is set
             if (xeroTenantId == null)
-                throw new Xero.NetStandard.OAuth2.Client.ApiException(400, "Missing required parameter 'xeroTenantId' when calling FinanceApi->GetFinancialStatementCashflow");
+                throw new Xero.Net.Api.Client.ApiException(400, "Missing required parameter 'xeroTenantId' when calling FinanceApi->GetFinancialStatementCashflow");
 
 
-            Xero.NetStandard.OAuth2.Client.RequestOptions requestOptions = new Xero.NetStandard.OAuth2.Client.RequestOptions();
+            Xero.Net.Api.Client.RequestOptions requestOptions = new Xero.Net.Api.Client.RequestOptions();
 
             String[] @contentTypes = new String[] {
             };
@@ -1187,7 +1187,7 @@ namespace Xero.NetStandard.OAuth2.Api
 
             if (startDate != null)
             {
-                foreach (var kvp in Xero.NetStandard.OAuth2.Client.ClientUtils.ParameterToMultiMap("", "startDate", startDate))
+                foreach (var kvp in Xero.Net.Api.Client.ClientUtils.ParameterToMultiMap("", "startDate", startDate))
                 {
                     foreach (var value in kvp.Value)
                     {
@@ -1198,7 +1198,7 @@ namespace Xero.NetStandard.OAuth2.Api
 
             if (endDate != null)
             {
-                foreach (var kvp in Xero.NetStandard.OAuth2.Client.ClientUtils.ParameterToMultiMap("", "endDate", endDate))
+                foreach (var kvp in Xero.Net.Api.Client.ClientUtils.ParameterToMultiMap("", "endDate", endDate))
                 {
                     foreach (var value in kvp.Value)
                     {
@@ -1207,7 +1207,7 @@ namespace Xero.NetStandard.OAuth2.Api
                 }
             }
             if (xeroTenantId != null)
-                requestOptions.HeaderParameters.Add("xero-tenant-id", Xero.NetStandard.OAuth2.Client.ClientUtils.ParameterToString(xeroTenantId)); // header parameter
+                requestOptions.HeaderParameters.Add("xero-tenant-id", Xero.Net.Api.Client.ClientUtils.ParameterToString(xeroTenantId)); // header parameter
 
             // authentication (OAuth2) required
             // oauth required
@@ -1234,7 +1234,7 @@ namespace Xero.NetStandard.OAuth2.Api
         /// <summary>
         /// Get expense by contacts report The expense by contact report provides a year to date profit and loss for customers and suppliers for a given organisation, including detailed contact information.
         /// </summary>
-        /// <exception cref="Xero.NetStandard.OAuth2.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <exception cref="Xero.Net.Api.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="accessToken">Xero API OAuth 2.0 accessToken</param>
         /// <param name="xeroTenantId">Xero identifier for Tenant</param>
         /// <param name="contactIds">Specifies the customer contacts to be included in the report.    If no parameter is provided, all customer contacts will be included (optional)</param>
@@ -1244,7 +1244,7 @@ namespace Xero.NetStandard.OAuth2.Api
         /// <returns>Task of IncomeByContactResponse</returns>
         public async System.Threading.Tasks.Task<IncomeByContactResponse> GetFinancialStatementContactsExpenseAsync (string accessToken, string xeroTenantId, List<Guid> contactIds = null, bool? includeManualJournals = null, string startDate = null, string endDate = null)
         {
-             Xero.NetStandard.OAuth2.Client.ApiResponse<IncomeByContactResponse> localVarResponse = await GetFinancialStatementContactsExpenseAsyncWithHttpInfo(accessToken, xeroTenantId, contactIds, includeManualJournals, startDate, endDate);
+             Xero.Net.Api.Client.ApiResponse<IncomeByContactResponse> localVarResponse = await GetFinancialStatementContactsExpenseAsyncWithHttpInfo(accessToken, xeroTenantId, contactIds, includeManualJournals, startDate, endDate);
              return localVarResponse.Data;
 
         }
@@ -1252,7 +1252,7 @@ namespace Xero.NetStandard.OAuth2.Api
         /// <summary>
         /// Get expense by contacts report The expense by contact report provides a year to date profit and loss for customers and suppliers for a given organisation, including detailed contact information.
         /// </summary>
-        /// <exception cref="Xero.NetStandard.OAuth2.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <exception cref="Xero.Net.Api.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="accessToken">Xero API OAuth 2.0 accessToken</param>
         /// <param name="xeroTenantId">Xero identifier for Tenant</param>
         /// <param name="contactIds">Specifies the customer contacts to be included in the report.    If no parameter is provided, all customer contacts will be included (optional)</param>
@@ -1260,14 +1260,14 @@ namespace Xero.NetStandard.OAuth2.Api
         /// <param name="startDate">Date yyyy-MM-dd    Specifies the start date for the report.                If no parameter is provided, the date of 12 months before the end date will be used.                It is recommended to always specify both a start date and end date; While the initial range may be set to 12 months, this may need to be reduced for high volume organisations in order to improve latency. (optional)</param>
         /// <param name="endDate">Date yyyy-MM-dd    Specifies the end date for the report.    If no parameter is provided, the current date will be used.                It is recommended to always specify both a start date and end date; While the initial range may be set to 12 months, this may need to be reduced for high volume organisations in order to improve latency. (optional)</param>
         /// <returns>Task of ApiResponse (IncomeByContactResponse)</returns>
-        public async System.Threading.Tasks.Task<Xero.NetStandard.OAuth2.Client.ApiResponse<IncomeByContactResponse>> GetFinancialStatementContactsExpenseAsyncWithHttpInfo (string accessToken, string xeroTenantId, List<Guid> contactIds = null, bool? includeManualJournals = null, string startDate = null, string endDate = null)
+        public async System.Threading.Tasks.Task<Xero.Net.Api.Client.ApiResponse<IncomeByContactResponse>> GetFinancialStatementContactsExpenseAsyncWithHttpInfo (string accessToken, string xeroTenantId, List<Guid> contactIds = null, bool? includeManualJournals = null, string startDate = null, string endDate = null)
         {
             // verify the required parameter 'xeroTenantId' is set
             if (xeroTenantId == null)
-                throw new Xero.NetStandard.OAuth2.Client.ApiException(400, "Missing required parameter 'xeroTenantId' when calling FinanceApi->GetFinancialStatementContactsExpense");
+                throw new Xero.Net.Api.Client.ApiException(400, "Missing required parameter 'xeroTenantId' when calling FinanceApi->GetFinancialStatementContactsExpense");
 
 
-            Xero.NetStandard.OAuth2.Client.RequestOptions requestOptions = new Xero.NetStandard.OAuth2.Client.RequestOptions();
+            Xero.Net.Api.Client.RequestOptions requestOptions = new Xero.Net.Api.Client.RequestOptions();
 
             String[] @contentTypes = new String[] {
             };
@@ -1286,7 +1286,7 @@ namespace Xero.NetStandard.OAuth2.Api
 
             if (contactIds != null)
             {
-                foreach (var kvp in Xero.NetStandard.OAuth2.Client.ClientUtils.ParameterToMultiMap("multi", "contactIds", contactIds))
+                foreach (var kvp in Xero.Net.Api.Client.ClientUtils.ParameterToMultiMap("multi", "contactIds", contactIds))
                 {
                     foreach (var value in kvp.Value)
                     {
@@ -1303,7 +1303,7 @@ namespace Xero.NetStandard.OAuth2.Api
 
             if (startDate != null)
             {
-                foreach (var kvp in Xero.NetStandard.OAuth2.Client.ClientUtils.ParameterToMultiMap("", "startDate", startDate))
+                foreach (var kvp in Xero.Net.Api.Client.ClientUtils.ParameterToMultiMap("", "startDate", startDate))
                 {
                     foreach (var value in kvp.Value)
                     {
@@ -1314,7 +1314,7 @@ namespace Xero.NetStandard.OAuth2.Api
 
             if (endDate != null)
             {
-                foreach (var kvp in Xero.NetStandard.OAuth2.Client.ClientUtils.ParameterToMultiMap("", "endDate", endDate))
+                foreach (var kvp in Xero.Net.Api.Client.ClientUtils.ParameterToMultiMap("", "endDate", endDate))
                 {
                     foreach (var value in kvp.Value)
                     {
@@ -1323,7 +1323,7 @@ namespace Xero.NetStandard.OAuth2.Api
                 }
             }
             if (xeroTenantId != null)
-                requestOptions.HeaderParameters.Add("xero-tenant-id", Xero.NetStandard.OAuth2.Client.ClientUtils.ParameterToString(xeroTenantId)); // header parameter
+                requestOptions.HeaderParameters.Add("xero-tenant-id", Xero.Net.Api.Client.ClientUtils.ParameterToString(xeroTenantId)); // header parameter
 
             // authentication (OAuth2) required
             // oauth required
@@ -1350,7 +1350,7 @@ namespace Xero.NetStandard.OAuth2.Api
         /// <summary>
         /// Get revenue by contacts report The revenue by contact report provides a year to date profit and loss for customers and suppliers for a given organisation, including detailed contact information.
         /// </summary>
-        /// <exception cref="Xero.NetStandard.OAuth2.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <exception cref="Xero.Net.Api.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="accessToken">Xero API OAuth 2.0 accessToken</param>
         /// <param name="xeroTenantId">Xero identifier for Tenant</param>
         /// <param name="contactIds">Specifies the customer contacts to be included in the report.    If no parameter is provided, all customer contacts will be included (optional)</param>
@@ -1360,7 +1360,7 @@ namespace Xero.NetStandard.OAuth2.Api
         /// <returns>Task of IncomeByContactResponse</returns>
         public async System.Threading.Tasks.Task<IncomeByContactResponse> GetFinancialStatementContactsRevenueAsync (string accessToken, string xeroTenantId, List<Guid> contactIds = null, bool? includeManualJournals = null, string startDate = null, string endDate = null)
         {
-             Xero.NetStandard.OAuth2.Client.ApiResponse<IncomeByContactResponse> localVarResponse = await GetFinancialStatementContactsRevenueAsyncWithHttpInfo(accessToken, xeroTenantId, contactIds, includeManualJournals, startDate, endDate);
+             Xero.Net.Api.Client.ApiResponse<IncomeByContactResponse> localVarResponse = await GetFinancialStatementContactsRevenueAsyncWithHttpInfo(accessToken, xeroTenantId, contactIds, includeManualJournals, startDate, endDate);
              return localVarResponse.Data;
 
         }
@@ -1368,7 +1368,7 @@ namespace Xero.NetStandard.OAuth2.Api
         /// <summary>
         /// Get revenue by contacts report The revenue by contact report provides a year to date profit and loss for customers and suppliers for a given organisation, including detailed contact information.
         /// </summary>
-        /// <exception cref="Xero.NetStandard.OAuth2.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <exception cref="Xero.Net.Api.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="accessToken">Xero API OAuth 2.0 accessToken</param>
         /// <param name="xeroTenantId">Xero identifier for Tenant</param>
         /// <param name="contactIds">Specifies the customer contacts to be included in the report.    If no parameter is provided, all customer contacts will be included (optional)</param>
@@ -1376,14 +1376,14 @@ namespace Xero.NetStandard.OAuth2.Api
         /// <param name="startDate">Date yyyy-MM-dd    Specifies the start date for the report.                If no parameter is provided, the date of 12 months before the end date will be used.                It is recommended to always specify both a start date and end date; While the initial range may be set to 12 months, this may need to be reduced for high volume organisations in order to improve latency. (optional)</param>
         /// <param name="endDate">Date yyyy-MM-dd    Specifies the end date for the report.    If no parameter is provided, the current date will be used.                It is recommended to always specify both a start date and end date; While the initial range may be set to 12 months, this may need to be reduced for high volume organisations in order to improve latency. (optional)</param>
         /// <returns>Task of ApiResponse (IncomeByContactResponse)</returns>
-        public async System.Threading.Tasks.Task<Xero.NetStandard.OAuth2.Client.ApiResponse<IncomeByContactResponse>> GetFinancialStatementContactsRevenueAsyncWithHttpInfo (string accessToken, string xeroTenantId, List<Guid> contactIds = null, bool? includeManualJournals = null, string startDate = null, string endDate = null)
+        public async System.Threading.Tasks.Task<Xero.Net.Api.Client.ApiResponse<IncomeByContactResponse>> GetFinancialStatementContactsRevenueAsyncWithHttpInfo (string accessToken, string xeroTenantId, List<Guid> contactIds = null, bool? includeManualJournals = null, string startDate = null, string endDate = null)
         {
             // verify the required parameter 'xeroTenantId' is set
             if (xeroTenantId == null)
-                throw new Xero.NetStandard.OAuth2.Client.ApiException(400, "Missing required parameter 'xeroTenantId' when calling FinanceApi->GetFinancialStatementContactsRevenue");
+                throw new Xero.Net.Api.Client.ApiException(400, "Missing required parameter 'xeroTenantId' when calling FinanceApi->GetFinancialStatementContactsRevenue");
 
 
-            Xero.NetStandard.OAuth2.Client.RequestOptions requestOptions = new Xero.NetStandard.OAuth2.Client.RequestOptions();
+            Xero.Net.Api.Client.RequestOptions requestOptions = new Xero.Net.Api.Client.RequestOptions();
 
             String[] @contentTypes = new String[] {
             };
@@ -1402,7 +1402,7 @@ namespace Xero.NetStandard.OAuth2.Api
 
             if (contactIds != null)
             {
-                foreach (var kvp in Xero.NetStandard.OAuth2.Client.ClientUtils.ParameterToMultiMap("multi", "contactIds", contactIds))
+                foreach (var kvp in Xero.Net.Api.Client.ClientUtils.ParameterToMultiMap("multi", "contactIds", contactIds))
                 {
                     foreach (var value in kvp.Value)
                     {
@@ -1419,7 +1419,7 @@ namespace Xero.NetStandard.OAuth2.Api
 
             if (startDate != null)
             {
-                foreach (var kvp in Xero.NetStandard.OAuth2.Client.ClientUtils.ParameterToMultiMap("", "startDate", startDate))
+                foreach (var kvp in Xero.Net.Api.Client.ClientUtils.ParameterToMultiMap("", "startDate", startDate))
                 {
                     foreach (var value in kvp.Value)
                     {
@@ -1430,7 +1430,7 @@ namespace Xero.NetStandard.OAuth2.Api
 
             if (endDate != null)
             {
-                foreach (var kvp in Xero.NetStandard.OAuth2.Client.ClientUtils.ParameterToMultiMap("", "endDate", endDate))
+                foreach (var kvp in Xero.Net.Api.Client.ClientUtils.ParameterToMultiMap("", "endDate", endDate))
                 {
                     foreach (var value in kvp.Value)
                     {
@@ -1439,7 +1439,7 @@ namespace Xero.NetStandard.OAuth2.Api
                 }
             }
             if (xeroTenantId != null)
-                requestOptions.HeaderParameters.Add("xero-tenant-id", Xero.NetStandard.OAuth2.Client.ClientUtils.ParameterToString(xeroTenantId)); // header parameter
+                requestOptions.HeaderParameters.Add("xero-tenant-id", Xero.Net.Api.Client.ClientUtils.ParameterToString(xeroTenantId)); // header parameter
 
             // authentication (OAuth2) required
             // oauth required
@@ -1466,7 +1466,7 @@ namespace Xero.NetStandard.OAuth2.Api
         /// <summary>
         /// Get Profit &amp; Loss report The profit and loss statement is a standard financial report providing detailed year to date income and expense detail for an organisation.
         /// </summary>
-        /// <exception cref="Xero.NetStandard.OAuth2.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <exception cref="Xero.Net.Api.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="accessToken">Xero API OAuth 2.0 accessToken</param>
         /// <param name="xeroTenantId">Xero identifier for Tenant</param>
         /// <param name="startDate">Date e.g. yyyy-MM-dd    Specifies the start date for profit and loss report    If no parameter is provided, the date of 12 months before the end date will be used. (optional)</param>
@@ -1474,7 +1474,7 @@ namespace Xero.NetStandard.OAuth2.Api
         /// <returns>Task of ProfitAndLossResponse</returns>
         public async System.Threading.Tasks.Task<ProfitAndLossResponse> GetFinancialStatementProfitAndLossAsync (string accessToken, string xeroTenantId, string startDate = null, string endDate = null)
         {
-             Xero.NetStandard.OAuth2.Client.ApiResponse<ProfitAndLossResponse> localVarResponse = await GetFinancialStatementProfitAndLossAsyncWithHttpInfo(accessToken, xeroTenantId, startDate, endDate);
+             Xero.Net.Api.Client.ApiResponse<ProfitAndLossResponse> localVarResponse = await GetFinancialStatementProfitAndLossAsyncWithHttpInfo(accessToken, xeroTenantId, startDate, endDate);
              return localVarResponse.Data;
 
         }
@@ -1482,20 +1482,20 @@ namespace Xero.NetStandard.OAuth2.Api
         /// <summary>
         /// Get Profit &amp; Loss report The profit and loss statement is a standard financial report providing detailed year to date income and expense detail for an organisation.
         /// </summary>
-        /// <exception cref="Xero.NetStandard.OAuth2.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <exception cref="Xero.Net.Api.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="accessToken">Xero API OAuth 2.0 accessToken</param>
         /// <param name="xeroTenantId">Xero identifier for Tenant</param>
         /// <param name="startDate">Date e.g. yyyy-MM-dd    Specifies the start date for profit and loss report    If no parameter is provided, the date of 12 months before the end date will be used. (optional)</param>
         /// <param name="endDate">Date e.g. yyyy-MM-dd    Specifies the end date for profit and loss report     If no parameter is provided, the current date will be used. (optional)</param>
         /// <returns>Task of ApiResponse (ProfitAndLossResponse)</returns>
-        public async System.Threading.Tasks.Task<Xero.NetStandard.OAuth2.Client.ApiResponse<ProfitAndLossResponse>> GetFinancialStatementProfitAndLossAsyncWithHttpInfo (string accessToken, string xeroTenantId, string startDate = null, string endDate = null)
+        public async System.Threading.Tasks.Task<Xero.Net.Api.Client.ApiResponse<ProfitAndLossResponse>> GetFinancialStatementProfitAndLossAsyncWithHttpInfo (string accessToken, string xeroTenantId, string startDate = null, string endDate = null)
         {
             // verify the required parameter 'xeroTenantId' is set
             if (xeroTenantId == null)
-                throw new Xero.NetStandard.OAuth2.Client.ApiException(400, "Missing required parameter 'xeroTenantId' when calling FinanceApi->GetFinancialStatementProfitAndLoss");
+                throw new Xero.Net.Api.Client.ApiException(400, "Missing required parameter 'xeroTenantId' when calling FinanceApi->GetFinancialStatementProfitAndLoss");
 
 
-            Xero.NetStandard.OAuth2.Client.RequestOptions requestOptions = new Xero.NetStandard.OAuth2.Client.RequestOptions();
+            Xero.Net.Api.Client.RequestOptions requestOptions = new Xero.Net.Api.Client.RequestOptions();
 
             String[] @contentTypes = new String[] {
             };
@@ -1514,7 +1514,7 @@ namespace Xero.NetStandard.OAuth2.Api
 
             if (startDate != null)
             {
-                foreach (var kvp in Xero.NetStandard.OAuth2.Client.ClientUtils.ParameterToMultiMap("", "startDate", startDate))
+                foreach (var kvp in Xero.Net.Api.Client.ClientUtils.ParameterToMultiMap("", "startDate", startDate))
                 {
                     foreach (var value in kvp.Value)
                     {
@@ -1525,7 +1525,7 @@ namespace Xero.NetStandard.OAuth2.Api
 
             if (endDate != null)
             {
-                foreach (var kvp in Xero.NetStandard.OAuth2.Client.ClientUtils.ParameterToMultiMap("", "endDate", endDate))
+                foreach (var kvp in Xero.Net.Api.Client.ClientUtils.ParameterToMultiMap("", "endDate", endDate))
                 {
                     foreach (var value in kvp.Value)
                     {
@@ -1534,7 +1534,7 @@ namespace Xero.NetStandard.OAuth2.Api
                 }
             }
             if (xeroTenantId != null)
-                requestOptions.HeaderParameters.Add("xero-tenant-id", Xero.NetStandard.OAuth2.Client.ClientUtils.ParameterToString(xeroTenantId)); // header parameter
+                requestOptions.HeaderParameters.Add("xero-tenant-id", Xero.Net.Api.Client.ClientUtils.ParameterToString(xeroTenantId)); // header parameter
 
             // authentication (OAuth2) required
             // oauth required
@@ -1561,14 +1561,14 @@ namespace Xero.NetStandard.OAuth2.Api
         /// <summary>
         /// Get Trial Balance report The trial balance provides a detailed list of all accounts of an organisation at a point in time, with revenue and expense items being year to date.
         /// </summary>
-        /// <exception cref="Xero.NetStandard.OAuth2.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <exception cref="Xero.Net.Api.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="accessToken">Xero API OAuth 2.0 accessToken</param>
         /// <param name="xeroTenantId">Xero identifier for Tenant</param>
         /// <param name="endDate">Date e.g. yyyy-MM-dd     Specifies the end date for trial balance report     If no parameter is provided, the current date will be used. (optional)</param>
         /// <returns>Task of TrialBalanceResponse</returns>
         public async System.Threading.Tasks.Task<TrialBalanceResponse> GetFinancialStatementTrialBalanceAsync (string accessToken, string xeroTenantId, string endDate = null)
         {
-             Xero.NetStandard.OAuth2.Client.ApiResponse<TrialBalanceResponse> localVarResponse = await GetFinancialStatementTrialBalanceAsyncWithHttpInfo(accessToken, xeroTenantId, endDate);
+             Xero.Net.Api.Client.ApiResponse<TrialBalanceResponse> localVarResponse = await GetFinancialStatementTrialBalanceAsyncWithHttpInfo(accessToken, xeroTenantId, endDate);
              return localVarResponse.Data;
 
         }
@@ -1576,19 +1576,19 @@ namespace Xero.NetStandard.OAuth2.Api
         /// <summary>
         /// Get Trial Balance report The trial balance provides a detailed list of all accounts of an organisation at a point in time, with revenue and expense items being year to date.
         /// </summary>
-        /// <exception cref="Xero.NetStandard.OAuth2.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <exception cref="Xero.Net.Api.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="accessToken">Xero API OAuth 2.0 accessToken</param>
         /// <param name="xeroTenantId">Xero identifier for Tenant</param>
         /// <param name="endDate">Date e.g. yyyy-MM-dd     Specifies the end date for trial balance report     If no parameter is provided, the current date will be used. (optional)</param>
         /// <returns>Task of ApiResponse (TrialBalanceResponse)</returns>
-        public async System.Threading.Tasks.Task<Xero.NetStandard.OAuth2.Client.ApiResponse<TrialBalanceResponse>> GetFinancialStatementTrialBalanceAsyncWithHttpInfo (string accessToken, string xeroTenantId, string endDate = null)
+        public async System.Threading.Tasks.Task<Xero.Net.Api.Client.ApiResponse<TrialBalanceResponse>> GetFinancialStatementTrialBalanceAsyncWithHttpInfo (string accessToken, string xeroTenantId, string endDate = null)
         {
             // verify the required parameter 'xeroTenantId' is set
             if (xeroTenantId == null)
-                throw new Xero.NetStandard.OAuth2.Client.ApiException(400, "Missing required parameter 'xeroTenantId' when calling FinanceApi->GetFinancialStatementTrialBalance");
+                throw new Xero.Net.Api.Client.ApiException(400, "Missing required parameter 'xeroTenantId' when calling FinanceApi->GetFinancialStatementTrialBalance");
 
 
-            Xero.NetStandard.OAuth2.Client.RequestOptions requestOptions = new Xero.NetStandard.OAuth2.Client.RequestOptions();
+            Xero.Net.Api.Client.RequestOptions requestOptions = new Xero.Net.Api.Client.RequestOptions();
 
             String[] @contentTypes = new String[] {
             };
@@ -1607,7 +1607,7 @@ namespace Xero.NetStandard.OAuth2.Api
 
             if (endDate != null)
             {
-                foreach (var kvp in Xero.NetStandard.OAuth2.Client.ClientUtils.ParameterToMultiMap("", "endDate", endDate))
+                foreach (var kvp in Xero.Net.Api.Client.ClientUtils.ParameterToMultiMap("", "endDate", endDate))
                 {
                     foreach (var value in kvp.Value)
                     {
@@ -1616,7 +1616,7 @@ namespace Xero.NetStandard.OAuth2.Api
                 }
             }
             if (xeroTenantId != null)
-                requestOptions.HeaderParameters.Add("xero-tenant-id", Xero.NetStandard.OAuth2.Client.ClientUtils.ParameterToString(xeroTenantId)); // header parameter
+                requestOptions.HeaderParameters.Add("xero-tenant-id", Xero.Net.Api.Client.ClientUtils.ParameterToString(xeroTenantId)); // header parameter
 
             // authentication (OAuth2) required
             // oauth required
