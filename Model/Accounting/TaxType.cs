@@ -412,28 +412,202 @@ namespace Xero.Net.Api.Model.Accounting
         TOURISTREFUND = 63,
 
         /// <summary>
-        /// Enum TXRCN33INPUT for value: TXRCN33INPUT
+        /// Enum TXRCN33 for value: TXRCN33
         /// </summary>
-        [EnumMember(Value = "TXRCN33INPUT")]
-        TXRCN33INPUT = 64,
+        [EnumMember(Value = "TXRCN33")]
+        TXRCN33 = 64,
 
         /// <summary>
-        /// Enum TXRCREINPUT for value: TXRCREINPUT
+        /// Enum TXRCRE for value: TXRCRE
         /// </summary>
-        [EnumMember(Value = "TXRCREINPUT")]
-        TXRCREINPUT = 65,
+        [EnumMember(Value = "TXRCRE")]
+        TXRCRE = 65,
 
         /// <summary>
-        /// Enum TXRCESSINPUT for value: TXRCESSINPUT
+        /// Enum TXRCESS for value: TXRCESS
         /// </summary>
-        [EnumMember(Value = "TXRCESSINPUT")]
-        TXRCESSINPUT = 66,
+        [EnumMember(Value = "TXRCESS")]
+        TXRCESS = 66,
 
         /// <summary>
-        /// Enum TXRCTSINPUT for value: TXRCTSINPUT
+        /// Enum TXRCTS for value: TXRCTS
         /// </summary>
-        [EnumMember(Value = "TXRCTSINPUT")]
-        TXRCTSINPUT = 67
+        [EnumMember(Value = "TXRCTS")]
+        TXRCTS = 67,
+
+        /// <summary>
+        /// Enum OUTPUTY23 for value: OUTPUTY23
+        /// </summary>
+        [EnumMember(Value = "OUTPUTY23")]
+        OUTPUTY23 = 68,
+
+        /// <summary>
+        /// Enum DSOUTPUTY23 for value: DSOUTPUTY23
+        /// </summary>
+        [EnumMember(Value = "DSOUTPUTY23")]
+        DSOUTPUTY23 = 69,
+
+        /// <summary>
+        /// Enum INPUTY23 for value: INPUTY23
+        /// </summary>
+        [EnumMember(Value = "INPUTY23")]
+        INPUTY23 = 70,
+
+        /// <summary>
+        /// Enum IMINPUT2Y23 for value: IMINPUT2Y23
+        /// </summary>
+        [EnumMember(Value = "IMINPUT2Y23")]
+        IMINPUT2Y23 = 71,
+
+        /// <summary>
+        /// Enum IGDSINPUT2Y23 for value: IGDSINPUT2Y23
+        /// </summary>
+        [EnumMember(Value = "IGDSINPUT2Y23")]
+        IGDSINPUT2Y23 = 72,
+
+        /// <summary>
+        /// Enum TXPETINPUTY23 for value: TXPETINPUTY23
+        /// </summary>
+        [EnumMember(Value = "TXPETINPUTY23")]
+        TXPETINPUTY23 = 73,
+
+        /// <summary>
+        /// Enum TXESSINPUTY23 for value: TXESSINPUTY23
+        /// </summary>
+        [EnumMember(Value = "TXESSINPUTY23")]
+        TXESSINPUTY23 = 74,
+
+        /// <summary>
+        /// Enum TXN33INPUTY23 for value: TXN33INPUTY23
+        /// </summary>
+        [EnumMember(Value = "TXN33INPUTY23")]
+        TXN33INPUTY23 = 75,
+
+        /// <summary>
+        /// Enum TXREINPUTY23 for value: TXREINPUTY23
+        /// </summary>
+        [EnumMember(Value = "TXREINPUTY23")]
+        TXREINPUTY23 = 76,
+
+        /// <summary>
+        /// Enum TXCAY23 for value: TXCAY23
+        /// </summary>
+        [EnumMember(Value = "TXCAY23")]
+        TXCAY23 = 77,
+
+        /// <summary>
+        /// Enum BADDEBTRELIEFY23 for value: BADDEBTRELIEFY23
+        /// </summary>
+        [EnumMember(Value = "BADDEBTRELIEFY23")]
+        BADDEBTRELIEFY23 = 78,
+
+        /// <summary>
+        /// Enum IGDSINPUT3Y23 for value: IGDSINPUT3Y23
+        /// </summary>
+        [EnumMember(Value = "IGDSINPUT3Y23")]
+        IGDSINPUT3Y23 = 79,
+
+        /// <summary>
+        /// Enum SROVRRSY23 for value: SROVRRSY23
+        /// </summary>
+        [EnumMember(Value = "SROVRRSY23")]
+        SROVRRSY23 = 80,
+
+        /// <summary>
+        /// Enum SROVRLVGY23 for value: SROVRLVGY23
+        /// </summary>
+        [EnumMember(Value = "SROVRLVGY23")]
+        SROVRLVGY23 = 81,
+
+        /// <summary>
+        /// Enum SRLVGY23 for value: SRLVGY23
+        /// </summary>
+        [EnumMember(Value = "SRLVGY23")]
+        SRLVGY23 = 82,
+
+        /// <summary>
+        /// Enum TXRCN33Y23 for value: TXRCN33Y23
+        /// </summary>
+        [EnumMember(Value = "TXRCN33Y23")]
+        TXRCN33Y23 = 83,
+
+        /// <summary>
+        /// Enum TXRCREY23 for value: TXRCREY23
+        /// </summary>
+        [EnumMember(Value = "TXRCREY23")]
+        TXRCREY23 = 84,
+
+        /// <summary>
+        /// Enum TXRCESSY23 for value: TXRCESSY23
+        /// </summary>
+        [EnumMember(Value = "TXRCESSY23")]
+        TXRCESSY23 = 85,
+
+        /// <summary>
+        /// Enum TXRCTSY23 for value: TXRCTSY23
+        /// </summary>
+        [EnumMember(Value = "TXRCTSY23")]
+        TXRCTSY23 = 86,
+
+        /// <summary>
+        /// Enum IM for value: IM
+        /// </summary>
+        [EnumMember(Value = "IM")]
+        IM = 87,
+
+        /// <summary>
+        /// Enum IMY23 for value: IMY23
+        /// </summary>
+        [EnumMember(Value = "IMY23")]
+        IMY23 = 88,
+
+        /// <summary>
+        /// Enum IMESS for value: IMESS
+        /// </summary>
+        [EnumMember(Value = "IMESS")]
+        IMESS = 89,
+
+        /// <summary>
+        /// Enum IMESSY23 for value: IMESSY23
+        /// </summary>
+        [EnumMember(Value = "IMESSY23")]
+        IMESSY23 = 90,
+
+        /// <summary>
+        /// Enum IMN33 for value: IMN33
+        /// </summary>
+        [EnumMember(Value = "IMN33")]
+        IMN33 = 91,
+
+        /// <summary>
+        /// Enum IMN33Y23 for value: IMN33Y23
+        /// </summary>
+        [EnumMember(Value = "IMN33Y23")]
+        IMN33Y23 = 92,
+
+        /// <summary>
+        /// Enum IMRE for value: IMRE
+        /// </summary>
+        [EnumMember(Value = "IMRE")]
+        IMRE = 93,
+
+        /// <summary>
+        /// Enum IMREY23 for value: IMREY23
+        /// </summary>
+        [EnumMember(Value = "IMREY23")]
+        IMREY23 = 94,
+
+        /// <summary>
+        /// Enum BADDEBTRECOVERY for value: BADDEBTRECOVERY
+        /// </summary>
+        [EnumMember(Value = "BADDEBTRECOVERY")]
+        BADDEBTRECOVERY = 95,
+
+        /// <summary>
+        /// Enum BADDEBTRECOVERYY23 for value: BADDEBTRECOVERYY23
+        /// </summary>
+        [EnumMember(Value = "BADDEBTRECOVERYY23")]
+        BADDEBTRECOVERYY23 = 96
 
     }
 

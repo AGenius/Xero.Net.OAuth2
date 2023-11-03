@@ -41,7 +41,7 @@ namespace Xero.Net.Core.Api
         {
             this.APICore = parentAPI;
             Xero.Net.Api.Client.Configuration confg = new Net.Api.Client.Configuration();
-            confg.UserAgent = "Xero.Net.Api-" + APICore.Version;
+            confg.UserAgent = "Xero.Net.Api-" + APICore.APIVersion;
             APIClient = new Xero.Net.Api.Api.AssetApi(confg);
         }
         #region Assets
@@ -92,7 +92,10 @@ namespace Xero.Net.Core.Api
             catch (Exception ex)
             {
                 var er = ex.InnerException as Xero.Net.Api.Client.ApiException;
-                throw new Xero.Net.Api.Client.ApiException(er.ErrorCode, er.Message, er.ErrorContent);
+                if (er != null)
+                {
+                    throw new Xero.Net.Api.Client.ApiException(er.ErrorCode, er.Message, er.ErrorContent);
+                }                
             }
 
             return null;
@@ -111,7 +114,10 @@ namespace Xero.Net.Core.Api
             catch (Exception ex)
             {
                 var er = ex.InnerException as Xero.Net.Api.Client.ApiException;
-                throw new Xero.Net.Api.Client.ApiException(er.ErrorCode, er.Message, er.ErrorContent);
+                if (er != null)
+                {
+                    throw new Xero.Net.Api.Client.ApiException(er.ErrorCode, er.Message, er.ErrorContent);
+                }                
             }
             return null;
         }

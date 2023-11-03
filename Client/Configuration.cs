@@ -16,6 +16,7 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using Newtonsoft.Json;
+using System.Net;
 
 namespace Xero.Net.Api.Client
 {
@@ -30,7 +31,7 @@ namespace Xero.Net.Api.Client
         /// Version of the package.
         /// </summary>
         /// <value>Version of the package.</value>
-        public const string Version = "3.27.0";
+        public const string Version = "3.33.0";
 
         /// <summary>
         /// Identifier for ISO 8601 DateTime Format
@@ -102,11 +103,12 @@ namespace Xero.Net.Api.Client
         [System.Diagnostics.CodeAnalysis.SuppressMessage("ReSharper", "VirtualMemberCallInConstructor")]
         public Configuration()
         {
-            UserAgent = "xero-netstandard-3.27.0";
+            UserAgent = "xero-netstandard-3.33.0";
             BasePath = "https://api.xero.com/api.xro/2.0";
             DefaultHeader = new ConcurrentDictionary<string, string>();
             ApiKey = new ConcurrentDictionary<string, string>();
             ApiKeyPrefix = new ConcurrentDictionary<string, string>();
+            Cookies = new List<Cookie>();
 
             // Setting Timeout has side effects (forces ApiClient creation).
             Timeout = 300000;
@@ -192,6 +194,11 @@ namespace Xero.Net.Api.Client
         /// </summary>
         /// <value>The password.</value>
         public virtual string Password { get; set; }
+
+        /// <summary>
+        /// Cookies to be sent along with the request.
+        /// </summary>
+        public virtual List<Cookie> Cookies { get; set; }
 
         /// <summary>
         /// Gets the API key with prefix.
@@ -334,35 +341,12 @@ namespace Xero.Net.Api.Client
         /// </summary>
         public static String ToDebugReport()
         {
-            var os_info = System.Environment.OSVersion;
             String report = "C# SDK (Xero.Net.Api) Debug Report:\n";
-            report += "     OS : " + os_info.VersionString + "\n";
-            report += "Platform :" + GetOsName(os_info) + "\n";
-            report += "Service :" + os_info.ServicePack + "\n";
-            report += "Version :" + os_info.Version + "\n";
-            report += "    Version of the API: 2.8.0\n";
-            report += "    SDK Package Version: 3.12.1\n";
+            report += "    OS: " + System.Runtime.InteropServices.RuntimeInformation.OSDescription + "\n";
+            report += "    Version of the API: 2.38.0\n";
+            report += "    SDK Package Version: 3.33.0\n";
 
             return report;
-        }
-        // Return the OS name.
-        private static string GetOsName(OperatingSystem os_info)
-        {
-            string version =
-                os_info.Version.Major.ToString() + "." +
-                os_info.Version.Minor.ToString();
-            switch (version)
-            {
-                case "10.0": return "Windows 10/Server 2016";
-                case "6.3": return "Windows 8.1/Server 2012 R2";
-                case "6.2": return "Windows 8/Server 2012";
-                case "6.1": return "Windows 7/Server 2008 R2";
-                case "6.0": return "Windows Server 2008/Vista";
-                case "5.2": return "Windows Server 2003 R2/Server 2003/XP 64-Bit Edition";
-                case "5.1": return "Windows XP";
-                case "5.0": return "Windows 2000";
-            }
-            return "Unknown";
         }
 
         /// <summary>

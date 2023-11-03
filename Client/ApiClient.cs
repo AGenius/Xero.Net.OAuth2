@@ -9,7 +9,6 @@
 
 
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Text.RegularExpressions;
@@ -17,16 +16,14 @@ using System.Threading.Tasks;
 using System.IO;
 using System.Linq;
 using System.Net;
-using System.Runtime.Serialization;
-using System.Runtime.Serialization.Formatters;
-using System.Text;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;
 using Newtonsoft.Json.Converters;
 using RestSharp;
-using RestSharp.Deserializers;
-using ErrorEventArgs = Newtonsoft.Json.Serialization.ErrorEventArgs;
+using RestSharp.Serializers;
 using RestSharpMethod = RestSharp.Method;
+using RestSharp.Serializers.Xml;
+using System.Threading;
 
 [assembly: System.Runtime.CompilerServices.InternalsVisibleToAttribute("Xero.Net.Api.Test")]
 namespace Xero.Net.Api.Client
@@ -34,40 +31,39 @@ namespace Xero.Net.Api.Client
     /// <summary>
     /// Allows RestSharp to Serialize/Deserialize JSON using our custom logic, but only when ContentType is JSON. 
     /// </summary>
-    internal class CustomJsonCodec : RestSharp.Serializers.ISerializer, RestSharp.Deserializers.IDeserializer
+    internal class CustomJsonCodec : IRestSerializer, ISerializer, IDeserializer
     {
         private readonly IReadableConfiguration _configuration;
-        private readonly JsonSerializer _serializer;
-        private string _contentType = "application/json";
+        private ContentType _contentType = "application/json";
         private readonly JsonSerializerSettings _serializerSettings = new JsonSerializerSettings
         {
             // OpenAPI generated types generally hide default constructors.
             ConstructorHandling = ConstructorHandling.AllowNonPublicDefaultConstructor,
             ContractResolver = new DefaultContractResolver
-              {
-                  NamingStrategy = new DefaultNamingStrategy()
-                  {
-                      OverrideSpecifiedNames = true
-                  }
-              },
+            {
+                NamingStrategy = new DefaultNamingStrategy()
+                {
+                    OverrideSpecifiedNames = true
+                }
+            },
             DateTimeZoneHandling = DateTimeZoneHandling.Utc,
             CheckAdditionalContent = false,
             Culture = CultureInfo.InvariantCulture,
             DateFormatHandling = DateFormatHandling.IsoDateFormat,
             DateFormatString = "yyyy'-'MM'-'dd'T'HH':'mm':'ss.FFFFFFFK",
-        	DateParseHandling = DateParseHandling.DateTime,
+            DateParseHandling = DateParseHandling.DateTime,
             DefaultValueHandling = DefaultValueHandling.Include,
-        	FloatFormatHandling = FloatFormatHandling.String,
+            FloatFormatHandling = FloatFormatHandling.String,
             FloatParseHandling = FloatParseHandling.Double,
             Formatting = Formatting.None,
             MaxDepth = null,
             MetadataPropertyHandling = MetadataPropertyHandling.Default,
             MissingMemberHandling = MissingMemberHandling.Ignore,
-        	NullValueHandling = NullValueHandling.Include,
+            NullValueHandling = NullValueHandling.Include,
             ObjectCreationHandling = ObjectCreationHandling.Auto,
             PreserveReferencesHandling = PreserveReferencesHandling.None,
             ReferenceLoopHandling = ReferenceLoopHandling.Error,
-        	StringEscapeHandling = StringEscapeHandling.Default,
+            StringEscapeHandling = StringEscapeHandling.Default,
             TypeNameAssemblyFormatHandling = TypeNameAssemblyFormatHandling.Simple,
             TypeNameHandling = TypeNameHandling.None
         };
@@ -75,50 +71,43 @@ namespace Xero.Net.Api.Client
         public CustomJsonCodec(IReadableConfiguration configuration)
         {
             _configuration = configuration;
-            _serializer = JsonSerializer.Create(_serializerSettings);
-        }
-
-        public CustomJsonCodec(JsonSerializerSettings serializerSettings, IReadableConfiguration configuration)
-        {
-            _serializerSettings = serializerSettings;
-            _serializer = JsonSerializer.Create(_serializerSettings);
-            _configuration = configuration;
         }
 
         public string Serialize(object obj)
         {
             String result = JsonConvert.SerializeObject(obj, _serializerSettings);
-            
+
             // when dealing with AU Payroll & Accounting API, we should convert DateTime object to Wcf Json Date String
-            if (obj.GetType().FullName.Contains(@"Xero.Net.Api.Model.Accounting") || obj.GetType().FullName.Contains(@"Xero.Net.Api.Model.PayrollAu") )
+            if (obj.GetType().FullName.Contains(@"Xero.Net.Api.Model.Accounting") || obj.GetType().FullName.Contains(@"Xero.Net.Api.Model.PayrollAu"))
             {
-              string dateTimePattern = @"\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}Z";
+                string dateTimePattern = @"\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}Z";
 
-              Regex rgx = new Regex(dateTimePattern);
-              Match match = rgx.Match(result);
-              
-              if (match.Success) {
-                int indexAdjust = 0;
-                foreach (Match m in rgx.Matches(result))
+                Regex rgx = new Regex(dateTimePattern);
+                Match match = rgx.Match(result);
+
+                if (match.Success)
                 {
-                  DateTime dateTime = DateTime.Parse(m.Value);
-                  DateTimeOffset dateTimeOffset   = new DateTimeOffset(dateTime);
-                  var unixDateTime = dateTimeOffset.ToUniversalTime().ToUnixTimeMilliseconds();
-                  var wcfJsonDateString = "/Date(" + unixDateTime + "+0000)/";
-                  result = result.Remove(m.Index + indexAdjust, m.Length).Insert(m.Index + indexAdjust, wcfJsonDateString);
-                  indexAdjust = indexAdjust + (wcfJsonDateString.Length - m.Value.Length);
+                    int indexAdjust = 0;
+                    foreach (Match m in rgx.Matches(result))
+                    {
+                        DateTime dateTime = DateTime.Parse(m.Value);
+                        DateTimeOffset dateTimeOffset = new DateTimeOffset(dateTime);
+                        var unixDateTime = dateTimeOffset.ToUniversalTime().ToUnixTimeMilliseconds();
+                        var wcfJsonDateString = "/Date(" + unixDateTime + "+0000)/";
+                        result = result.Remove(m.Index + indexAdjust, m.Length).Insert(m.Index + indexAdjust, wcfJsonDateString);
+                        indexAdjust = indexAdjust + (wcfJsonDateString.Length - m.Value.Length);
+                    }
                 }
-              }
 
-              return result;
+                return result;
             };
-            
+
             return result;
         }
 
-        public T Deserialize<T>(IRestResponse response)
+        public T Deserialize<T>(RestResponse response)
         {
-            var result = (T) Deserialize(response, typeof(T));
+            var result = (T)Deserialize(response, typeof(T));
             return result;
         }
 
@@ -128,9 +117,9 @@ namespace Xero.Net.Api.Client
         /// <param name="response">The HTTP response.</param>
         /// <param name="type">Object type.</param>
         /// <returns>Object representation of the JSON string.</returns>
-        internal object Deserialize(IRestResponse response, Type type)
+        internal object Deserialize(RestResponse response, Type type)
         {
-            IList<Parameter> headers = response.Headers;
+            IReadOnlyCollection<HeaderParameter> headers = response.Headers;
             if (type == typeof(byte[])) // return byte array
             {
                 return response.RawBytes;
@@ -169,7 +158,10 @@ namespace Xero.Net.Api.Client
             {
                 return ClientUtils.ConvertType(response.Content, type);
             }
-
+            if (response.StatusCode == HttpStatusCode.NotFound)
+            {
+                return null; // Fix Not Found response (stops the DeserializeObject throwing the ApiException 500 below
+            }
             // at this point, it must be a model (json)
             try
             {
@@ -185,11 +177,34 @@ namespace Xero.Net.Api.Client
         public string Namespace { get; set; }
         public string DateFormat { get; set; }
 
-        public string ContentType
+        public ContentType ContentType
         {
             get { return _contentType; }
             set { throw new InvalidOperationException("Not allowed to set content type."); }
         }
+
+        public string Serialize(Parameter parameter)
+        {
+            return Serialize(parameter.Value);
+        }
+
+        public ISerializer Serializer => this;
+
+        public IDeserializer Deserializer => this;
+
+        public string[] AcceptedContentTypes => new[]
+        {
+            "application/json",
+            "text/json",
+            "text/x-json",
+            "text/javascript",
+            "*+json",
+            "*"
+        };
+
+        public SupportsContentType SupportsContentType => type => AcceptedContentTypes.Contains(type.Value);
+
+        public DataFormat DataFormat => DataFormat.Json;
     }
 
     /// <summary>
@@ -218,7 +233,7 @@ namespace Xero.Net.Api.Client
     }
 
     /// <summary>
-    /// Provides a default implementation of an Api client (both synchronous and asynchronous implementatios),
+    /// Provides a default implementation of an Api client (both synchronous and asynchronous implementations),
     /// encapsulating general REST accessor use cases.
     /// </summary>
     public partial class ApiClient : ISynchronousClient, IAsynchronousClient
@@ -234,7 +249,7 @@ namespace Xero.Net.Api.Client
         /// Allows for extending request processing for <see cref="ApiClient"/> generated code.
         /// </summary>
         /// <param name="request">The RestSharp request object</param>
-        protected virtual void InterceptRequest(IRestRequest request)
+        protected virtual void InterceptRequest(RestRequest request)
         {
 
         }
@@ -244,11 +259,12 @@ namespace Xero.Net.Api.Client
         /// </summary>
         /// <param name="request">The RestSharp request object</param>
         /// <param name="response">The RestSharp response object</param>
-        protected virtual void InterceptResponse(IRestRequest request, IRestResponse response)
+        protected virtual void InterceptResponse(RestRequest request, RestResponse response)
         {
-            
+
         }
         /// <summary>
+        /// AGenius
         /// Allows for extending result processing for <see cref="ApiClient"/> generated code.
         /// </summary>
         /// <param name="result">The result object</param>        
@@ -284,7 +300,7 @@ namespace Xero.Net.Api.Client
         /// <exception cref="ArgumentException"></exception>
         public ApiClient(String basePath)
         {
-           if (String.IsNullOrEmpty(basePath))
+            if (String.IsNullOrEmpty(basePath))
                 throw new ArgumentException("basePath cannot be empty");
 
             _baseUrl = basePath;
@@ -302,25 +318,25 @@ namespace Xero.Net.Api.Client
             switch (method)
             {
                 case HttpMethod.Get:
-                    other = RestSharpMethod.GET;
+                    other = RestSharpMethod.Get;
                     break;
                 case HttpMethod.Post:
-                    other = RestSharpMethod.POST;
+                    other = RestSharpMethod.Post;
                     break;
                 case HttpMethod.Put:
-                    other = RestSharpMethod.PUT;
+                    other = RestSharpMethod.Put;
                     break;
                 case HttpMethod.Delete:
-                    other = RestSharpMethod.DELETE;
+                    other = RestSharpMethod.Delete;
                     break;
                 case HttpMethod.Head:
-                    other = RestSharpMethod.HEAD;
+                    other = RestSharpMethod.Head;
                     break;
                 case HttpMethod.Options:
-                    other = RestSharpMethod.OPTIONS;
+                    other = RestSharpMethod.Options;
                     break;
                 case HttpMethod.Patch:
-                    other = RestSharpMethod.PATCH;
+                    other = RestSharpMethod.Patch;
                     break;
                 default:
                     throw new ArgumentOutOfRangeException("method", method, null);
@@ -350,11 +366,10 @@ namespace Xero.Net.Api.Client
             if (path == null) throw new ArgumentNullException("path");
             if (options == null) throw new ArgumentNullException("options");
             if (configuration == null) throw new ArgumentNullException("configuration");
-            
-            RestRequest request = new RestRequest(Method(method))
+
+            RestRequest request = new RestRequest(path, Method(method))
             {
-                Resource = path,
-                JsonSerializer = new CustomJsonCodec(configuration)
+                Timeout = configuration.Timeout
             };
 
             if (options.PathParameters != null)
@@ -364,7 +379,7 @@ namespace Xero.Net.Api.Client
                     request.AddParameter(pathParam.Key, pathParam.Value, ParameterType.UrlSegment);
                 }
             }
-            
+
             if (options.QueryParameters != null)
             {
                 foreach (var queryParam in options.QueryParameters)
@@ -418,12 +433,12 @@ namespace Xero.Net.Api.Client
                 if (options.PathParameters.ContainsKey("FileName"))
                 {
                     //restsharp needs the bytestream to go here. addfile adds metadata which corrupts file. 
-                    request.AddParameter("application/octet-stream",(byte[])options.Data,ParameterType.RequestBody);
+                    request.AddParameter("application/octet-stream", (byte[])options.Data, ParameterType.RequestBody);
                 }
                 else
                 {
                     request.AddJsonBody(options.Data);
-                }            
+                }
             }
 
             if (options.FileParameters != null)
@@ -446,7 +461,7 @@ namespace Xero.Net.Api.Client
                         var bytes = memStream.ToArray();
                         var hasName = options.FormParameters.TryGetValue("filename", out var name);
                         options.FormParameters.TryGetValue("mimeType", out var contentType);
-                        
+
                         if (!hasName)
                         {
                             throw new ApiException(400, "Files API: No filename provided when uploading file");
@@ -468,18 +483,10 @@ namespace Xero.Net.Api.Client
                 }
             }
 
-            if (options.Cookies != null && options.Cookies.Count > 0)
-            {
-                foreach (var cookie in options.Cookies)
-                {
-                    request.AddCookie(cookie.Name, cookie.Value);
-                }
-            }
-            
             return request;
         }
 
-        private ApiResponse<T> toApiResponse<T>(IRestResponse<T> response)
+        private ApiResponse<T> toApiResponse<T>(RestResponse<T> response)
         {
             T result = response.Data;
             var transformed = new ApiResponse<T>(response.StatusCode, new Multimap<string, string>(), result)
@@ -488,7 +495,7 @@ namespace Xero.Net.Api.Client
                 Cookies = new List<Cookie>(),
                 Content = response.Content
             };
-            
+
             if (response.Headers != null)
             {
                 foreach (var responseHeader in response.Headers)
@@ -499,13 +506,14 @@ namespace Xero.Net.Api.Client
 
             if (response.Cookies != null)
             {
-                foreach (var responseCookies in response.Cookies)
+                for (int i = 0; i < response.Cookies.Count; i++)
                 {
+                    Cookie responseCookies = response.Cookies[i];
                     transformed.Cookies.Add(
                         new Cookie(
-                            responseCookies.Name, 
-                            responseCookies.Value, 
-                            responseCookies.Path, 
+                            responseCookies.Name,
+                            responseCookies.Value,
+                            responseCookies.Path,
                             responseCookies.Domain)
                         );
                 }
@@ -514,45 +522,37 @@ namespace Xero.Net.Api.Client
             return transformed;
         }
 
-        private async Task<ApiResponse<T>> Exec<T>(RestRequest req, IReadableConfiguration configuration)
+        private async Task<ApiResponse<T>> Exec<T>(RestRequest req, IReadableConfiguration configuration, CancellationToken cancellationToken = default)
         {
-            RestClient client = new RestClient(_baseUrl);
-
-            client.ClearHandlers();
-            var existingDeserializer = req.JsonSerializer as IDeserializer;
-            if (existingDeserializer != null)
+            RestClientOptions clientOptions = new RestClientOptions(_baseUrl)
             {
-                client.AddHandler("application/json", () => existingDeserializer);
-                client.AddHandler("text/json", () => existingDeserializer);
-                client.AddHandler("text/x-json", () => existingDeserializer);
-                client.AddHandler("text/javascript", () => existingDeserializer);
-                client.AddHandler("*+json", () => existingDeserializer);
-                client.AddHandler("*", () => existingDeserializer);
-            }
-            else
-            {
-                var codec = new CustomJsonCodec(configuration);
-                client.AddHandler("application/json", () => codec);
-                client.AddHandler("text/json", () => codec);
-                client.AddHandler("text/x-json", () => codec);
-                client.AddHandler("text/javascript", () => codec);
-                client.AddHandler("*+json", () => codec);
-                client.AddHandler("*", () => codec);
-            }
-
-            client.AddHandler("application/xml", () => new XmlDeserializer());
-            client.AddHandler("text/xml", () => new XmlDeserializer());
-            client.AddHandler("*+xml", () => new XmlDeserializer());
-
-            client.Timeout = configuration.Timeout;
-
+                MaxTimeout = configuration.Timeout
+            };
             if (configuration.UserAgent != null)
             {
-                client.UserAgent = configuration.UserAgent;
+                clientOptions.UserAgent = configuration.UserAgent;
+            }
+
+            RestClient client = new RestClient(
+              clientOptions,
+              configureSerialization: s => s.UseSerializer(() =>
+              {
+                  var serializer = new CustomJsonCodec(configuration);
+                  return serializer;
+              })
+                  .UseSerializer<XmlRestSerializer>()
+          );
+
+            if (configuration.Cookies != null && configuration.Cookies.Count > 0)
+            {
+                foreach (var cookie in configuration.Cookies)
+                {
+                    req.CookieContainer.Add(new Cookie(cookie.Name, cookie.Value));
+                }
             }
 
             InterceptRequest(req);
-            var response = await client.ExecuteAsync<T>(req);
+            var response = await client.ExecuteAsync<T>(req, cancellationToken);
             InterceptResponse(req, response);
 
             var result = toApiResponse(response);
@@ -563,9 +563,10 @@ namespace Xero.Net.Api.Client
 
             if (response.Cookies != null && response.Cookies.Count > 0)
             {
-                if(result.Cookies == null) result.Cookies = new List<Cookie>();
-                foreach (var restResponseCookie in response.Cookies)
+                if (result.Cookies == null) result.Cookies = new List<Cookie>();
+                for (int i = 0; i < response.Cookies.Count; i++)
                 {
+                    var restResponseCookie = response.Cookies[i];
                     var cookie = new Cookie(
                         restResponseCookie.Name,
                         restResponseCookie.Value,
@@ -583,16 +584,13 @@ namespace Xero.Net.Api.Client
                         Secure = restResponseCookie.Secure,
                         Version = restResponseCookie.Version
                     };
-                    
+
                     result.Cookies.Add(cookie);
                 }
             }
-
-            InterceptResult(result);
-
             return result;
         }
-        
+
         #region IAsynchronousClient
         /// <summary>
         /// Make a HTTP GET request (async).
@@ -601,11 +599,12 @@ namespace Xero.Net.Api.Client
         /// <param name="options">The additional request options.</param>
         /// <param name="configuration">A per-request configuration object. It is assumed that any merge with
         /// GlobalConfiguration has been done before calling this method.</param>
+        /// <param name="cancellationToken">Cancellation token enables cancellation between threads. Defaults to CancellationToken.None</param>
         /// <returns>A Task containing ApiResponse</returns>
-        public async Task<ApiResponse<T>> GetAsync<T>(string path, RequestOptions options, IReadableConfiguration configuration = null)
+        public async Task<ApiResponse<T>> GetAsync<T>(string path, RequestOptions options, IReadableConfiguration configuration = null, CancellationToken cancellationToken = default)
         {
             var config = configuration ?? GlobalConfiguration.Instance;
-            return await Exec<T>(newRequest(HttpMethod.Get, path, options, config), config);
+            return await Exec<T>(newRequest(HttpMethod.Get, path, options, config), config, cancellationToken);
         }
 
         /// <summary>
@@ -615,11 +614,12 @@ namespace Xero.Net.Api.Client
         /// <param name="options">The additional request options.</param>
         /// <param name="configuration">A per-request configuration object. It is assumed that any merge with
         /// GlobalConfiguration has been done before calling this method.</param>
+        /// <param name="cancellationToken">Cancellation token enables cancellation between threads. Defaults to CancellationToken.None</param>
         /// <returns>A Task containing ApiResponse</returns>
-        public async Task<ApiResponse<T>> PostAsync<T>(string path, RequestOptions options, IReadableConfiguration configuration = null)
+        public async Task<ApiResponse<T>> PostAsync<T>(string path, RequestOptions options, IReadableConfiguration configuration = null, CancellationToken cancellationToken = default)
         {
             var config = configuration ?? GlobalConfiguration.Instance;
-            return await Exec<T>(newRequest(HttpMethod.Post, path, options, config), config);
+            return await Exec<T>(newRequest(HttpMethod.Post, path, options, config), config, cancellationToken);
         }
 
         /// <summary>
@@ -629,11 +629,12 @@ namespace Xero.Net.Api.Client
         /// <param name="options">The additional request options.</param>
         /// <param name="configuration">A per-request configuration object. It is assumed that any merge with
         /// GlobalConfiguration has been done before calling this method.</param>
+        /// <param name="cancellationToken">Cancellation token enables cancellation between threads. Defaults to CancellationToken.None</param>
         /// <returns>A Task containing ApiResponse</returns>
-        public async Task<ApiResponse<T>> PutAsync<T>(string path, RequestOptions options, IReadableConfiguration configuration = null)
+        public async Task<ApiResponse<T>> PutAsync<T>(string path, RequestOptions options, IReadableConfiguration configuration = null, CancellationToken cancellationToken = default)
         {
             var config = configuration ?? GlobalConfiguration.Instance;
-            return await Exec<T>(newRequest(HttpMethod.Put, path, options, config), config);
+            return await Exec<T>(newRequest(HttpMethod.Put, path, options, config), config, cancellationToken);
         }
 
         /// <summary>
@@ -643,11 +644,12 @@ namespace Xero.Net.Api.Client
         /// <param name="options">The additional request options.</param>
         /// <param name="configuration">A per-request configuration object. It is assumed that any merge with
         /// GlobalConfiguration has been done before calling this method.</param>
+        /// <param name="cancellationToken">Cancellation token enables cancellation between threads. Defaults to CancellationToken.None</param>
         /// <returns>A Task containing ApiResponse</returns>
-        public async Task<ApiResponse<T>> DeleteAsync<T>(string path, RequestOptions options, IReadableConfiguration configuration = null)
+        public async Task<ApiResponse<T>> DeleteAsync<T>(string path, RequestOptions options, IReadableConfiguration configuration = null, CancellationToken cancellationToken = default)
         {
             var config = configuration ?? GlobalConfiguration.Instance;
-            return await Exec<T>(newRequest(HttpMethod.Delete, path, options, config), config);
+            return await Exec<T>(newRequest(HttpMethod.Delete, path, options, config), config, cancellationToken);
         }
 
         /// <summary>
@@ -657,11 +659,12 @@ namespace Xero.Net.Api.Client
         /// <param name="options">The additional request options.</param>
         /// <param name="configuration">A per-request configuration object. It is assumed that any merge with
         /// GlobalConfiguration has been done before calling this method.</param>
+        /// <param name="cancellationToken">Cancellation token enables cancellation between threads. Defaults to CancellationToken.None</param>
         /// <returns>A Task containing ApiResponse</returns>
-        public async Task<ApiResponse<T>> HeadAsync<T>(string path, RequestOptions options, IReadableConfiguration configuration = null)
+        public async Task<ApiResponse<T>> HeadAsync<T>(string path, RequestOptions options, IReadableConfiguration configuration = null, CancellationToken cancellationToken = default)
         {
             var config = configuration ?? GlobalConfiguration.Instance;
-            return await Exec<T>(newRequest(HttpMethod.Head, path, options, config), config);
+            return await Exec<T>(newRequest(HttpMethod.Head, path, options, config), config, cancellationToken);
         }
 
         /// <summary>
@@ -671,11 +674,12 @@ namespace Xero.Net.Api.Client
         /// <param name="options">The additional request options.</param>
         /// <param name="configuration">A per-request configuration object. It is assumed that any merge with
         /// GlobalConfiguration has been done before calling this method.</param>
+        /// <param name="cancellationToken">Cancellation token enables cancellation between threads. Defaults to CancellationToken.None</param>
         /// <returns>A Task containing ApiResponse</returns>
-        public async Task<ApiResponse<T>> OptionsAsync<T>(string path, RequestOptions options, IReadableConfiguration configuration = null)
+        public async Task<ApiResponse<T>> OptionsAsync<T>(string path, RequestOptions options, IReadableConfiguration configuration = null, CancellationToken cancellationToken = default)
         {
             var config = configuration ?? GlobalConfiguration.Instance;
-            return await Exec<T>(newRequest(HttpMethod.Options, path, options, config), config);
+            return await Exec<T>(newRequest(HttpMethod.Options, path, options, config), config, cancellationToken);
         }
 
         /// <summary>
@@ -685,11 +689,12 @@ namespace Xero.Net.Api.Client
         /// <param name="options">The additional request options.</param>
         /// <param name="configuration">A per-request configuration object. It is assumed that any merge with
         /// GlobalConfiguration has been done before calling this method.</param>
+        /// <param name="cancellationToken">Cancellation token enables cancellation between threads. Defaults to CancellationToken.None</param>
         /// <returns>A Task containing ApiResponse</returns>
-        public async Task<ApiResponse<T>> PatchAsync<T>(string path, RequestOptions options, IReadableConfiguration configuration = null)
+        public async Task<ApiResponse<T>> PatchAsync<T>(string path, RequestOptions options, IReadableConfiguration configuration = null, CancellationToken cancellationToken = default)
         {
             var config = configuration ?? GlobalConfiguration.Instance;
-            return await Exec<T>(newRequest(HttpMethod.Patch, path, options, config), config);
+            return await Exec<T>(newRequest(HttpMethod.Patch, path, options, config), config, cancellationToken);
         }
         #endregion IAsynchronousClient
 
@@ -701,10 +706,11 @@ namespace Xero.Net.Api.Client
         /// <param name="options">The additional request options.</param>
         /// <param name="configuration">A per-request configuration object. It is assumed that any merge with
         /// GlobalConfiguration has been done before calling this method.</param>
+        /// <param name="cancellationToken">Cancellation token enables cancellation between threads. Defaults to CancellationToken.None</param>
         /// <returns>A Task containing ApiResponse</returns>
-        public ApiResponse<T> Get<T>(string path, RequestOptions options, IReadableConfiguration configuration = null)
+        public ApiResponse<T> Get<T>(string path, RequestOptions options, IReadableConfiguration configuration = null, CancellationToken cancellationToken = default)
         {
-            return GetAsync<T>(path, options, configuration).Result;
+            return GetAsync<T>(path, options, configuration, cancellationToken).Result;
         }
 
         /// <summary>
@@ -714,10 +720,11 @@ namespace Xero.Net.Api.Client
         /// <param name="options">The additional request options.</param>
         /// <param name="configuration">A per-request configuration object. It is assumed that any merge with
         /// GlobalConfiguration has been done before calling this method.</param>
+        /// <param name="cancellationToken">Cancellation token enables cancellation between threads. Defaults to CancellationToken.None</param>
         /// <returns>A Task containing ApiResponse</returns>
-        public ApiResponse<T> Post<T>(string path, RequestOptions options, IReadableConfiguration configuration = null)
+        public ApiResponse<T> Post<T>(string path, RequestOptions options, IReadableConfiguration configuration = null, CancellationToken cancellationToken = default)
         {
-            return PostAsync<T>(path, options, configuration).Result;
+            return PostAsync<T>(path, options, configuration, cancellationToken).Result;
         }
 
         /// <summary>
@@ -727,10 +734,11 @@ namespace Xero.Net.Api.Client
         /// <param name="options">The additional request options.</param>
         /// <param name="configuration">A per-request configuration object. It is assumed that any merge with
         /// GlobalConfiguration has been done before calling this method.</param>
+        /// <param name="cancellationToken">Cancellation token enables cancellation between threads. Defaults to CancellationToken.None</param>
         /// <returns>A Task containing ApiResponse</returns>
-        public ApiResponse<T> Put<T>(string path, RequestOptions options, IReadableConfiguration configuration = null)
+        public ApiResponse<T> Put<T>(string path, RequestOptions options, IReadableConfiguration configuration = null, CancellationToken cancellationToken = default)
         {
-            return PutAsync<T>(path, options, configuration).Result;
+            return PutAsync<T>(path, options, configuration, cancellationToken).Result;
         }
 
         /// <summary>
@@ -740,10 +748,11 @@ namespace Xero.Net.Api.Client
         /// <param name="options">The additional request options.</param>
         /// <param name="configuration">A per-request configuration object. It is assumed that any merge with
         /// GlobalConfiguration has been done before calling this method.</param>
+        /// <param name="cancellationToken">Cancellation token enables cancellation between threads. Defaults to CancellationToken.None</param>
         /// <returns>A Task containing ApiResponse</returns>
-        public ApiResponse<T> Delete<T>(string path, RequestOptions options, IReadableConfiguration configuration = null)
+        public ApiResponse<T> Delete<T>(string path, RequestOptions options, IReadableConfiguration configuration = null, CancellationToken cancellationToken = default)
         {
-            return DeleteAsync<T>(path, options, configuration).Result;
+            return DeleteAsync<T>(path, options, configuration, cancellationToken).Result;
         }
 
         /// <summary>
@@ -753,10 +762,11 @@ namespace Xero.Net.Api.Client
         /// <param name="options">The additional request options.</param>
         /// <param name="configuration">A per-request configuration object. It is assumed that any merge with
         /// GlobalConfiguration has been done before calling this method.</param>
+        /// <param name="cancellationToken">Cancellation token enables cancellation between threads. Defaults to CancellationToken.None</param>
         /// <returns>A Task containing ApiResponse</returns>
-        public ApiResponse<T> Head<T>(string path, RequestOptions options, IReadableConfiguration configuration = null)
+        public ApiResponse<T> Head<T>(string path, RequestOptions options, IReadableConfiguration configuration = null, CancellationToken cancellationToken = default)
         {
-            return HeadAsync<T>(path, options, configuration).Result;
+            return HeadAsync<T>(path, options, configuration, cancellationToken).Result;
         }
 
         /// <summary>
@@ -766,10 +776,11 @@ namespace Xero.Net.Api.Client
         /// <param name="options">The additional request options.</param>
         /// <param name="configuration">A per-request configuration object. It is assumed that any merge with
         /// GlobalConfiguration has been done before calling this method.</param>
+        /// <param name="cancellationToken">Cancellation token enables cancellation between threads. Defaults to CancellationToken.None</param>
         /// <returns>A Task containing ApiResponse</returns>
-        public ApiResponse<T> Options<T>(string path, RequestOptions options, IReadableConfiguration configuration = null)
+        public ApiResponse<T> Options<T>(string path, RequestOptions options, IReadableConfiguration configuration = null, CancellationToken cancellationToken = default)
         {
-            return OptionsAsync<T>(path, options, configuration).Result;
+            return OptionsAsync<T>(path, options, configuration, cancellationToken).Result;
         }
 
         /// <summary>
@@ -779,10 +790,11 @@ namespace Xero.Net.Api.Client
         /// <param name="options">The additional request options.</param>
         /// <param name="configuration">A per-request configuration object. It is assumed that any merge with
         /// GlobalConfiguration has been done before calling this method.</param>
+        /// <param name="cancellationToken">Cancellation token enables cancellation between threads. Defaults to CancellationToken.None</param>
         /// <returns>A Task containing ApiResponse</returns>
-        public ApiResponse<T> Patch<T>(string path, RequestOptions options, IReadableConfiguration configuration = null)
+        public ApiResponse<T> Patch<T>(string path, RequestOptions options, IReadableConfiguration configuration = null, CancellationToken cancellationToken = default)
         {
-            return PatchAsync<T>(path, options, configuration).Result;
+            return PatchAsync<T>(path, options, configuration, cancellationToken).Result;
         }
         #endregion ISynchronousClient
     }

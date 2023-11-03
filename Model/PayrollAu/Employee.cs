@@ -31,9 +31,9 @@ namespace Xero.Net.Api.Model.PayrollAu
     public partial class Employee :  IEquatable<Employee>, IValidatableObject
     {
         /// <summary>
-        /// The employee’s gender. See Employee Gender
+        /// The employee’s gender. See Employee Gender
         /// </summary>
-        /// <value>The employee’s gender. See Employee Gender</value>
+        /// <value>The employee’s gender. See Employee Gender</value>
         [JsonConverter(typeof(Client.CustomStringEnumConverter))]
         public enum GenderEnum
         {
@@ -64,9 +64,9 @@ namespace Xero.Net.Api.Model.PayrollAu
         }
 
         /// <summary>
-        /// The employee’s gender. See Employee Gender
+        /// The employee’s gender. See Employee Gender
         /// </summary>
-        /// <value>The employee’s gender. See Employee Gender</value>
+        /// <value>The employee’s gender. See Employee Gender</value>
         [DataMember(Name="Gender", EmitDefaultValue=false)]
         public GenderEnum Gender { get; set; }
         /// <summary>
@@ -126,6 +126,21 @@ namespace Xero.Net.Api.Model.PayrollAu
         /// <value>* &#x60;V&#x60; Voluntary cessation - An employee resignation, retirement, domestic or pressing necessity or abandonment of employment * &#x60;I&#x60; Ill health - An employee resignation due to medical condition that prevents the continuation of employment, such as for illness, ill-health, medical unfitness or total permanent disability * &#x60;D&#x60; Deceased - The death of an employee * &#x60;R&#x60; Redundancy - An employer-initiated termination of employment due to a genuine redundancy or approved early retirement scheme * &#x60;F&#x60; Dismissal - An employer-initiated termination of employment due to dismissal, inability to perform the required work, misconduct or inefficiency * &#x60;C&#x60; Contract cessation - The natural conclusion of a limited employment relationship due to contract/engagement duration or task completion, seasonal work completion, or to cease casuals that are no longer required * &#x60;T&#x60; Transfer - The administrative arrangements performed to transfer employees across payroll systems, move them temporarily to another employer (machinery of government for public servants), transfer of business, move them to outsourcing arrangements or other such technical activities. </value>
         [DataMember(Name="TerminationReason", EmitDefaultValue=false)]
         public TerminationReasonEnum TerminationReason { get; set; }
+        /// <summary>
+        /// Gets or Sets IncomeType
+        /// </summary>
+        [DataMember(Name="IncomeType", EmitDefaultValue=false)]
+        public IncomeType IncomeType { get; set; }
+        /// <summary>
+        /// Gets or Sets EmploymentType
+        /// </summary>
+        [DataMember(Name="EmploymentType", EmitDefaultValue=false)]
+        public EmploymentType EmploymentType { get; set; }
+        /// <summary>
+        /// Gets or Sets CountryOfResidence
+        /// </summary>
+        [DataMember(Name="CountryOfResidence", EmitDefaultValue=false)]
+        public CountryOfResidence CountryOfResidence { get; set; }
         /// <summary>
         /// Gets or Sets Status
         /// </summary>
@@ -308,6 +323,13 @@ namespace Xero.Net.Api.Model.PayrollAu
         public TaxDeclaration TaxDeclaration { get; set; }
 
         /// <summary>
+        /// Indicates if the employee has been updated for STP Phase 2 compliance. Doesn&#39;t indicate that the employee is payable.
+        /// </summary>
+        /// <value>Indicates if the employee has been updated for STP Phase 2 compliance. Doesn&#39;t indicate that the employee is payable.</value>
+        [DataMember(Name="IsSTP2Qualified", EmitDefaultValue=false)]
+        public bool? IsSTP2Qualified { get; set; }
+
+        /// <summary>
         /// Gets or Sets LeaveBalances
         /// </summary>
         [DataMember(Name="LeaveBalances", EmitDefaultValue=false)]
@@ -373,6 +395,10 @@ namespace Xero.Net.Api.Model.PayrollAu
             sb.Append("  PayTemplate: ").Append(PayTemplate).Append("\n");
             sb.Append("  OpeningBalances: ").Append(OpeningBalances).Append("\n");
             sb.Append("  TaxDeclaration: ").Append(TaxDeclaration).Append("\n");
+            sb.Append("  IncomeType: ").Append(IncomeType).Append("\n");
+            sb.Append("  EmploymentType: ").Append(EmploymentType).Append("\n");
+            sb.Append("  CountryOfResidence: ").Append(CountryOfResidence).Append("\n");
+            sb.Append("  IsSTP2Qualified: ").Append(IsSTP2Qualified).Append("\n");
             sb.Append("  LeaveBalances: ").Append(LeaveBalances).Append("\n");
             sb.Append("  LeaveLines: ").Append(LeaveLines).Append("\n");
             sb.Append("  SuperMemberships: ").Append(SuperMemberships).Append("\n");
@@ -543,6 +569,23 @@ namespace Xero.Net.Api.Model.PayrollAu
                     this.TaxDeclaration.Equals(input.TaxDeclaration))
                 ) && 
                 (
+                    this.IncomeType == input.IncomeType ||
+                    this.IncomeType.Equals(input.IncomeType)
+                ) && 
+                (
+                    this.EmploymentType == input.EmploymentType ||
+                    this.EmploymentType.Equals(input.EmploymentType)
+                ) && 
+                (
+                    this.CountryOfResidence == input.CountryOfResidence ||
+                    this.CountryOfResidence.Equals(input.CountryOfResidence)
+                ) && 
+                (
+                    this.IsSTP2Qualified == input.IsSTP2Qualified ||
+                    (this.IsSTP2Qualified != null &&
+                    this.IsSTP2Qualified.Equals(input.IsSTP2Qualified))
+                ) && 
+                (
                     this.LeaveBalances == input.LeaveBalances ||
                     this.LeaveBalances != null &&
                     input.LeaveBalances != null &&
@@ -636,6 +679,11 @@ namespace Xero.Net.Api.Model.PayrollAu
                     hashCode = hashCode * 59 + this.OpeningBalances.GetHashCode();
                 if (this.TaxDeclaration != null)
                     hashCode = hashCode * 59 + this.TaxDeclaration.GetHashCode();
+                hashCode = hashCode * 59 + this.IncomeType.GetHashCode();
+                hashCode = hashCode * 59 + this.EmploymentType.GetHashCode();
+                hashCode = hashCode * 59 + this.CountryOfResidence.GetHashCode();
+                if (this.IsSTP2Qualified != null)
+                    hashCode = hashCode * 59 + this.IsSTP2Qualified.GetHashCode();
                 if (this.LeaveBalances != null)
                     hashCode = hashCode * 59 + this.LeaveBalances.GetHashCode();
                 if (this.LeaveLines != null)

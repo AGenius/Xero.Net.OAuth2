@@ -545,28 +545,118 @@ namespace Xero.Net.Api.Model.Accounting
             TOURISTREFUND = 78,
 
             /// <summary>
-            /// Enum TXRCN33INPUT for value: TXRCN33INPUT
+            /// Enum TXRCN33 for value: TXRCN33
             /// </summary>
-            [EnumMember(Value = "TXRCN33INPUT")]
-            TXRCN33INPUT = 79,
+            [EnumMember(Value = "TXRCN33")]
+            TXRCN33 = 79,
 
             /// <summary>
-            /// Enum TXRCREINPUT for value: TXRCREINPUT
+            /// Enum TXRCRE for value: TXRCRE
             /// </summary>
-            [EnumMember(Value = "TXRCREINPUT")]
-            TXRCREINPUT = 80,
+            [EnumMember(Value = "TXRCRE")]
+            TXRCRE = 80,
 
             /// <summary>
-            /// Enum TXRCESSINPUT for value: TXRCESSINPUT
+            /// Enum TXRCESS for value: TXRCESS
             /// </summary>
-            [EnumMember(Value = "TXRCESSINPUT")]
-            TXRCESSINPUT = 81,
+            [EnumMember(Value = "TXRCESS")]
+            TXRCESS = 81,
 
             /// <summary>
-            /// Enum TXRCTSINPUT for value: TXRCTSINPUT
+            /// Enum TXRCTS for value: TXRCTS
             /// </summary>
-            [EnumMember(Value = "TXRCTSINPUT")]
-            TXRCTSINPUT = 82
+            [EnumMember(Value = "TXRCTS")]
+            TXRCTS = 82,
+
+            /// <summary>
+            /// Enum CAPEXINPUT for value: CAPEXINPUT
+            /// </summary>
+            [EnumMember(Value = "CAPEXINPUT")]
+            CAPEXINPUT = 83,
+
+            /// <summary>
+            /// Enum UNDEFINED for value: UNDEFINED
+            /// </summary>
+            [EnumMember(Value = "UNDEFINED")]
+            UNDEFINED = 84,
+
+            /// <summary>
+            /// Enum CAPEXOUTPUT for value: CAPEXOUTPUT
+            /// </summary>
+            [EnumMember(Value = "CAPEXOUTPUT")]
+            CAPEXOUTPUT = 85,
+
+            /// <summary>
+            /// Enum ZEROEXPOUTPUT for value: ZEROEXPOUTPUT
+            /// </summary>
+            [EnumMember(Value = "ZEROEXPOUTPUT")]
+            ZEROEXPOUTPUT = 86,
+
+            /// <summary>
+            /// Enum GOODSIMPORT for value: GOODSIMPORT
+            /// </summary>
+            [EnumMember(Value = "GOODSIMPORT")]
+            GOODSIMPORT = 87,
+
+            /// <summary>
+            /// Enum NONEINPUT for value: NONEINPUT
+            /// </summary>
+            [EnumMember(Value = "NONEINPUT")]
+            NONEINPUT = 88,
+
+            /// <summary>
+            /// Enum NOTREPORTED for value: NOTREPORTED
+            /// </summary>
+            [EnumMember(Value = "NOTREPORTED")]
+            NOTREPORTED = 89,
+
+            /// <summary>
+            /// Enum SROVRRS for value: SROVRRS
+            /// </summary>
+            [EnumMember(Value = "SROVRRS")]
+            SROVRRS = 90,
+
+            /// <summary>
+            /// Enum SROVRLVG for value: SROVRLVG
+            /// </summary>
+            [EnumMember(Value = "SROVRLVG")]
+            SROVRLVG = 91,
+
+            /// <summary>
+            /// Enum SRLVG for value: SRLVG
+            /// </summary>
+            [EnumMember(Value = "SRLVG")]
+            SRLVG = 92,
+
+            /// <summary>
+            /// Enum IM for value: IM
+            /// </summary>
+            [EnumMember(Value = "IM")]
+            IM = 93,
+
+            /// <summary>
+            /// Enum IMESS for value: IMESS
+            /// </summary>
+            [EnumMember(Value = "IMESS")]
+            IMESS = 94,
+
+            /// <summary>
+            /// Enum IMN33 for value: IMN33
+            /// </summary>
+            [EnumMember(Value = "IMN33")]
+            IMN33 = 95,
+
+            /// <summary>
+            /// Enum IMRE for value: IMRE
+            /// </summary>
+            [EnumMember(Value = "IMRE")]
+            IMRE = 96,
+
+            /// <summary>
+            /// Enum BADDEBTRECOVERY for value: BADDEBTRECOVERY
+            /// </summary>
+            [EnumMember(Value = "BADDEBTRECOVERY")]
+            BADDEBTRECOVERY = 97
 
         }
 

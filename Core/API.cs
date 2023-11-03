@@ -15,11 +15,12 @@ namespace Xero.Net.Core
         /// <summary>
         /// The API Wrapper version
         /// </summary>
-        public string Version
+        public string APIVersion
         {
             get
             {
-                return "1.2021.0208,Xero-Standard: 3.14.0";
+                //return "";
+                return "1.2023.1031-Xero-Standard 3.33";
             }
         }
         oAuth2 _authClient = null;

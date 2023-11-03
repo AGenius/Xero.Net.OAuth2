@@ -11,6 +11,7 @@
 
 using System;
 using System.Threading.Tasks;
+using System.Threading;
 
 namespace Xero.Net.Api.Client
 {
@@ -22,6 +23,7 @@ namespace Xero.Net.Api.Client
     public interface IAsynchronousClient
     {
         /// <summary>
+        /// AGenius
         /// Stores the Returned Rate information from the API Call header
         /// </summary>
         Model.RateLimitInfo RateInfo { get; set; }
@@ -32,69 +34,76 @@ namespace Xero.Net.Api.Client
         /// <param name="path">The relative path to invoke.</param>
         /// <param name="options">The request parameters to pass along to the client.</param>
         /// <param name="configuration">Per-request configurable settings.</param>
+        /// <param name="cancellationToken">Cancellation token enables cancellation between threads. Defaults to CancellationToken.None</param>
         /// <typeparam name="T">The return type.</typeparam>
         /// <returns>A task eventually representing the response data, decorated with <see cref="ApiResponse{T}"/></returns>
-        Task<ApiResponse<T>> GetAsync<T>(String path, RequestOptions options, IReadableConfiguration configuration = null);
-        
+        Task<ApiResponse<T>> GetAsync<T>(String path, RequestOptions options, IReadableConfiguration configuration = null, CancellationToken cancellationToken = default);
+
         /// <summary>
         /// Executes a non-blocking call to some <paramref name="path"/> using the POST http verb.
         /// </summary>
         /// <param name="path">The relative path to invoke.</param>
         /// <param name="options">The request parameters to pass along to the client.</param>
         /// <param name="configuration">Per-request configurable settings.</param>
+        /// <param name="cancellationToken">Cancellation token enables cancellation between threads. Defaults to CancellationToken.None</param>
         /// <typeparam name="T">The return type.</typeparam>
         /// <returns>A task eventually representing the response data, decorated with <see cref="ApiResponse{T}"/></returns>
-        Task<ApiResponse<T>> PostAsync<T>(String path, RequestOptions options, IReadableConfiguration configuration = null);
-        
+        Task<ApiResponse<T>> PostAsync<T>(String path, RequestOptions options, IReadableConfiguration configuration = null, CancellationToken cancellationToken = default);
+
         /// <summary>
         /// Executes a non-blocking call to some <paramref name="path"/> using the PUT http verb.
         /// </summary>
         /// <param name="path">The relative path to invoke.</param>
         /// <param name="options">The request parameters to pass along to the client.</param>
         /// <param name="configuration">Per-request configurable settings.</param>
+        /// <param name="cancellationToken">Cancellation token enables cancellation between threads. Defaults to CancellationToken.None</param>
         /// <typeparam name="T">The return type.</typeparam>
         /// <returns>A task eventually representing the response data, decorated with <see cref="ApiResponse{T}"/></returns>
-        Task<ApiResponse<T>> PutAsync<T>(String path, RequestOptions options, IReadableConfiguration configuration = null);
-        
+        Task<ApiResponse<T>> PutAsync<T>(String path, RequestOptions options, IReadableConfiguration configuration = null, CancellationToken cancellationToken = default);
+
         /// <summary>
         /// Executes a non-blocking call to some <paramref name="path"/> using the DELETE http verb.
         /// </summary>
         /// <param name="path">The relative path to invoke.</param>
         /// <param name="options">The request parameters to pass along to the client.</param>
         /// <param name="configuration">Per-request configurable settings.</param>
+        /// <param name="cancellationToken">Cancellation token enables cancellation between threads. Defaults to CancellationToken.None</param>
         /// <typeparam name="T">The return type.</typeparam>
         /// <returns>A task eventually representing the response data, decorated with <see cref="ApiResponse{T}"/></returns>
-        Task<ApiResponse<T>> DeleteAsync<T>(String path, RequestOptions options, IReadableConfiguration configuration = null);
-        
+        Task<ApiResponse<T>> DeleteAsync<T>(String path, RequestOptions options, IReadableConfiguration configuration = null, CancellationToken cancellationToken = default);
+
         /// <summary>
         /// Executes a non-blocking call to some <paramref name="path"/> using the HEAD http verb.
         /// </summary>
         /// <param name="path">The relative path to invoke.</param>
         /// <param name="options">The request parameters to pass along to the client.</param>
         /// <param name="configuration">Per-request configurable settings.</param>
+        /// <param name="cancellationToken">Cancellation token enables cancellation between threads. Defaults to CancellationToken.None</param>
         /// <typeparam name="T">The return type.</typeparam>
         /// <returns>A task eventually representing the response data, decorated with <see cref="ApiResponse{T}"/></returns>
-        Task<ApiResponse<T>> HeadAsync<T>(String path, RequestOptions options, IReadableConfiguration configuration = null);
-        
+        Task<ApiResponse<T>> HeadAsync<T>(String path, RequestOptions options, IReadableConfiguration configuration = null, CancellationToken cancellationToken = default);
+
         /// <summary>
         /// Executes a non-blocking call to some <paramref name="path"/> using the OPTIONS http verb.
         /// </summary>
         /// <param name="path">The relative path to invoke.</param>
         /// <param name="options">The request parameters to pass along to the client.</param>
         /// <param name="configuration">Per-request configurable settings.</param>
+        /// <param name="cancellationToken">Cancellation token enables cancellation between threads. Defaults to CancellationToken.None</param>
         /// <typeparam name="T">The return type.</typeparam>
         /// <returns>A task eventually representing the response data, decorated with <see cref="ApiResponse{T}"/></returns>
-        Task<ApiResponse<T>> OptionsAsync<T>(String path, RequestOptions options, IReadableConfiguration configuration = null);
-        
+        Task<ApiResponse<T>> OptionsAsync<T>(String path, RequestOptions options, IReadableConfiguration configuration = null, CancellationToken cancellationToken = default);
+
         /// <summary>
         /// Executes a non-blocking call to some <paramref name="path"/> using the PATCH http verb.
         /// </summary>
         /// <param name="path">The relative path to invoke.</param>
         /// <param name="options">The request parameters to pass along to the client.</param>
         /// <param name="configuration">Per-request configurable settings.</param>
+        /// <param name="cancellationToken">Cancellation token enables cancellation between threads. Defaults to CancellationToken.None</param>
         /// <typeparam name="T">The return type.</typeparam>
         /// <returns>A task eventually representing the response data, decorated with <see cref="ApiResponse{T}"/></returns>
-        Task<ApiResponse<T>> PatchAsync<T>(String path, RequestOptions options, IReadableConfiguration configuration = null);
+        Task<ApiResponse<T>> PatchAsync<T>(String path, RequestOptions options, IReadableConfiguration configuration = null, CancellationToken cancellationToken = default);
     }
 }
 

@@ -79,7 +79,7 @@ namespace Xero.Net.Core
                 string payload = "{";
                 foreach (var item in token.Payload)
                 {
-                    if (item.Value.GetType().Name == "JArray")
+                    if (item.Value.GetType().Name == "JArray" || item.Value.GetType().Name == "JsonElement")
                     {
                         payload += '"' + item.Key + "\":" + item.Value + ",";
                     }

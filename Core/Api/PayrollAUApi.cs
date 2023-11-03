@@ -42,7 +42,7 @@ namespace Xero.Net.Core.Api
         {
             this.APICore = parentAPI;
             Xero.Net.Api.Client.Configuration confg = new Net.Api.Client.Configuration();
-            confg.UserAgent = "Xero.Net.Api-" + APICore.Version;
+            confg.UserAgent = "Xero.Net.Api-" + APICore.APIVersion;
             APIClient = new Xero.Net.Api.Api.PayrollAuApi(confg);
         }
     }
